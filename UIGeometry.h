@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKitDefines.h>
+#import <UIUtilities/UIGeometry.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -42,15 +43,6 @@ typedef struct __attribute__((objc_boxable)) NS_SWIFT_SENDABLE API_AVAILABLE(wat
     CGFloat horizontal, vertical; // specify amount to offset a position, positive for right or down, negative for left or up
 } UIOffset;
 
-typedef NS_OPTIONS(NSUInteger, UIRectEdge) {
-    UIRectEdgeNone   = 0,
-    UIRectEdgeTop    = 1 << 0,
-    UIRectEdgeLeft   = 1 << 1,
-    UIRectEdgeBottom = 1 << 2,
-    UIRectEdgeRight  = 1 << 3,
-    UIRectEdgeAll    = UIRectEdgeTop | UIRectEdgeLeft | UIRectEdgeBottom | UIRectEdgeRight
-} API_AVAILABLE(ios(7.0), watchos(2.0));
-
 typedef NS_OPTIONS(NSUInteger, UIRectCorner) {
     UIRectCornerTopLeft     = 1 << 0,
     UIRectCornerTopRight    = 1 << 1,
@@ -58,13 +50,6 @@ typedef NS_OPTIONS(NSUInteger, UIRectCorner) {
     UIRectCornerBottomRight = 1 << 3,
     UIRectCornerAllCorners  = ~0UL
 } API_AVAILABLE(watchos(2.0));
-
-typedef NS_OPTIONS(NSUInteger, UIAxis) {
-    UIAxisNeither    = 0,
-    UIAxisHorizontal = 1 << 0,
-    UIAxisVertical   = 1 << 1,
-    UIAxisBoth       = (UIAxisHorizontal | UIAxisVertical),
-} API_AVAILABLE(ios(13.4), tvos(13.4), watchos(6.2));
 
 #ifdef FOUNDATION_HAS_DIRECTIONAL_GEOMETRY
 

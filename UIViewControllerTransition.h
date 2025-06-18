@@ -12,7 +12,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@class UIView, UIViewController, UIZoomTransitionSourceViewProviderContext;
+@class UIView, UIViewController, UIZoomTransitionSourceViewProviderContext, UIBarButtonItem;
 
 UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(watchos)
 NS_SWIFT_NAME(UIViewController.Transition)
@@ -37,6 +37,9 @@ NS_SWIFT_NAME(UIViewController.Transition)
 /// present(cityViewController, animated: true)
 /// ```
 + (instancetype)zoomWithOptions:(nullable UIZoomTransitionOptions *)options sourceViewProvider:(UIView * _Nullable (^)(UIZoomTransitionSourceViewProviderContext *))sourceViewProvider NS_REFINED_FOR_SWIFT;
+
+/// Zoom from the `UIBarButtonItem` provided by the `sourceBarButtonItemProvider` to the presented or pushed view controller's view.
++ (instancetype)zoomWithOptions:(nullable UIZoomTransitionOptions *)options sourceBarButtonItemProvider:(UIBarButtonItem * _Nullable (^)(UIZoomTransitionSourceViewProviderContext *))sourceBarButtonItemProvider API_AVAILABLE(ios(26.0)) NS_REFINED_FOR_SWIFT;
 
 /// View slides up from the bottom of the screen. Same as `UIModalTransitionStyle.coverVertical`.
 + (instancetype)coverVerticalTransition NS_REFINED_FOR_SWIFT;

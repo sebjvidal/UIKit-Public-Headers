@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKitDefines.h>
+#import <UIKit/UIFocusDefines.h>
+
 #import <UIKit/UIFocusGuide.h>
 #import <UIKit/UIFocusAnimationCoordinator.h>
+@class UIFocusEffect;
 
-@class UIView, UIFocusUpdateContext, UIFocusMovementHint, UIFocusEffect, UIFocusAnimationCoordinator;
+@class UIView, UIFocusUpdateContext, UIFocusMovementHint;
 @protocol UICoordinateSpace, UIFocusItemContainer;
 
 typedef NS_OPTIONS(NSUInteger, UIFocusHeading) {
@@ -182,16 +184,6 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// The item that is focused after the update, i.e. where focus is updating to. May be nil if no item is being focused, meaning focus is being lost.
 @property (nonatomic, weak, readonly, nullable) id<UIFocusItem> nextFocusedItem API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(watchos);
 
-/// The view that was focused before the update. May be nil if no view was focused, such as when setting initial focus.
-/// If previouslyFocusedItem is not a view, this returns that item's containing view, otherwise they are equal.
-/// NOTE: This property will be deprecated in a future release. Use previouslyFocusedItem instead.
-@property (nonatomic, weak, readonly, nullable) UIView *previouslyFocusedView;
-
-/// The view that will be focused after the update. May be nil if no view will be focused.
-/// If nextFocusedItem is not a view, this returns that item's containing view, otherwise they are equal.
-/// NOTE: This property will be deprecated in a future release. Use nextFocusedItem instead.
-@property (nonatomic, weak, readonly, nullable) UIView *nextFocusedView;
-
 /// The focus heading in which the update is occurring.
 @property (nonatomic, assign, readonly) UIFocusHeading focusHeading;
 
@@ -211,6 +203,8 @@ UIKIT_EXTERN UIFocusSoundIdentifier const UIFocusSoundIdentifierNone API_AVAILAB
 UIKIT_EXTERN UIFocusSoundIdentifier const UIFocusSoundIdentifierDefault API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(ios, watchos, visionos);
 
 NS_HEADER_AUDIT_END(nullability, sendability)
+
+#import <UIKit/UIFocusUpdateContext+UIKitAdditions.h>
 
 #else
 #import <UIKitCore/UIFocus.h>

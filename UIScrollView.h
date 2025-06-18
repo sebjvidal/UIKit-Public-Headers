@@ -46,6 +46,40 @@ typedef CGFloat UIScrollViewDecelerationRate NS_TYPED_ENUM API_UNAVAILABLE(watch
 UIKIT_EXTERN const UIScrollViewDecelerationRate UIScrollViewDecelerationRateNormal API_AVAILABLE(ios(3.0)) API_UNAVAILABLE(watchos);
 UIKIT_EXTERN const UIScrollViewDecelerationRate UIScrollViewDecelerationRateFast API_AVAILABLE(ios(3.0)) API_UNAVAILABLE(watchos);
 
+/// Styles for a scroll view's edge effect.
+UIKIT_FINAL UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NAME(UIScrollEdgeEffect.Style)
+@interface UIScrollEdgeEffectStyle : NSObject
+
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
+/// The automatic scroll edge effect style.
+@property (nonatomic, readonly, class) UIScrollEdgeEffectStyle *automaticStyle;
+
+/// A soft-edged scroll edge effect.
+@property (nonatomic, readonly, class) UIScrollEdgeEffectStyle *softStyle;
+
+/// A scroll edge effect with a hard cutoff and dividing line.
+@property (nonatomic, readonly, class) UIScrollEdgeEffectStyle *hardStyle;
+
+@end
+
+/// Properties of the effect on a particular edge of the scroll view.
+UIKIT_FINAL UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos)
+@interface UIScrollEdgeEffect : NSObject
+
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
+/// The style of this edge effect.
+@property (nonatomic, strong) UIScrollEdgeEffectStyle *style;
+
+/// Whether this edge effect is hidden.
+/// Default: false
+@property (nonatomic, getter=isHidden) BOOL hidden;
+
+@end
+
 @class UIEvent, UIImageView, UIPanGestureRecognizer, UIPinchGestureRecognizer;
 @protocol UIScrollViewDelegate;
 
@@ -145,6 +179,25 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 // If contentOffset is set with animation, the scroll indicators will fade out when the animation completes.
 - (void)withScrollIndicatorsShownForContentOffsetChanges:(void (NS_NOESCAPE ^)(void))changes API_AVAILABLE(ios(17.4)) API_UNAVAILABLE(watchos);
 
+/// The following properties can be used to access and modify the effect on a particular edge.
+///
+/// In the following example, the hard style is set for the top edge.
+///
+///     scrollView.topEdgeEffect.style = .hard
+///
+
+/// The effect for the top edge of the scroll view.
+@property (nonatomic, readonly) UIScrollEdgeEffect *topEdgeEffect API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// The effect for the left edge of the scroll view.
+@property (nonatomic, readonly) UIScrollEdgeEffect *leftEdgeEffect API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// The effect for the bottom edge of the scroll view.
+@property (nonatomic, readonly) UIScrollEdgeEffect *bottomEdgeEffect API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// The effect for the right edge of the scroll view.
+@property (nonatomic, readonly) UIScrollEdgeEffect *rightEdgeEffect API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
 /*
  Scrolling with no scroll bars is a bit complex. on touch down, we don't know if the user will want to scroll or track a subview like a control.
  on touch down, we start a timer and also look at any movement. if the time elapses without sufficient change in position, we start sending events to
@@ -235,6 +288,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Set this to YES to make the scroll view animate its content offset in response to keys like Page Up/Down, Home/End, and the arrow keys.
 /// The scroll view must be focused or first responder in order to receive these key events. Default is YES for apps linked after iOS 17.0.
 @property (nonatomic, assign) BOOL allowsKeyboardScrolling API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos) API_UNAVAILABLE(tvos);
+
+/// Defines which axes are considered for Look to Scroll.
+/// Does not affect when isPagingEnabled is true.
+@property (nonatomic) UIAxis lookToScrollAxes API_AVAILABLE(visionos(26.0)) API_UNAVAILABLE(ios, watchos, tvos);
 
 @end
 

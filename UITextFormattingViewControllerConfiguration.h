@@ -19,7 +19,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 #pragma mark - UITextFormattingViewControllerConfiguration
 
-UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UITextFormattingViewController.Configuration)
+UIKIT_EXTERN API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UITextFormattingViewController.Configuration)
 /// Text formatting view controller configuration object.
 @interface UITextFormattingViewControllerConfiguration : NSObject <NSCopying, NSSecureCoding>
 

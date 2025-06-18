@@ -114,7 +114,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property (nullable, nonatomic, readwrite, strong) UIView *inputAccessoryView API_UNAVAILABLE(visionos);
 
 /// When set to false, user interaction will be prevented and the search bar will take on a disabled appearance
-/// If the search bar is associated with a UINavigationItem with `UINavigationItemSearchBarPlacementInline`,
+/// If the search bar is associated with a UINavigationItem with `UINavigationItemSearchBarPlacementIntegrated`,
 /// then the minimized (icon-only) UISearchBar will not grow to the text field while `enabled` is false.
 @property (nonatomic, getter=isEnabled) BOOL enabled API_AVAILABLE(ios(16.4), tvos(16.4)) API_UNAVAILABLE(watchos); // Default YES
 

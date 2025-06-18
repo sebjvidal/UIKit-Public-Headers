@@ -18,7 +18,7 @@
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 /// Allows to formally participate in UI updates and influence UI update behavior.
-UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos) API_UNAVAILABLE(macCatalyst)
+UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos, macCatalyst)
 @interface UIUpdateLink: NSObject
 
 +(instancetype)new NS_UNAVAILABLE;

@@ -15,7 +15,11 @@
 #import <UIKit/UIDynamicBehavior.h>
 #import <UIKit/NSLayoutConstraint.h>
 #import <UIKit/UITraitCollection.h>
+#import <UIKit/UILayoutGuide.h>
 #import <UIKit/UIFocus.h>
+#import <UIKit/UIViewLayoutRegion.h>
+#import <UIKit/UIFocusEffect.h>
+#import <UIUtilities/UICoordinateSpace.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -61,7 +65,7 @@ typedef NS_OPTIONS(NSUInteger, UIViewAutoresizing) {
 } API_UNAVAILABLE(watchos);
 
 typedef NS_OPTIONS(NSUInteger, UIViewAnimationOptions) {
-    UIViewAnimationOptionLayoutSubviews            = 1 <<  0,
+    UIViewAnimationOptionLayoutSubviews            = 1 <<  0, // resized views will perform layout; consider using UIViewAnimationOptionFlushUpdates instead
     UIViewAnimationOptionAllowUserInteraction      = 1 <<  1, // turn on user interaction while animating
     UIViewAnimationOptionBeginFromCurrentState     = 1 <<  2, // start all views from current value, not initial value
     UIViewAnimationOptionRepeat                    = 1 <<  3, // repeat animation indefinitely
@@ -89,6 +93,16 @@ typedef NS_OPTIONS(NSUInteger, UIViewAnimationOptions) {
     UIViewAnimationOptionPreferredFramesPerSecondDefault     = 0 << 24,
     UIViewAnimationOptionPreferredFramesPerSecond60          = 3 << 24,
     UIViewAnimationOptionPreferredFramesPerSecond30          = 7 << 24,
+    
+    /// Flush all pending updates (including traits, properties, and layout) whenever the animation context changes.
+    /// This includes flushing updates:
+    ///  - Before entering an animation scope, for invalidations that happened previously without animation.
+    ///  - Before entering a nested animation scope, for invalidations that happened in the outer animation scope.
+    ///  - Before exiting any animation scope, for invalidations that happened in that animation scope.
+    ///  - Before disabling animations, for invalidations that happened in the animation scope with animations enabled.
+    ///  - Before re-enabling animations, for invalidations that happened in the scope with animations disabled.
+    ///  This animation option implicitly applies to any nested animation scopes, even if they don't explicitly use this option.
+    UIViewAnimationOptionFlushUpdates API_AVAILABLE(ios(26.0), macos(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos) = 1 << 28,
     
 } API_AVAILABLE(ios(4.0)) API_UNAVAILABLE(watchos);
 
@@ -127,18 +141,6 @@ typedef NS_ENUM(NSInteger, UISemanticContentAttribute) {
     UISemanticContentAttributeForceRightToLeft
 } API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(watchos);
 
-API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
-@protocol UICoordinateSpace <NSObject>
-
-- (CGPoint)convertPoint:(CGPoint)point toCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace API_AVAILABLE(ios(8.0));
-- (CGPoint)convertPoint:(CGPoint)point fromCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace API_AVAILABLE(ios(8.0));
-- (CGRect)convertRect:(CGRect)rect toCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace API_AVAILABLE(ios(8.0));
-- (CGRect)convertRect:(CGRect)rect fromCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace API_AVAILABLE(ios(8.0));
-
-@property (readonly, nonatomic) CGRect bounds API_AVAILABLE(ios(8.0));
-
-@end
-
 @class UIBezierPath, UIEvent, UIWindow, UIViewController, UIColor, UIGestureRecognizer, UIMotionEffect, CALayer, UILayoutGuide, UIKeyboardLayoutGuide;
 
 UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
@@ -148,6 +150,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 - (instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
+- (instancetype)init API_AVAILABLE(ios(2.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 @property(nonatomic,getter=isUserInteractionEnabled) BOOL userInteractionEnabled;  // default is YES. if set to NO, user events (touch, keys) are ignored and removed from the event queue.
 @property(nonatomic)                                 NSInteger tag;                // default is 0
@@ -243,6 +246,16 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 - (BOOL)isDescendantOfView:(UIView *)view;  // returns YES for self.
 - (nullable __kindof UIView *)viewWithTag:(NSInteger)tag; // recursive search. includes self
+
+/// Call to manually request a properties update for the view.
+/// Multiple requests may be coalesced into a single update alongside the next layout pass.
+- (void)setNeedsUpdateProperties API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+/// Override point for subclasses to update properties of this view.
+/// Never call this method directly; use `setNeedsUpdateProperties` to schedule an update.
+- (void)updateProperties NS_REQUIRES_SUPER API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+/// Forces an immediate properties update for this view (and its view controller, if applicable)
+/// and any subviews, including any view controllers or views in its subtree.
+- (void)updatePropertiesIfNeeded API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 
 // Allows you to perform layout before the drawing cycle happens. -layoutIfNeeded forces layout early
 - (void)setNeedsLayout;
@@ -724,6 +737,16 @@ API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos)
 /// Forces an immediate trait update for this view (and its view controller, if applicable) and any subviews,
 /// including any view controllers or views in its subtree. Any trait change callbacks are sent synchronously.
 - (void)updateTraitsIfNeeded API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);
+
+@end
+
+
+API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos)
+@interface UIView (LayoutRegions)
+
+- (UILayoutGuide *)layoutGuideForLayoutRegion:(UIViewLayoutRegion *)layoutRegion NS_REFINED_FOR_SWIFT;
+- (UIEdgeInsets)edgeInsetsForLayoutRegion:(UIViewLayoutRegion *)layoutRegion NS_REFINED_FOR_SWIFT;
+- (NSDirectionalEdgeInsets)directionalEdgeInsetsForLayoutRegion:(UIViewLayoutRegion *)layoutRegion NS_REFINED_FOR_SWIFT;
 
 @end
 

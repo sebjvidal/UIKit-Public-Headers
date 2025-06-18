@@ -13,7 +13,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@class UISceneSession, UISceneConnectionOptions, UIOpenURLContext, UISceneOpenExternalURLOptions, UISceneActivationConditions;
+@class UISceneSession, UISceneConnectionOptions, UIOpenURLContext, UISceneOpenExternalURLOptions, UISceneActivationConditions, UISceneDestructionCondition;
 @protocol UISceneDelegate;
 
 UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
@@ -54,6 +54,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 // use the activation conditions to influence which scene is activated for banner taps, URLs, etc.
 @property (nonatomic, strong) UISceneActivationConditions *activationConditions;
+
+// Conditions that help the system shell determine whether the scene should be destroyed for certain actions
+@property (nonatomic, copy) NSSet<UISceneDestructionCondition *> *destructionConditions API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos) NS_REFINED_FOR_SWIFT;
 
 @end
 

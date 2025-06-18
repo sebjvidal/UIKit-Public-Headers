@@ -17,39 +17,39 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 #pragma mark - UITextFormattingViewControllerTextAlignment
 
 /// Text formatting horizontal alignment state.
-typedef NSString * UITextFormattingViewControllerTextAlignment NS_TYPED_ENUM NS_SWIFT_NAME(UITextFormattingViewController.TextAlignment) API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+typedef NSString * UITextFormattingViewControllerTextAlignment NS_TYPED_ENUM NS_SWIFT_NAME(UITextFormattingViewController.TextAlignment) API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
-UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentLeft      NS_SWIFT_NAME(left)         API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentCenter    NS_SWIFT_NAME(center)       API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentRight     NS_SWIFT_NAME(right)        API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentJustified NS_SWIFT_NAME(justified)    API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentNatural   NS_SWIFT_NAME(natural)      API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentLeft      NS_SWIFT_NAME(left)         API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentCenter    NS_SWIFT_NAME(center)       API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentRight     NS_SWIFT_NAME(right)        API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentJustified NS_SWIFT_NAME(justified)    API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextAlignment const UITextFormattingViewControllerTextAlignmentNatural   NS_SWIFT_NAME(natural)      API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
 #pragma mark - UITextFormattingViewControllerTextList
 
 /// Text formatting text list state.
-typedef NSString * UITextFormattingViewControllerTextList NS_TYPED_ENUM NS_SWIFT_NAME(UITextFormattingViewController.TextList) API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+typedef NSString * UITextFormattingViewControllerTextList NS_TYPED_ENUM NS_SWIFT_NAME(UITextFormattingViewController.TextList) API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
-UIKIT_EXTERN UITextFormattingViewControllerTextList const UITextFormattingViewControllerTextListDisc                NS_SWIFT_NAME(disc)         API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerTextList const UITextFormattingViewControllerTextListHyphen              NS_SWIFT_NAME(hyphen)       API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerTextList const UITextFormattingViewControllerTextListDecimal             NS_SWIFT_NAME(decimal)      API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerTextList const UITextFormattingViewControllerTextListOther               NS_SWIFT_NAME(other)        API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextList const UITextFormattingViewControllerTextListDisc                NS_SWIFT_NAME(disc)         API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextList const UITextFormattingViewControllerTextListHyphen              NS_SWIFT_NAME(hyphen)       API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextList const UITextFormattingViewControllerTextListDecimal             NS_SWIFT_NAME(decimal)      API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerTextList const UITextFormattingViewControllerTextListOther               NS_SWIFT_NAME(other)        API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
 #pragma mark - UITextFormattingViewControllerHighlight
 
 /// Text formatting highlight state.
-typedef NSString * UITextFormattingViewControllerHighlight NS_TYPED_ENUM NS_SWIFT_NAME(UITextFormattingViewController.Highlight) API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+typedef NSString * UITextFormattingViewControllerHighlight NS_TYPED_ENUM NS_SWIFT_NAME(UITextFormattingViewController.Highlight) API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
-UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightDefault           NS_SWIFT_NAME(default)      API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightPurple            NS_SWIFT_NAME(purple)       API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightPink              NS_SWIFT_NAME(pink)         API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightOrange            NS_SWIFT_NAME(orange)       API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightMint              NS_SWIFT_NAME(mint)         API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
-UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightBlue              NS_SWIFT_NAME(blue)         API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightDefault           NS_SWIFT_NAME(default)      API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightPurple            NS_SWIFT_NAME(purple)       API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightPink              NS_SWIFT_NAME(pink)         API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightOrange            NS_SWIFT_NAME(orange)       API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightMint              NS_SWIFT_NAME(mint)         API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN UITextFormattingViewControllerHighlight const UITextFormattingViewControllerHighlightBlue              NS_SWIFT_NAME(blue)         API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
 #pragma mark - UITextFormattingViewControllerFormattingDescriptor
 
-UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_REFINED_FOR_SWIFT
+UIKIT_EXTERN API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_REFINED_FOR_SWIFT
 /// Object that represents current text formatting state.
 /// This can apply to formatting state of some selected range of text or currently applicable input formatting.
 @interface UITextFormattingViewControllerFormattingDescriptor : NSObject <NSCopying, NSSecureCoding>

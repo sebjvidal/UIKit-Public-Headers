@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIFocus.h>
-#import <UIKit/UIKitDefines.h>
 #import <QuartzCore/CATransform3D.h>
 
 /// Provides information about the current state of hinting for the focused item.

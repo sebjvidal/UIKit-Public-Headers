@@ -13,6 +13,7 @@
 @class UIImageSymbolConfiguration;
 @class UIButton;
 @class UIImage;
+@class UISymbolContentTransition;
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -84,6 +85,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos) NS_SW
 + (instancetype)borderedTintedButtonConfiguration;
 + (instancetype)borderedProminentButtonConfiguration;
 
++ (instancetype)glassButtonConfiguration API_AVAILABLE(ios(26.0), tvos(26.0)) API_UNAVAILABLE(watchos);
++ (instancetype)tintedGlassButtonConfiguration API_AVAILABLE(ios(26.0), tvos(26.0)) API_UNAVAILABLE(watchos);
+
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -111,6 +115,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos) NS_SW
 @property (nonatomic, readwrite, strong, nullable) UIImage *image;
 @property (nonatomic, readwrite, copy, nullable) UIConfigurationColorTransformer imageColorTransformer;
 @property (nonatomic, readwrite, copy, nullable) UIImageSymbolConfiguration *preferredSymbolConfigurationForImage;
+
+/// The symbol content transition to use when transitioning across symbol images.
+/// Defaults to `nil`, meaning no symbol content transition should occur.
+@property (nonatomic, readwrite, strong, nullable) UISymbolContentTransition *symbolContentTransition API_AVAILABLE(ios(26.0), tvos(26.0)) API_UNAVAILABLE(watchos);
 
 /// Shows an activity indicator in place of an image. Its placement is controlled by the imagePlacement property.
 @property (nonatomic, readwrite, assign) BOOL showsActivityIndicator;

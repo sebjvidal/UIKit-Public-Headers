@@ -31,7 +31,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 /// Instead, consider calling `-[CAMetalLayer nextDrawable]` on the background thread and block main thread manually
 /// in one of the phases. Use small timeout that allows for UI update to proceed without a new drawable and still finish
 /// before the completion deadline.
-UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos) API_UNAVAILABLE(macCatalyst)
+UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos, macCatalyst)
 @interface UIUpdateActionPhase: NSObject
 
 +(instancetype)new NS_UNAVAILABLE;

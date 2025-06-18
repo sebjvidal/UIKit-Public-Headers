@@ -3,7 +3,7 @@
 //  NSAdaptiveImageGlyph.h
 //  Text Kit
 //
-//  Copyright (c) 2024, Apple Inc. All rights reserved.
+//  Copyright (c) 2024-2025,Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSAttributedString.h>
@@ -20,7 +20,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), watchos(11.0), visionos(2.0)) NS_SWIFT_SENDABLE
 @interface NSAdaptiveImageGlyph : NSObject <NSCopying, NSSecureCoding, CTAdaptiveImageProviding>
 
-- (instancetype)initWithImageContent:(NSData*)imageContent NS_DESIGNATED_INITIALIZER; // Initialization: imageContent must conform to the image data format identified by contentType
+- (instancetype)initWithImageContent:(NSData *)imageContent NS_DESIGNATED_INITIALIZER; // Initialization: imageContent must conform to the image data format identified by contentType
 - (instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 

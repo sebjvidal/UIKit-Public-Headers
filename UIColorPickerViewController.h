@@ -53,6 +53,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI
 /// If set to `NO` users are only able to pick fully opaque colors.
 @property (nonatomic) BOOL supportsAlpha;
 
+/// If set to `NO` the eyedropper functionality is not supported for this color picker.
+@property (nonatomic) BOOL supportsEyedropper API_AVAILABLE(ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+
+/// The maximum exposure to apply to a color when returned by the color picker.
+@property (nonatomic) CGFloat maximumLinearExposure API_AVAILABLE(ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+
 - (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 

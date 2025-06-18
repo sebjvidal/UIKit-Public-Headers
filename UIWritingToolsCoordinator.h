@@ -260,6 +260,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(18.2), visionos(2.4)) API_UNAVAILABLE(tvos, watch
 /// which lets the system determine the type of content to generate.
 @property(nonatomic) UIWritingToolsResultOptions preferredResultOptions; // Defaults to "Default"
 
+// When YES, the Writing Tools subsystem interprets and generates the text list paragraph incorporating the text list marker string. By default, it employs ``NSTextList.includesTextListMarkers`` as the value.
+@property BOOL includesTextListMarkers API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(watchos, tvos);
+
 /// The type of content the system generates for your custom text view.
 ///
 /// This property contains the set of options that Writing Tools outputs

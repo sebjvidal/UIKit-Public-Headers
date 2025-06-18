@@ -2,7 +2,7 @@
 //  UIFoundation.h
 //  Text Kit
 //
-//  Copyright © 2021 Apple Inc. All rights reserved.
+//  Copyright © 2021-2025 Apple Inc. All rights reserved.
 //
 
 #import <UIKit/NSTextRange.h>

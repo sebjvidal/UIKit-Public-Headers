@@ -13,7 +13,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 #pragma mark - UITextFormattingViewControllerFormattingStyle
 
-UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_REFINED_FOR_SWIFT
+UIKIT_EXTERN API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_REFINED_FOR_SWIFT
 /// Type that defines formatting style presented in text formatting view.
 @interface UITextFormattingViewControllerFormattingStyle : NSObject <NSCopying, NSSecureCoding>
 

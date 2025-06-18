@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class UIPrintPageRenderer;
 @class UIView, UIFont, UIColor;
 
-UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos)
 @interface UIPrintFormatter : NSObject <NSCopying>
 
 @property(nullable,nonatomic,readonly,weak) UIPrintPageRenderer *printPageRenderer API_UNAVAILABLE(tvos); // default is nil. set when formatter added to a print page renderer
@@ -42,7 +42,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_
 
 //______________________________
 
-UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos)
 @interface UISimpleTextPrintFormatter : UIPrintFormatter {
 }
 
@@ -59,7 +59,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_
 
 //______________________________
 
-UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos)
 @interface UIMarkupTextPrintFormatter : UIPrintFormatter {
 }
 
@@ -70,7 +70,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_
 
 //______________________________
 
-UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) 
 @interface UIViewPrintFormatter : UIPrintFormatter 
 
 @property(nonatomic,readonly) UIView *view;

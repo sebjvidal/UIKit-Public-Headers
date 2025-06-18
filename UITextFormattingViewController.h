@@ -20,7 +20,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 #pragma mark - UITextFormattingViewControllerDelegate
 
-UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR NS_REFINED_FOR_SWIFT
+UIKIT_EXTERN API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR NS_REFINED_FOR_SWIFT
 @protocol UITextFormattingViewControllerDelegate <NSObject>
 
 /// Delegate method that will be invoked on any text formatting changes.
@@ -64,7 +64,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API
 #pragma mark - UITextFormattingViewController
 
 /// A view controller that manages the interface for common text formatting options.
-UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 @interface UITextFormattingViewController : UIViewController
 
 /// Current text formatting configuration object.

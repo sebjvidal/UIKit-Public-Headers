@@ -9,6 +9,8 @@
 #import <UIKit/UIScene.h>
 #import <UIKit/UIApplication.h>
 #import <UIKit/UISceneOptions.h>
+#import <UIKit/UISceneSizeRestrictions.h>
+#import <UIKit/UISceneWindowingControlStyle.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -20,8 +22,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 #pragma mark Geometry
 @property (nonatomic, readonly) UIScreen *screen API_UNAVAILABLE(visionos);
-@property (nonatomic, readonly) UIInterfaceOrientation interfaceOrientation API_UNAVAILABLE(tvos);
-@property (nonatomic, readonly) id<UICoordinateSpace> coordinateSpace;
+@property (nonatomic, readonly) UIInterfaceOrientation interfaceOrientation API_DEPRECATED("Use effectiveGeometry.interfaceOrientation instead.", ios(13.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(tvos);
+@property (nonatomic, readonly) id<UICoordinateSpace> coordinateSpace API_DEPRECATED("Use effectiveGeometry.coordinateSpace instead.", ios(13.0, 26.0), tvos(13.0, 26.0), visionos(1.0, 26.0));
 @property (nonatomic, readonly) UITraitCollection *traitCollection;
 
 // Request an update to the window scene's geometry in system space.
@@ -30,7 +32,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 // Provides the current resolved values for the window scene's geometry in system space.
 @property (nonatomic, readonly) UIWindowSceneGeometry *effectiveGeometry API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
 
-// Restrictions which the system should use when resizing the scene. This property will be NULL on platforms which don't support scene resize, else a mutable object is returned which the client may customize.
+/// Preferences the system should evaluate when resizing the scene. If non `nil`, returns a mutable instance that the client may customize.
+/// - Note: This property will be `nil` on platforms that don't support scene resizing.
 @property (nonatomic, readonly, nullable) UISceneSizeRestrictions *sizeRestrictions API_AVAILABLE(ios(13.0));
 
 #pragma mark Window management
@@ -63,9 +66,15 @@ API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @optional
 @property (nullable, nonatomic, strong) UIWindow *window;
 
-// Called when the coordinate space, interface orientation, or trait collection of a UIWindowScene changes
-// Always called when a UIWindowScene moves between screens
-- (void)windowScene:(UIWindowScene *)windowScene didUpdateCoordinateSpace:(id<UICoordinateSpace>)previousCoordinateSpace interfaceOrientation:(UIInterfaceOrientation)previousInterfaceOrientation traitCollection:(UITraitCollection *)previousTraitCollection API_UNAVAILABLE(tvos);
+/// Called when the coordinate space, interface orientation, or trait collection of a `UIWindowScene` changes.
+///
+/// Always called when a UIWindowScene moves between screens.
+- (void)windowScene:(UIWindowScene *)windowScene didUpdateCoordinateSpace:(id<UICoordinateSpace>)previousCoordinateSpace interfaceOrientation:(UIInterfaceOrientation)previousInterfaceOrientation traitCollection:(UITraitCollection *)previousTraitCollection API_DEPRECATED("Use windowScene(_: didUpdateEffectiveGeometry:) to be notified of the scene's geometry changes, or use traits whose values are inherited from the scene via the traitCollection of views and view controllers instead.", ios(13.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(tvos);
+
+/// Called when the window scene's effective geometry has changed.
+///
+/// Always called when a `UIWindowScene` moves between screens.
+- (void)windowScene:(UIWindowScene *)windowScene didUpdateEffectiveGeometry:(UIWindowSceneGeometry *)previousEffectiveGeometry API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 
 #pragma mark - System Integration
 // Called when the user activates your application by selecting a shortcut on the home screen,
@@ -77,6 +86,11 @@ API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 // You should use the CKShareMetadata object's shareURL and containerIdentifier to schedule a CKAcceptSharesOperation, then start using
 // the resulting CKShare and its associated record(s), which will appear in the CKContainer's shared database in a zone matching that of the record's owner.
 - (void)windowScene:(UIWindowScene *)windowScene userDidAcceptCloudKitShareWithMetadata:(CKShareMetadata *)cloudKitShareMetadata;
+
+/// Called by the system to determine the windowing control style for the provided scene.
+/// `automaticStyle` will be used if this method is not implemented.
+- (UISceneWindowingControlStyle *)preferredWindowingControlStyleForScene:(UIWindowScene *)windowScene API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
 @end
 
 #pragma mark - Session Roles
@@ -90,6 +104,9 @@ UIKIT_EXTERN UISceneSessionRole const UIWindowSceneSessionRoleExternalDisplay AP
 // A session role which defines a 3D volumetric application
 UIKIT_EXTERN UISceneSessionRole const UIWindowSceneSessionRoleVolumetricApplication API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, tvos, macos, watchos);
 
+// A session role which defines an application for Assistive Access
+UIKIT_EXTERN UISceneSessionRole const UIWindowSceneSessionRoleAssistiveAccessApplication API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
 #pragma mark - UIWindowSceneDismissalAnimation
 typedef NS_ENUM(NSInteger, UIWindowSceneDismissalAnimation) {
     UIWindowSceneDismissalAnimationStandard = 1,
@@ -100,20 +117,6 @@ typedef NS_ENUM(NSInteger, UIWindowSceneDismissalAnimation) {
 UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @interface UIWindowSceneDestructionRequestOptions : UISceneDestructionRequestOptions
 @property (nonatomic, readwrite) UIWindowSceneDismissalAnimation windowDismissalAnimation;
-@end
-
-UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
-@interface UISceneSizeRestrictions : NSObject
-
-// Clients should never make one of these directly. See -[UIWindowScene sizeRestrictions].
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
-
-@property (nonatomic, assign) CGSize minimumSize;
-@property (nonatomic, assign) CGSize maximumSize;
-
-@property (nonatomic) BOOL allowsFullScreen API_AVAILABLE(macCatalyst(16.0)) API_UNAVAILABLE(watchos);
-
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

@@ -28,6 +28,16 @@ typedef NS_OPTIONS(NSUInteger, UIMenuElementAttributes) {
     UIMenuElementAttributesKeepsMenuPresented API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos) = 1 << 3
 } API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
 
+/// Possible repeat behaviors for a menu element.
+typedef NS_ENUM(NSInteger, UIMenuElementRepeatBehavior) {
+    /// Automatically uses the appropriate repeat behavior for this element.
+    UIMenuElementRepeatBehaviorAutomatic = 0,
+    /// The element should be allowed to repeat.
+    UIMenuElementRepeatBehaviorRepeatable,
+    /// The element should not be repeatable.
+    UIMenuElementRepeatBehaviorNonRepeatable,
+} API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NAME(UIMenuElement.RepeatBehavior);
+
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR

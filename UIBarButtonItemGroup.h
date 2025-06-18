@@ -29,6 +29,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Construct a UIBarButtonItemGroup that can be moved or added/removed under UINavigationBar customization.
 + (UIBarButtonItemGroup *)optionalGroupWithCustomizationIdentifier:(NSString *)customizationIdentifier inDefaultCustomization:(BOOL)inDefaultCustomization representativeItem:(nullable UIBarButtonItem *)representativeItem items:(NSArray<UIBarButtonItem *> *)items API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
+/// Returns a new group that contains a single zero-width fixed space item inside it.
+///
+/// If you specify a group with a single zero-width fixed space,
+/// the navigation bar to visually separate the following groups.
++ (UIBarButtonItemGroup *)groupWithFixedSpace API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NAME(fixedSpace());
+
 /// The bar button items associated with this group. Changing these items will affect the bar displaying these items without needing to re-set the groups that are in that bar. Any UIBarButtonItems that are already in group will be removed from that group.
 @property (nonatomic, readwrite, copy) NSArray<UIBarButtonItem *> *barButtonItems;
 

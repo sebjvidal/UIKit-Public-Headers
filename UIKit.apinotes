@@ -2447,8 +2447,6 @@ Globals:
   Availability: nonswift
 - Name: UISceneWillConnectNotification
   SwiftName: UIScene.willConnectNotification
-- Name: UISceneWillDisconnectNotification
-  SwiftName: UIScene.willDisconnectNotification
 - Name: UISceneDidDisconnectNotification
   SwiftName: UIScene.didDisconnectNotification
 - Name: UISceneDidActivateNotification
@@ -2471,6 +2469,8 @@ Globals:
   SwiftName: windowExternalDisplayNonInteractive
 - Name: UIWindowSceneSessionRoleVolumetricApplication
   SwiftName: windowApplicationVolumetric
+- Name: UIWindowSceneSessionRoleAssistiveAccessApplication
+  SwiftName: windowAssistiveAccessApplication
 - Name: UISheetPresentationControllerDetentInactive
   SwiftPrivate: true
 - Name: UISheetPresentationControllerAutomaticDimension

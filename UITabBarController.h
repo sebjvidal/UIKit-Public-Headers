@@ -29,7 +29,23 @@ typedef NS_ENUM(NSInteger, UITabBarControllerMode) {
 
 } NS_SWIFT_NAME(UITabBarController.Mode) API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
-@class UIView, UIImage, UINavigationController, UITabBarItem, UITabBarControllerSidebar, UITab, UITabGroup;
+typedef NS_ENUM(NSInteger, UITabBarMinimizeBehavior) {
+    /// Resolves to the system default minimize behavior.
+    UITabBarMinimizeBehaviorAutomatic = 0,
+
+    /// The tab bar does not minimize.
+    UITabBarMinimizeBehaviorNever API_UNAVAILABLE(tvos, visionos),
+
+    /// The tab bar minimizes when scrolling down, and expands when scrolling back up.
+    UITabBarMinimizeBehaviorOnScrollDown API_UNAVAILABLE(tvos, visionos),
+
+    /// The tab bar minimizes when scrolling up, and expands when scrolling back down.
+    /// Recommended if the scroll view content is aligned to the bottom.
+    UITabBarMinimizeBehaviorOnScrollUp API_UNAVAILABLE(tvos, visionos),
+
+} NS_SWIFT_NAME(UITabBarController.MinimizeBehavior) API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+@class UIView, UIImage, UINavigationController, UITabBarItem, UITabBarControllerSidebar, UITab, UITabGroup, UITabAccessory;
 @protocol UITabBarControllerDelegate;
 
 /*!
@@ -47,26 +63,37 @@ typedef NS_ENUM(NSInteger, UITabBarControllerMode) {
 UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @interface UITabBarController : UIViewController <UITabBarDelegate, NSCoding>
 
-/// The object managing the delegate of the tab bar controller. Default is nil.
+/// The object managing the delegate of the tab bar controller.
+///
+/// The default value for this property is `nil`.
 @property(nonatomic, weak, nullable) id<UITabBarControllerDelegate> delegate;
 
-/// The object managing the tab sidebar for the tab bar controller. Default is `UITabBarControllerModeAutomatic`
+/// The object managing the tab sidebar for the tab bar controller.
+///
+/// The default value for this property is `UITabBarControllerModeAutomatic`.
 @property (nonatomic, assign) UITabBarControllerMode mode API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
 /// The object managing the tab sidebar for the tab bar controller.
 @property (nonatomic, strong, readonly) UITabBarControllerSidebar *sidebar API_AVAILABLE(ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
-/// The customization identifier for the tab bar and sidebar for persistence. The identifier is useful for when an app has multiple tab bar controllers,
-/// each with their own customizations. If the identifier is nil, a system default is used. Default is nil.
+/// The customization identifier for the tab bar and sidebar for persistence.
+///
+/// The identifier is useful for when an app has multiple tab bar controllers, each with their own customizations.
+/// If the customization identifier is `nil`, a system default is used. Default is `nil`.
 @property (nonatomic, copy, nullable) NSString *customizationIdentifier API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
-/// An optional filter to display only select root-level tabs when in a compact appearance. Default is nil, which would make all tabs available.
+/// An optional filter to display only select root-level tabs when in a compact appearance.
+///
+/// The default value is is `nil`, which would make all tabs available.
 @property (nonatomic, copy, nullable) NSArray<NSString *> *compactTabIdentifiers API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
-/// The currently selected tab, which can be a root tab or any of their descendants. Default is nil.
+/// The currently selected tab, which can be a root tab or any of their descendants.
+///
+/// The default value for this property is `nil`.
 @property (nonatomic, strong, nullable) UITab *selectedTab API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
-/// An array of root tabs representing view controllers to display by the tab bar interface. Default is empty.
+/// An array of root tabs representing view controllers to display by the tab bar interface.
+///
 /// Once set, `UITabBarController.viewControllers` and related properties and methods will not be called.
 @property (nonatomic, copy) NSArray<__kindof UITab *> *tabs API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
@@ -79,14 +106,32 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Creates a tab bar controller with the specified tabs.
 - (instancetype)initWithTabs:(NSArray<UITab *> *)tabs API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
-/// Determines if the active tab bar is currently hidden. Default is NO.
+/// Defines the minimize behavior for the tab bar, if it is supported.
+///
+/// The default value for this property is `UITabBarMinimizeBehaviorAutomatic`.
+@property (nonatomic, assign) UITabBarMinimizeBehavior tabBarMinimizeBehavior API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// Determines if the active tab bar is currently hidden.
+///
+/// The default value for this property is `NO`.
 @property (nonatomic, assign, getter=isTabBarHidden) BOOL tabBarHidden API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
 /// Changes the active tab bar's visibility with an option to animate the change.
 - (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animated API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
+/// The content layout guide provides the layout area for the UITabBarController unobscured by the tab bar or sidebar.
+@property (nonatomic, strong, readonly) UILayoutGuide *contentLayoutGuide API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// An optional bottom accessory of the tab bar controller.
+///
+/// The default value for this property is `nil`.
+@property (nonatomic, strong, nullable) UITabAccessory *bottomAccessory API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
+
+/// Sets a bottom accessory with an option to animate the change.
+- (void)setBottomAccessory:(nullable UITabAccessory *)bottomAccessory animated:(BOOL)animated API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
 
 @property(nullable, nonatomic,copy) NSArray<__kindof UIViewController *> *viewControllers;
+
 // If the number of view controllers is greater than the number displayable by a tab bar, a "More" navigation controller will automatically be shown.
 // The "More" navigation controller will not be returned by -viewControllers, but it may be returned by -selectedViewController.
 - (void)setViewControllers:(NSArray<__kindof UIViewController *> * __nullable)viewControllers animated:(BOOL)animated;
@@ -106,19 +151,25 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 @optional
 
-/// Return YES if the specified `tab` can be selected by the user. Otherwise, return NO.
+/// Asks the delegate whether the specified tab should be made active.
+///
+/// Return @c YES if the specified @c tab can be selected by the user. Otherwise, return @c NO
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectTab:(UITab *)tab NS_SWIFT_NAME(tabBarController(_:shouldSelectTab:)) API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
-/// Called when the selected tab has changed in the tab bar controller. The specified selected `tab` is either a root tab or its decendants.
+/// Tells the delegate that the user selected the specified @c selectedTab in the tab bar controller.
+///
+/// This specified @c selectedTab is either a root tab or any of their descendants.
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectTab:(UITab *)selectedTab previousTab:(nullable UITab *)previousTab NS_SWIFT_NAME(tabBarController(_:didSelectTab:previousTab:)) API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
-/// Determines if items from the specified drop session can be dropped into the specified `tab`. If the operation is either a `.move` or `.copy`,
-/// then the drop will proceed and `tabBarController:tab:acceptItemsFromDropSession:` is called. By default, the drop will be
-/// treated as a cancel operation if this is not implemented.
+/// Asks the delegate for a drop operation to determine if drag items can be dropped into the specified @c tab
+///
+/// If the operation is either a `.move` or `.copy`, then the drop will proceed and `tabBarController:tab:acceptItemsFromDropSession:`
+/// is called. By default, the drop will be treated as a cancel operation if this is not implemented.
 - (UIDropOperation)tabBarController:(UITabBarController *)tabBarController tab:(UITab *)tab operationForAcceptingItemsFromDropSession:(id<UIDropSession>)session API_AVAILABLE(ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
 
-/// Receive the drop from into the tab using the specified session. This is only called if the drop operation returned
-/// from `tabBarController:tab:operationForAcceptingItemsFromDropSession` is valid for a drop.
+/// Notifies the delegate to perform a drop into the specified @c tab from the specified session.
+///
+/// This is only called if the operation returned from `tabBarController:tab:operationForAcceptingItemsFromDropSession` is valid for a drop.
 - (void)tabBarController:(UITabBarController *)tabBarController tab:(UITab *)tab acceptItemsFromDropSession:(id<UIDropSession>)session API_AVAILABLE(ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// Notifies the delegate when the tab bar controller is about to begin editing.
@@ -130,7 +181,7 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Notifies the delegate when editing has ended and the specified tabs have had their `isHidden` values changed by the user.
 - (void)tabBarController:(UITabBarController *)tabBarController visibilityDidChangeForTabs:(NSArray<UITab *> *)tabs API_AVAILABLE(ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
 
-/// Notifies the deleagte that the display order for the specified tab has been changed by the user.
+/// Notifies the delegate that the display order for the specified tab has been changed by the user.
 - (void)tabBarController:(UITabBarController *)tabBarController displayOrderDidChangeForGroup:(UITabGroup *)group API_AVAILABLE(ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// Used with `UITabGroup.managingNavigationController`, this method allows the delegate to customize the displayed view controllers
@@ -141,7 +192,7 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 ///
 /// @param tabBarController The tab bar controller managed by the delegate.
 /// @param tab The tab for which the displayed view controllers is being requested for by its `managingTabGroup`. Each tab in the selection hierarchy will be called once.
-/// @param proposedViewControllers The proposed view controllers for the given tab. In general, the propoesd view controller is a single-item array of the tab's viewController. If other view controllers are pushed onto the navigation stack, they will be part of the last (leafmost) tab's `proposedViewControllers` such that they are preserved between updates.
+/// @param proposedViewControllers The proposed view controllers for the given tab. In general, the proposed view controller is a single-item array of the tab's viewController. If other view controllers are pushed onto the navigation stack, they will be part of the last (leaf-most) tab's `proposedViewControllers` such that they are preserved between updates.
 ///
 /// @return A list of view controllers represented by the tab in the navigation stack.
 - (NSArray<UIViewController *> *)tabBarController:(UITabBarController *)tabBarController

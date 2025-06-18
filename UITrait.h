@@ -123,6 +123,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(17.0), tvos(17.0), visionos(1.0)) API_UNAVAILABLE
 @interface UITraitSceneCaptureState : NSObject <UINSIntegerTraitDefinition> // UISceneCaptureState
 @end
 
+UIKIT_EXTERN NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos)
+@interface UITraitHDRHeadroomUsageLimit : NSObject <UINSIntegerTraitDefinition> // UIHDRHeadroomUsageLimit
+@end
+
 NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else

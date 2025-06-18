@@ -28,6 +28,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI
 /// Does support KVO and does send `UIControlEventValueChanged`.
 @property (nullable, nonatomic, strong) UIColor *selectedColor;
 
+/// If set to `NO` the eyedropper functionality is not supported for this color well.
+@property (nonatomic) BOOL supportsEyedropper API_AVAILABLE(ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+
+/// The maximum exposure to apply to a color when returned by the color well.
+@property (nonatomic) CGFloat maximumLinearExposure API_AVAILABLE(ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

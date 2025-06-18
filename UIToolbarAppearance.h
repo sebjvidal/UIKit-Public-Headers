@@ -17,8 +17,14 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// The appearance for plain-style bar button items
 @property (nonatomic, readwrite, copy) UIBarButtonItemAppearance *buttonAppearance;
 
+/// The appearance attributes for Prominent buttons.
+///
+/// Use this property to configure the appearance of bar button items that use `UIBarButtonItemStyleProminent`.
+/// If the navigation bar doesn't have any buttons using this style, this property has no effect.
+@property (nonatomic, readwrite, copy) UIBarButtonItemAppearance *prominentButtonAppearance API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+
 /// The appearance for done-style bar button items
-@property (nonatomic, readwrite, copy) UIBarButtonItemAppearance *doneButtonAppearance;
+@property (nonatomic, readwrite, copy) UIBarButtonItemAppearance *doneButtonAppearance API_DEPRECATED_WITH_REPLACEMENT("prominentButtonAppearance", ios(13.0, 26.0), tvos(13.0, 26.0)) API_UNAVAILABLE(watchos);
 
 @end
 

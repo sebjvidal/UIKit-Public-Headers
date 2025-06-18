@@ -73,7 +73,6 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property(nonatomic) BOOL allowsEditingTextAttributes API_AVAILABLE(ios(6.0)); // default is NO. allows editing text attributes with style operations and pasting rich text
 @property(nullable, nonatomic,copy) NSDictionary<NSAttributedStringKey,id> *typingAttributes API_AVAILABLE(ios(6.0)); // automatically resets when the selection changes
 
-
 // You can supply custom views which are displayed at the left or right
 // sides of the text field. Uses for such views could be to show an icon or
 // a button to operate on the text in the field in an application-defined
@@ -148,7 +147,19 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (void)textFieldDidEndEditing:(UITextField *)textField;             // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
 - (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(watchos); // if implemented, called in place of textFieldDidEndEditing:
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;   // return NO to not change text
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string API_DEPRECATED_WITH_REPLACEMENT("-textField:shouldChangeCharactersInRanges:replacementString:", ios(2.0, API_TO_BE_DEPRECATED));   // return NO to not change text
+/**
+ * @abstract Asks the delegate if the text at the specified `ranges` should be replaced with `string`.
+ *
+ * @discussion If this method returns YES then the text field will, at its own discretion, choose any one of the specified `ranges` of text and replace it with the specified `replacementString` before deleting the text at the other ranges.
+ *
+ * @param textField                       The text field asking the delegate
+ * @param ranges                             The ranges of the text that should be deleted before replacing
+ * @param replacementString     The replacement string
+ *
+ * @return Returns YES if the text at the `ranges` should be replaced.
+ */
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRanges:(NSArray<NSValue *> *)ranges replacementString:(NSString *)string API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0), watchos(26.0));
 
 - (void)textFieldDidChangeSelection:(UITextField *)textField API_AVAILABLE(ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);
 
@@ -164,7 +175,18 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
  *
  * @return Return a UIMenu describing the desired menu hierarchy. Return @c nil to present the default system menu.
  */
-- (nullable UIMenu *)textField:(UITextField *)textField editMenuForCharactersInRange:(NSRange)range suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
+- (nullable UIMenu *)textField:(UITextField *)textField editMenuForCharactersInRange:(NSRange)range suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions API_UNAVAILABLE(watchos) API_DEPRECATED_WITH_REPLACEMENT("-textField:editMenuForCharactersInRanges:suggestedActions", ios(16.0, API_TO_BE_DEPRECATED));
+
+/**
+ * @abstract Asks the delegate for the menu to be shown for the specified `ranges`.
+ *
+ * @param textField                   The text field requesting the menu.
+ * @param ranges                          The text ranges for which the menu is presented for.
+ * @param suggestedActions   The actions and commands that the system suggests.
+ *
+ * @return Return a UIMenu describing the desired menu hierarchy. Return @c nil to present the default system menu.
+ */
+- (nullable UIMenu *)textField:(UITextField *)textField editMenuForCharactersInRanges:(NSArray<NSValue *> *)ranges suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0), watchos(26.0));
 
 /**
  * @abstract Called when the text field is about to present the edit menu.

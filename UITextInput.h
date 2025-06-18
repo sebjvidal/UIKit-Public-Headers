@@ -271,8 +271,8 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 /// Inserts the user or system’s input suggestion into the document.
 - (void)insertInputSuggestion:(UIInputSuggestion *)inputSuggestion API_AVAILABLE(ios(18.4)) API_UNAVAILABLE(tvos, watchos, visionos, macCatalyst);
-@end
 
+@end
 //---------------------------------------------------------------------------------------------------
 
 /* UITextInput keys to style dictionaries are deprecated. Use NSAttributedString keys instead, such as NSFontAttribute, etc. */

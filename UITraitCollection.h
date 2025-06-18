@@ -13,6 +13,8 @@
 #import <UIKit/UIContentSizeCategory.h>
 #import <UIKit/UISceneDefinitions.h>
 #import <UIKit/UITraitListEnvironment.h>
+#import <UIKit/UITabAccessory.h>
+#import <UIKit/UISplitViewControllerLayoutEnvironment.h>
 
 /*! A trait collection encapsulates the system traits of an interface's environment. */
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
@@ -101,6 +103,19 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_SENDABLE
 /// The list environment represents whether a given trait collection is from a view in a UITableView or a UICollectionView list section.
 @property (nonatomic, readonly) UIListEnvironment listEnvironment API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
+/// Constructs a new trait collection with the given `tabAccessoryEnvironment`.
++ (UITraitCollection *)traitCollectionWithTabAccessoryEnvironment:(UITabAccessoryEnvironment)tabAccessoryEnvironment API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos, tvos, watchos);
+
+/// The tab accessory environment represents whether a given trait collection is from a view in a `UITabAccessory` content view.
+@property (nonatomic, readonly) UITabAccessoryEnvironment tabAccessoryEnvironment API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos, tvos, watchos);
+
+/// The split view controller layout environment represents whether an ancestor split view controller is expanded or collapsed.
+@property (nonatomic, readonly) UISplitViewControllerLayoutEnvironment splitViewControllerLayoutEnvironment API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// If HDR headroom should be used for the current UI configuration. Headroom usage is disabled in certain UI configurations, such as when all an application's windows are in the background.
+@property (nonatomic, readonly) UIHDRHeadroomUsageLimit hdrHeadroomUsageLimit API_AVAILABLE(ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
++ (UITraitCollection *)traitCollectionWithHDRHeadroomUsageLimit:(UIHDRHeadroomUsageLimit)hdrHeadroomUsageLimit API_AVAILABLE(ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
+
 @end
 
 
@@ -134,6 +149,8 @@ API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property (nonatomic) UISceneCaptureState sceneCaptureState API_AVAILABLE(ios(17.0), tvos(17.0), visionos(1.0));
 @property (nonatomic, copy) NSString *typesettingLanguage;
 @property (nonatomic) UIListEnvironment listEnvironment API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) UITabAccessoryEnvironment tabAccessoryEnvironment API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos, tvos, watchos);
+@property (nonatomic) UISplitViewControllerLayoutEnvironment splitViewControllerLayoutEnvironment API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 @end
 
 typedef void (^UITraitMutations)(id<UIMutableTraits> mutableTraits) API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);

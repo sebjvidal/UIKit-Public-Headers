@@ -360,15 +360,31 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions API_AVAILABLE(ios(6.0));
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions API_AVAILABLE(ios(3.0));
 
-- (void)applicationDidBecomeActive:(UIApplication *)application;
-- (void)applicationWillResignActive:(UIApplication *)application;
+/// Tells the delegate that the application has become active
+/// - Note: This method is not called if `UIScene` lifecycle has been adopted.
+- (void)applicationDidBecomeActive:(UIApplication *)application API_DEPRECATED("Use UIScene lifecycle and sceneDidBecomeActive(_:) from UISceneDelegate or the UIApplication.didBecomeActiveNotification instead.", ios(2.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// Tells the delegate that the application is about to become inactive
+/// - Note: This method is not called if `UIScene` lifecycle has been adopted.
+- (void)applicationWillResignActive:(UIApplication *)application API_DEPRECATED("Use UIScene lifecycle and sceneWillResignActive(_:) from UISceneDelegate or the UIApplication.willResignActiveNotification instead.", ios(2.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// Tells the delegate that the application is now in the background
+/// - Note: This method is not called if `UIScene` lifecycle has been adopted.
+- (void)applicationDidEnterBackground:(UIApplication *)application API_AVAILABLE(ios(4.0)) API_DEPRECATED("Use UIScene lifecycle and sceneDidEnterBackground(_:) from UISceneDelegate or the UIApplication.didEnterBackgroundNotification instead.", ios(4.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// Tells the delegate that the application is about to enter the foreground
+/// - Note: This method is not called if `UIScene` lifecycle has been adopted.
+- (void)applicationWillEnterForeground:(UIApplication *)application API_DEPRECATED("Use UIScene lifecycle and sceneWillEnterForeground(_:) from UISceneDelegate or the UIApplication.willEnterForegroundNotification instead.", ios(4.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url API_DEPRECATED_WITH_REPLACEMENT("application:openURL:options:", ios(2.0, 9.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(visionos, watchos);
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(nullable NSString *)sourceApplication annotation:(id)annotation API_DEPRECATED_WITH_REPLACEMENT("application:openURL:options:", ios(4.2, 9.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(visionos, watchos);
 
 
-typedef NSString * UIApplicationOpenURLOptionsKey NS_TYPED_ENUM API_UNAVAILABLE(watchos);
+typedef NSString * UIApplicationOpenURLOptionsKey NS_TYPED_ENUM API_DEPRECATED("Use UIScene lifecycle and equivalent properties on UISceneOpenURLOptions from a UIOpenURLContext in UIScene.ConnectionOptions.URLContexts instead.", ios(9.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options API_AVAILABLE(ios(9.0)); // no equiv. notification. return NO if the application can't open for some reason
+/// Return NO if the application can't open the `url` for some reason
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options API_DEPRECATED("Use UIScene lifecycle and scene(_:openURLContexts:) from UISceneDelegate instead.", ios(9.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application;      // try to clean up as much memory as possible. next step is to terminate app
 - (void)applicationWillTerminate:(UIApplication *)application;
@@ -413,9 +429,9 @@ typedef NSString * UIApplicationOpenURLOptionsKey NS_TYPED_ENUM API_UNAVAILABLE(
 /// Applications with the "fetch" background mode may be given opportunities to fetch updated content in the background or when it is convenient for the system. This method will be called in these situations. You should call the fetchCompletionHandler as soon as you're finished performing that operation, so the system can accurately estimate its power and data cost.
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler NS_SWIFT_DISABLE_ASYNC API_DEPRECATED("Use a BGAppRefreshTask in the BackgroundTasks framework instead", ios(7.0, 13.0), tvos(11.0, 13.0)) API_UNAVAILABLE(visionos, watchos);
 
-// Called when the user activates your application by selecting a shortcut on the home screen,
-// except when -application:willFinishLaunchingWithOptions: or -application:didFinishLaunchingWithOptions returns NO.
-- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void(^)(BOOL succeeded))completionHandler API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(tvos);
+/// Called when the user activates your application by selecting a shortcut on the home screen, except when `application(_:willFinishLaunchingWithOptions:)`
+/// or `application(_:didFinishLaunchingWithOptions:)` returns `false`.
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void(^)(BOOL succeeded))completionHandler API_DEPRECATED("Use UIScene lifecycle and windowScene(_:performActionFor:completionHandler:) from UIWindowSceneDelegate instead.", ios(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(tvos, watchos);
 
 // Applications using an NSURLSession with a background configuration may be launched or resumed in the background in order to handle the
 // completion of tasks in that session, or to handle authentication. This method will be called with the identifier of the session needing
@@ -431,9 +447,6 @@ typedef NSString * UIApplicationOpenURLOptionsKey NS_TYPED_ENUM API_UNAVAILABLE(
 - (nullable id)application:(UIApplication *)application handlerForIntent:(INIntent *)intent API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
 - (void)application:(UIApplication *)application handleIntent:(INIntent *)intent completionHandler:(void(^)(INIntentResponse *intentResponse))completionHandler API_DEPRECATED("Use application:handlerForIntent: instead", ios(11.0, 14.0), visionos(1.0, 1.0)) API_UNAVAILABLE(watchos);
-
-- (void)applicationDidEnterBackground:(UIApplication *)application API_AVAILABLE(ios(4.0));
-- (void)applicationWillEnterForeground:(UIApplication *)application API_AVAILABLE(ios(4.0));
 
 - (void)applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application API_AVAILABLE(ios(4.0));
 - (void)applicationProtectedDataDidBecomeAvailable:(UIApplication *)application    API_AVAILABLE(ios(4.0));
@@ -463,29 +476,30 @@ typedef NSString * UIApplicationExtensionPointIdentifier NS_TYPED_ENUM API_UNAVA
 
 #pragma mark -- User Activity Continuation protocol adopted by UIApplication delegate --
 
-// Called on the main thread as soon as the user indicates they want to continue an activity in your application. The NSUserActivity object may not be available instantly,
-// so use this as an opportunity to show the user that an activity will be continued shortly.
-// For each application:willContinueUserActivityWithType: invocation, you are guaranteed to get exactly one invocation of application:continueUserActivity: on success,
-// or application:didFailToContinueUserActivityWithType:error: if an error was encountered.
-- (BOOL)application:(UIApplication *)application willContinueUserActivityWithType:(NSString *)userActivityType API_AVAILABLE(ios(8.0));
+/// Called on the main thread as soon as the user indicates they want to continue an activity in your application. The ``NSUserActivity`` object may not be available
+/// instantly, so use this as an opportunity to show the user that an activity will be continued shortly.
+///
+/// For each `application(_:willContinueUserActivityWithType:)` invocation, you are guaranteed to get exactly one invocation of `application(_:continue:restorationHandler:)`
+/// on success, or `application(_:didFailToContinueUserActivityWithType:error:)` if an error was encountered.
+- (BOOL)application:(UIApplication *)application willContinueUserActivityWithType:(NSString *)userActivityType API_DEPRECATED("Use UIScene lifecycle and scene(_:willContinueUserActivityWithType:) from UISceneDelegate instead.", ios(8.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
-// Called on the main thread after the NSUserActivity object is available. Use the data you stored in the NSUserActivity object to re-create what the user was doing.
-// You can create/fetch any restorable objects associated with the user activity, and pass them to the restorationHandler. They will then have the UIResponder restoreUserActivityState: method
-// invoked with the user activity. Invoking the restorationHandler is optional. It may be copied and invoked later, and it will bounce to the main thread to complete its work and call
-// restoreUserActivityState on all objects.
-- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler API_AVAILABLE(ios(8.0));
+/// Called on the main thread after the ``NSUserActivity`` object is available. Use the data you stored in the ``NSUserActivity`` object to re-create what the user
+/// was doing. You can create/fetch any restorable objects associated with the user activity, and pass them to the `restorationHandler`. They will then have the
+/// `UIResponder` `restoreUserActivityState:` method invoked with the user activity. Invoking the `restorationHandler` is optional. It may be copied and
+/// invoked later, and it will bounce to the main thread to complete its work and call `restoreUserActivityState` on all objects.
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler API_DEPRECATED("Use UIScene lifecycle and scene(_:continue:) from UISceneDelegate instead.", ios(8.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
-// If the user activity cannot be fetched after willContinueUserActivityWithType is called, this will be called on the main thread when implemented.
-- (void)application:(UIApplication *)application didFailToContinueUserActivityWithType:(NSString *)userActivityType error:(NSError *)error API_AVAILABLE(ios(8.0));
+/// If the user activity cannot be fetched after `application(_:willContinueUserActivityWithType:)` is called, this will be called on the main thread when implemented.
+- (void)application:(UIApplication *)application didFailToContinueUserActivityWithType:(NSString *)userActivityType error:(NSError *)error API_DEPRECATED("Use UIScene lifecycle and scene(_:didFailToContinueUserActivityWithType:error:) from UISceneDelegate instead.", ios(8.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
-// This is called on the main thread when a user activity managed by UIKit has been updated. You can use this as a last chance to add additional data to the userActivity.
-- (void)application:(UIApplication *)application didUpdateUserActivity:(NSUserActivity *)userActivity API_AVAILABLE(ios(8.0));
+/// This is called on the main thread when a user activity managed by UIKit has been updated. You can use this as a last chance to add additional data to the userActivity.
+- (void)application:(UIApplication *)application didUpdateUserActivity:(NSUserActivity *)userActivity API_DEPRECATED("Use UIScene lifecycle and scene(_:didUpdate) from UISceneDelegate instead.", ios(8.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
 #pragma mark -- CloudKit Sharing Invitation Handling --
-// This will be called on the main thread after the user indicates they want to accept a CloudKit sharing invitation in your application.
-// You should use the CKShareMetadata object's shareURL and containerIdentifier to schedule a CKAcceptSharesOperation, then start using
-// the resulting CKShare and its associated record(s), which will appear in the CKContainer's shared database in a zone matching that of the record's owner.
-- (void)application:(UIApplication *)application userDidAcceptCloudKitShareWithMetadata:(CKShareMetadata *)cloudKitShareMetadata API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(watchos);
+/// This will be called on the main thread after the user indicates they want to accept a CloudKit sharing invitation in your application.
+/// You should use the `CKShareMetadata` object's `shareURL` and `containerIdentifier` to schedule a `CKAcceptSharesOperation`, then start using
+/// the resulting `CKShare` and its associated record(s), which will appear in the `CKContainer`'s shared database in a zone matching that of the record's owner.
+- (void)application:(UIApplication *)application userDidAcceptCloudKitShareWithMetadata:(CKShareMetadata *)cloudKitShareMetadata API_DEPRECATED("Use UIScene lifecycle and windowScene(_:userDidAcceptCloudKitShareWith:) from UIWindowSceneDelegate instead.", ios(10.0, 26.0), tvos(10.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
 #pragma mark -- UIScene Support --
 // Called when the UIKit is about to create & vend a new UIScene instance to the application.
@@ -553,22 +567,48 @@ UIKIT_EXTERN NSNotificationName const UIApplicationBackgroundRefreshStatusDidCha
 UIKIT_EXTERN NSNotificationName const UIApplicationProtectedDataWillBecomeUnavailable    API_AVAILABLE(ios(4.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 UIKIT_EXTERN NSNotificationName const UIApplicationProtectedDataDidBecomeAvailable       API_AVAILABLE(ios(4.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsURLKey API_UNAVAILABLE(watchos)                   NS_SWIFT_NAME(url) API_AVAILABLE(ios(3.0)); // userInfo contains NSURL with launch URL
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsSourceApplicationKey API_UNAVAILABLE(watchos)     NS_SWIFT_NAME(sourceApplication) API_AVAILABLE(ios(3.0)); // userInfo contains NSString with bundle ID of the originating application; non-nil if the originating application and this application share the same team identifier
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsRemoteNotificationKey API_UNAVAILABLE(watchos)    NS_SWIFT_NAME(remoteNotification) API_AVAILABLE(ios(3.0)) API_UNAVAILABLE(tvos); // userInfo contains NSDictionary with payload
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsLocalNotificationKey API_UNAVAILABLE(watchos)     NS_SWIFT_NAME(localNotification) API_DEPRECATED("Use UserNotifications Framework's -[UNUserNotificationCenterDelegate didReceiveNotificationResponse:withCompletionHandler:]", ios(4.0, 10.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos); // userInfo contains a UILocalNotification
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsAnnotationKey API_UNAVAILABLE(watchos)            NS_SWIFT_NAME(annotation) API_DEPRECATED("This dictionary key is no longer used.", ios(3.2, 16.0)) API_UNAVAILABLE(visionos); // userInfo contains object with annotation property list
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsLocationKey API_UNAVAILABLE(watchos)              NS_SWIFT_NAME(location) API_AVAILABLE(ios(4.0)); // app was launched in response to a CoreLocation event.
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsNewsstandDownloadsKey API_UNAVAILABLE(watchos)    NS_SWIFT_NAME(newsstandDownloads) API_AVAILABLE(ios(5.0)) API_UNAVAILABLE(tvos); // userInfo contains an NSArray of NKAssetDownload identifiers
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsBluetoothCentralsKey API_UNAVAILABLE(watchos)     NS_SWIFT_NAME(bluetoothCentrals) API_AVAILABLE(ios(7.0)); // userInfo contains an NSArray of CBCentralManager restore identifiers
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsBluetoothPeripheralsKey API_UNAVAILABLE(watchos)  NS_SWIFT_NAME(bluetoothPeripherals) API_AVAILABLE(ios(7.0)); // userInfo contains an NSArray of CBPeripheralManager restore identifiers
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsShortcutItemKey API_UNAVAILABLE(watchos)          NS_SWIFT_NAME(shortcutItem) API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(tvos); // userInfo contains the UIApplicationShortcutItem used to launch the app.
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsEventAttributionKey      NS_SWIFT_NAME(eventAttribution) API_AVAILABLE(ios(14.5)) API_UNAVAILABLE(watchos, tvos); // userInfo contains a UIEventAttribution to go along with a URL open on launch
+/// UserInfo contains a ``NSURL`` with launch URL to open
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsURLKey NS_SWIFT_NAME(url) API_DEPRECATED("Use UIScene lifecycle and UIScene.ConnectionOptions.URLContexts instead.", ios(3.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
-// Key in options dict passed to application:[will | did]FinishLaunchingWithOptions and info for UIApplicationDidFinishLaunchingNotification
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsUserActivityDictionaryKey API_UNAVAILABLE(watchos)    NS_SWIFT_NAME(userActivityDictionary) API_AVAILABLE(ios(8.0)); // Sub-Dictionary present in launch options when user activity is present
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsUserActivityTypeKey API_UNAVAILABLE(watchos)          NS_SWIFT_NAME(userActivityType) API_AVAILABLE(ios(8.0)); // Key in user activity dictionary for the activity type
-UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsCloudKitShareMetadataKey API_UNAVAILABLE(watchos) NS_SWIFT_NAME(cloudKitShareMetadata) API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(tvos); // The presence of this key indicates that the app was launched in order to handle a CloudKit sharing invitation. The value of this key is a CKShareMetadata object.
+/// UserInfo contains a ``NSString`` with the bundle ID of the originating application; non-nil if the originating application and this application share the same team identifier
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsSourceApplicationKey NS_SWIFT_NAME(sourceApplication) API_DEPRECATED("Use UIScene lifecycle and UIScene.ConnectionOptions.sourceApplication instead.", ios(3.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// UserInfo contains a ``NSDictionary`` notification payload with property-list objects plus ``NSNull``
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsRemoteNotificationKey NS_SWIFT_NAME(remoteNotification) API_DEPRECATED("Continue using UIApplicationDelegate's application(_:didReceiveRemoteNotification:fetchCompletionHandler:) to process silent remote notifications after scene connection.", ios(3.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(tvos, watchos);
+
+/// UserInfo contains a ``UILocalNotification``
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsLocalNotificationKey NS_SWIFT_NAME(localNotification) API_DEPRECATED("Use UserNotifications Framework's -[UNUserNotificationCenterDelegate didReceiveNotificationResponse:withCompletionHandler:]", ios(4.0, 10.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) ;
+
+/// UserInfo contains a property list annotation object
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsAnnotationKey NS_SWIFT_NAME(annotation) API_DEPRECATED("This dictionary key is no longer used.", ios(3.2, 16.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos);
+
+/// The app was launched in response to a CoreLocation event
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsLocationKey NS_SWIFT_NAME(location) API_DEPRECATED("Adopt CLLocationUpdate or CLMonitor, or use CLLocationManagerDelegate from CoreLocation to handle expected location events after scene connection.", ios(4.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// UserInfo contains an ``NSArray`` of ``NKAssetDownload`` identifiers
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsNewsstandDownloadsKey NS_SWIFT_NAME(newsstandDownloads) API_DEPRECATED("This dictionary key is no longer used.", ios(5.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
+
+/// UserInfo contains an ``NSArray`` of ``CBCentralManager`` restore identifiers
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsBluetoothCentralsKey NS_SWIFT_NAME(bluetoothCentrals) API_DEPRECATED("Store restoration identifiers and reinstantiate central managers with those identifiers on app launch to resume previous functionality.", ios(7.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// UserInfo contains an ``NSArray`` of ``CBPeripheralManager`` restore identifiers
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsBluetoothPeripheralsKey NS_SWIFT_NAME(bluetoothPeripherals) API_DEPRECATED("Store restoration identifiers and reinstantiate peripheral managers with those identifiers on app launch to resume previous functionality.", ios(7.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// UserInfo contains the ``UIApplicationShortcutItem`` used to launch the app
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsShortcutItemKey NS_SWIFT_NAME(shortcutItem) API_DEPRECATED("Use UIScene lifecycle and UIScene.ConnectionOptions.shortcutItem instead.", ios(3.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(tvos, watchos);
+
+/// UserInfo contains a ``UIEventAttribution`` to go along with a URL open on launch
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsEventAttributionKey NS_SWIFT_NAME(eventAttribution) API_DEPRECATED("Use UIScene lifecycle and UIScene.ConnectionOptions.eventAttribution instead.", ios(14.5, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos, tvos);
+
+/// Key in options dictionary passed to `application(_:willFinishLaunchingWithOptions:)` and `application(_:didFinishLaunchingWithOptions:)`
+/// and info for `UIApplication.didFinishLaunchingNotification`. Sub-Dictionary present in launch options when user activity is present.
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsUserActivityDictionaryKey NS_SWIFT_NAME(userActivityDictionary) API_DEPRECATED("Use UIScene lifecycle and UIScene.ConnectionOptions.userActivities instead.", ios(8.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// Key in user activity dictionary for the activity type
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsUserActivityTypeKey NS_SWIFT_NAME(userActivityType) API_DEPRECATED("Use UIScene lifecycle and UIScene.ConnectionOptions.handoffUserActivityType instead.", ios(8.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// The presence of this key indicates that the app was launched in order to handle a CloudKit sharing invitation. The value of this key is a ``CKShareMetadata`` object.
+UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsCloudKitShareMetadataKey NS_SWIFT_NAME(cloudKitShareMetadata) API_DEPRECATED("Use UIScene lifecycle and UIScene.ConnectionOptions.cloudKitShareMetadata instead.", ios(10.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(tvos, watchos);
 
 UIKIT_EXTERN NSString *const UIApplicationOpenSettingsURLString API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 
@@ -581,12 +621,19 @@ UIKIT_EXTERN NSString *const UIApplicationOpenNotificationSettingsURLString API_
 UIKIT_EXTERN NSString *const UIApplicationOpenNotificationSettingsURLString API_AVAILABLE(ios(15.4)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 #endif
 
+/// An options key for `application(_:open:options:)`. The value is an ``NSString`` containing the bundle ID of the originating application; non-nil if the originating
+/// application and this application share the same team identifier.
+UIKIT_EXTERN UIApplicationOpenURLOptionsKey const UIApplicationOpenURLOptionsSourceApplicationKey NS_SWIFT_NAME(sourceApplication) API_DEPRECATED("Use UIScene lifecycle and UISceneOpenURLOptions.sourceApplication from a UIOpenURLContext in UIScene.ConnectionOptions.URLContexts instead.", ios(9.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
-// Keys for application:openURL:options:
-UIKIT_EXTERN UIApplicationOpenURLOptionsKey const UIApplicationOpenURLOptionsSourceApplicationKey API_UNAVAILABLE(watchos) NS_SWIFT_NAME(sourceApplication) API_AVAILABLE(ios(9.0));   // value is an NSString containing the bundle ID of the originating application; non-nil if the originating application and this application share the same team identifier
-UIKIT_EXTERN UIApplicationOpenURLOptionsKey const UIApplicationOpenURLOptionsAnnotationKey API_UNAVAILABLE(watchos) NS_SWIFT_NAME(annotation) API_AVAILABLE(ios(9.0));   // value is a property-list typed object corresponding to what the originating application passed in UIDocumentInteractionController's annotation property
-UIKIT_EXTERN UIApplicationOpenURLOptionsKey const UIApplicationOpenURLOptionsOpenInPlaceKey API_UNAVAILABLE(watchos) NS_SWIFT_NAME(openInPlace) API_AVAILABLE(ios(9.0));   // value is a bool NSNumber. Copy the file before use if this value is NO, or is not present.
-UIKIT_EXTERN UIApplicationOpenURLOptionsKey const UIApplicationOpenURLOptionsEventAttributionKey NS_SWIFT_NAME(eventAttribution) API_AVAILABLE(ios(14.5)) API_UNAVAILABLE(watchos, tvos); // value is a UIEventAttribution to go along with the URL to open
+/// An options key for `application(_:open:options:)`. The value is a property-list typed object corresponding to what the originating application passed in
+/// `UIDocumentInteractionController`'s annotation property.
+UIKIT_EXTERN UIApplicationOpenURLOptionsKey const UIApplicationOpenURLOptionsAnnotationKey NS_SWIFT_NAME(annotation) API_DEPRECATED("Use UIScene lifecycle and UISceneOpenURLOptions.annotation from a UIOpenURLContext in UIScene.ConnectionOptions.URLContexts instead.", ios(9.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos) ;
+
+/// An options key for `application(_:open:options:)`. The value is a bool `NSNumber`. Copy the file before use if this value is NO, or is not present.
+UIKIT_EXTERN UIApplicationOpenURLOptionsKey const UIApplicationOpenURLOptionsOpenInPlaceKey NS_SWIFT_NAME(openInPlace) API_DEPRECATED("Use UIScene lifecycle and UISceneOpenURLOptions.openInPlace from a UIOpenURLContext in UIScene.ConnectionOptions.URLContexts instead.", ios(9.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+
+/// An options key for `application(_:open:options:)`. The value is a `UIEventAttribution` to go along with the URL to open.
+UIKIT_EXTERN UIApplicationOpenURLOptionsKey const UIApplicationOpenURLOptionsEventAttributionKey NS_SWIFT_NAME(eventAttribution) API_DEPRECATED("Use UIScene lifecycle and UISceneOpenURLOptions.eventAttribution from a UIOpenURLContext in UIScene.ConnectionOptions.URLContexts instead.", ios(14.5, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos, tvos);
 
 // This notification is posted after the user takes a screenshot (for example by pressing both the home and lock screen buttons)
 UIKIT_EXTERN NSNotificationName const UIApplicationUserDidTakeScreenshotNotification API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;

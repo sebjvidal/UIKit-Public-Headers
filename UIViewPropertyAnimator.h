@@ -38,6 +38,16 @@ UIKIT_EXTERN API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Defaults to NO. Provides the ability for an animator to pause on completion instead of transitioning to the .inactive state.
 @property(nonatomic) BOOL pausesOnCompletion API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos);
 
+/// Flush all pending updates (including traits, properties, and layout) whenever the animation context changes.
+/// This includes flushing updates:
+///  - Before entering an animation scope, for invalidations that happened previously without animation.
+///  - Before entering a nested animation scope, for invalidations that happened in the outer animation scope.
+///  - Before exiting any animation scope, for invalidations that happened in that animation scope.
+///  - Before disabling animations, for invalidations that happened in the animation scope with animations enabled.
+///  - Before re-enabling animations, for invalidations that happened in the scope with animations disabled.
+///  This behavior implicitly applies to any nested animation scopes, even if they don't explicitly specify this.
+@property(nonatomic) BOOL flushUpdates API_AVAILABLE(ios(26.0), macos(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
 - (instancetype)initWithDuration:(NSTimeInterval)duration timingParameters:(id <UITimingCurveProvider>)parameters NS_DESIGNATED_INITIALIZER;
 
 /// All convenience initializers return an animator which is not running.

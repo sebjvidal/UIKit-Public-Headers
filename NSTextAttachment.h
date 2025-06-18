@@ -5,7 +5,7 @@
 //  NSTextAttachment.h
 //  UIKit
 //
-//  Copyright (c) 2011-2024, Apple Inc. All rights reserved.
+//  Copyright (c) 2011-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSAttributedString.h>
@@ -119,6 +119,7 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE
 // Invoked from -[NSTextAttachment attachmentBoundsForAttributes:location:textContainer:proposedLineFragment:position:]
 - (CGRect)attachmentBoundsForAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes location:(id <NSTextLocation>)location textContainer:(nullable NSTextContainer *)textContainer proposedLineFragment:(CGRect)proposedLineFragment position:(CGPoint)position;
 @end
+
 
 // This protocol defines the interface to attachment objects from NSLayoutManager
 API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)

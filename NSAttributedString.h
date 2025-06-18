@@ -8,7 +8,7 @@
 //  NSAttributedString.h
 //  UIKit
 //
-//  Copyright (c) 2011-2024, Apple Inc. All rights reserved.
+//  Copyright (c) 2011-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSAttributedString.h>

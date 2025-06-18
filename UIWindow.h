@@ -22,7 +22,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @interface UIWindow : UIView
 
 // instantiate a UIWindow already associated with a given UIWindowScene instance, with matching frame & interface orientations.
-- (instancetype)initWithWindowScene:(UIWindowScene *)windowScene API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
+- (instancetype)initWithWindowScene:(UIWindowScene *)windowScene NS_DESIGNATED_INITIALIZER API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
+
+- (instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER API_DEPRECATED("Use init(windowScene:) instead.", ios(2.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
+- (instancetype)init API_DEPRECATED("Use init(windowScene:) instead.", ios(2.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);
 
 // If nil, window will not appear on any screen.
 // changing the UIWindowScene may be an expensive operation and should not be done in performance-sensitive code

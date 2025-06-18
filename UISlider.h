@@ -9,9 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIControl.h>
+#import <UIKit/UISliderTrackConfiguration.h>
 #import <UIKit/UIKitDefines.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
+
+typedef NS_ENUM(NSInteger, UISliderStyle) {
+    UISliderStyleDefault,     // normal slider with thumb
+    UISliderStyleThumbless,   // without a thumb, typically for media playback
+} API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos)
+NS_SWIFT_NAME(UISlider.Style);
 
 @class UIImageView, UIImage;
 
@@ -26,6 +33,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_
 @property(nullable, nonatomic,strong) UIImage *maximumValueImage;          // default is nil. image that appears to right of control (e.g. speaker max)
 
 @property(nonatomic,getter=isContinuous) BOOL continuous;        // if set, value change events are generated any time the value changes due to dragging. default = YES
+
+// Defines how the slider track behaves
+@property(nonatomic, copy, nullable) UISliderTrackConfiguration *trackConfiguration API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos) NS_REFINED_FOR_SWIFT;
+
+// Allows adjusting the slider styling
+@property (nonatomic) UISliderStyle sliderStyle API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
 
 @property(nullable, nonatomic,strong) UIColor *minimumTrackTintColor API_AVAILABLE(ios(5.0)) UI_APPEARANCE_SELECTOR;
 @property(nullable, nonatomic,strong) UIColor *maximumTrackTintColor API_AVAILABLE(ios(5.0)) UI_APPEARANCE_SELECTOR;

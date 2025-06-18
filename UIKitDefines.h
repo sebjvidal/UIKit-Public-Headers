@@ -7,14 +7,7 @@
 //
 
 #import <Availability.h>
-
-#ifdef __cplusplus
-#define UIKIT_EXTERN		extern "C" __attribute__((visibility ("default")))
-#else
-#define UIKIT_EXTERN	        extern __attribute__((visibility ("default")))
-#endif
-
-#define UIKIT_STATIC_INLINE	static inline
+#import <UIUtilities/UIDefines.h>
 
 #define UIKIT_AVAILABLE_IOS_ONLY(vers)      __IOS_AVAILABLE(vers) __WATCHOS_UNAVAILABLE __TVOS_UNAVAILABLE
 #define UIKIT_AVAILABLE_WATCHOS_ONLY(vers)  __IOS_UNAVAILABLE __WATCHOS_AVAILABLE(vers) __TVOS_UNAVAILABLE
@@ -34,16 +27,6 @@
 #define UIKIT_SWIFT_FORWARD_DECLARE(DECLARATION)
 #endif
 
-#if !defined(UIKIT_EXTERN_C_BEGIN) && !defined(UIKIT_EXTERN_C_END)
-    #ifdef __cplusplus
-        #define UIKIT_EXTERN_C_BEGIN extern "C" {
-        #define UIKIT_EXTERN_C_END }
-    #else
-        #define UIKIT_EXTERN_C_BEGIN
-        #define UIKIT_EXTERN_C_END
-    #endif
-#endif
-
 #if !defined(UIKIT_HAS_UIFOUNDATION_SYMBOLS)
     #if defined(UIKIT_BUILDING_UIKITMACHELPER) || __has_feature(modules)
         #define UIKIT_HAS_UIFOUNDATION_SYMBOLS TARGET_OS_IPHONE
@@ -51,6 +34,14 @@
         #define UIKIT_HAS_UIFOUNDATION_SYMBOLS 1
     #endif // defined(UIKIT_BUILDING_UIKITMACHELPER)
 #endif // !defined(UIKIT_HAS_UIFOUNDATION_SYMBOLS)
+
+#ifndef UIKIT_FINAL
+    #if defined(__has_attribute) && __has_attribute(objc_subclassing_restricted)
+        #define UIKIT_FINAL __attribute__((objc_subclassing_restricted))
+    #else
+        #define UIKIT_FINAL
+    #endif
+#endif
 
 #else
 #import <UIKitCore/UIKitDefines.h>

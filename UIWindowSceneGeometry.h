@@ -34,7 +34,15 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos)
 + (instancetype)new NS_UNAVAILABLE;
 
 @property (nonatomic, readonly) CGRect systemFrame API_AVAILABLE(macCatalyst(16.0)) API_UNAVAILABLE(ios, watchos, tvos, visionos);
+
+/// The coordinate space of the scene
+@property (nonatomic, readonly) id<UICoordinateSpace> coordinateSpace API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// The interface orientation of the scene
 @property (nonatomic, readonly) UIInterfaceOrientation interfaceOrientation API_UNAVAILABLE(tvos);
+
+/// If the scene's interface orientation is locked and preventing changes. To express a preference for this value, override  `UIViewController`'s `prefersInterfaceOrientationLocked`.
+@property (nonatomic, getter=isInterfaceOrientationLocked, readonly) BOOL interfaceOrientationLocked API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
 
 /// The current app specified minimumSize. A value of 0,0 is returned if a minimum is not set by the application
 @property (nonatomic, readonly) CGSize minimumSize API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, tvos, macos, watchos);
@@ -44,6 +52,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos)
 
 /// The current app specified resizingRestriction. Default value UIWindowSceneResizingRestrictionsUnspecified
 @property (nonatomic, readonly) UIWindowSceneResizingRestrictions resizingRestrictions API_AVAILABLE(visionos(1.0)) API_UNAVAILABLE(ios, tvos, macos, watchos);
+
+/// Returns true when the scene is being resized interactively, otherwise false.
+@property (nonatomic, readonly, getter=isInteractivelyResizing) BOOL interactivelyResizing API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0));
 
 @end
 

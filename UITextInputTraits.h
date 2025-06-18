@@ -209,6 +209,9 @@ typedef NS_OPTIONS(NSUInteger, UIWritingToolsResultOptions) {
     
     /// implies `RichText`,  and Writing Tools may provide attributes for tabular layout
     UIWritingToolsResultTable = 1 << 3,
+    
+    /// implies `RichText`, `List`, and `Table`, and Writing Tools may provide text with presentation intent attributes. Writing Tools will use `NSPresentationIntent` instead of `NSTextList` and `NSTextTable` to represent lists and tables.
+    UIWritingToolsResultPresentationIntent API_AVAILABLE(ios(26.0), visionos(26.0)) = 1 << 4,
 } API_AVAILABLE(ios(18.0), visionos(2.4)) API_UNAVAILABLE(tvos, watchos);
 
 typedef NSString * UITextContentType NS_TYPED_ENUM API_UNAVAILABLE(watchos);

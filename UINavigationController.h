@@ -80,7 +80,15 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property(null_resettable,nonatomic,readonly) UIToolbar *toolbar API_AVAILABLE(ios(3.0)) API_UNAVAILABLE(tvos); // For use when presenting an action sheet.
 
 @property(nullable, nonatomic, weak) id<UINavigationControllerDelegate> delegate;
+
+/// The interactive pop gesture recognizes on the leading screen edge and initiates an interactive pop.
+/// This property should only be used to set up failure requirements with it.
 @property(nullable, nonatomic, readonly) UIGestureRecognizer *interactivePopGestureRecognizer API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(tvos);
+
+/// The interactive content pop gesture recognizes on the entire content area of the navigation controller
+/// in cases that are not covered by the interactive pop gesture recognizer and initiates an interactive pop.
+/// This property should only be used to set up failure requirements with it.
+@property(nullable, nonatomic, readonly) UIGestureRecognizer *interactiveContentPopGestureRecognizer API_AVAILABLE(ios(26.0), macCatalyst(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
 
 - (void)showViewController:(UIViewController *)vc sender:(nullable id)sender API_AVAILABLE(ios(8.0)); // Interpreted as pushViewController:animated:
 

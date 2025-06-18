@@ -39,7 +39,20 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (void)textViewDidBeginEditing:(UITextView *)textView;
 - (void)textViewDidEndEditing:(UITextView *)textView;
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text API_DEPRECATED_WITH_REPLACEMENT("-textView:shouldChangeTextInRanges:replacementText:", ios(2.0, API_TO_BE_DEPRECATED));
+/**
+ * @abstract Asks the delegate if the text at the specified `ranges` should be replaced with `text`.
+ *
+ * @discussion If this method returns YES then the text view will, at its own discretion, choose any one of the specified `ranges` of text and replace it with the specified `replacementText` before deleting the text at the other ranges.
+ *
+ * @param textView                  The text view asking the delegate
+ * @param ranges                       The ranges of the text that should be deleted before replacing
+ * @param replacementText   The replacement text
+ *
+ * @return Returns true if the text at the `ranges` should be replaced.
+ */
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRanges:(NSArray<NSValue *> *)ranges replacementText:(NSString *)text API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0), watchos(26.0));
+
 - (void)textViewDidChange:(UITextView *)textView;
 
 - (void)textViewDidChangeSelection:(UITextView *)textView;
@@ -53,7 +66,18 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
  *
  * @return Return a UIMenu describing the desired menu hierarchy. Return @c nil to present the default system menu.
  */
-- (nullable UIMenu *)textView:(UITextView *)textView editMenuForTextInRange:(NSRange)range suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
+- (nullable UIMenu *)textView:(UITextView *)textView editMenuForTextInRange:(NSRange)range suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions API_UNAVAILABLE(watchos) API_DEPRECATED_WITH_REPLACEMENT("-textView:editMenuForTextInRanges:suggestedActions:", ios(16.0, API_TO_BE_DEPRECATED));
+
+/**
+ * @abstract Asks the delegate for the menu to be shown for the specified text ranges.
+ *
+ * @param textView                     The text view requesting the menu.
+ * @param ranges                          The text ranges for which the menu is presented for.
+ * @param suggestedActions   The actions and commands that the system suggests.
+ *
+ * @return Return a UIMenu describing the desired menu hierarchy. Return @c nil to present the default system menu.
+ */
+- (nullable UIMenu *)textView:(UITextView *)textView editMenuForTextInRanges:(NSArray<NSValue *> *)ranges suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0), watchos(26.0));
 
 /**
  * @abstract Called when the text view is about to present the edit menu.
@@ -148,28 +172,28 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
  *
  * @param viewController  The text formatting controller that is being presented.
  */
-- (void)textView:(UITextView *)textView willBeginFormattingWithViewController:(UITextFormattingViewController *)viewController API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+- (void)textView:(UITextView *)textView willBeginFormattingWithViewController:(UITextFormattingViewController *)viewController API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
 /**
  * @abstract Informs the delegate that text formatting controller has been presented.
  *
  * @param viewController  The text formatting controller that is being presented.
  */
-- (void)textView:(UITextView *)textView didBeginFormattingWithViewController:(UITextFormattingViewController *)viewController API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+- (void)textView:(UITextView *)textView didBeginFormattingWithViewController:(UITextFormattingViewController *)viewController API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
 /**
  * @abstract Informs the delegate that text formatting controller is about to be dismissed.
  *
  * @param viewController  The text formatting controller that is being presented.
  */
-- (void)textView:(UITextView *)textView willEndFormattingWithViewController:(UITextFormattingViewController *)viewController API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+- (void)textView:(UITextView *)textView willEndFormattingWithViewController:(UITextFormattingViewController *)viewController API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
 /**
  * @abstract Informs the delegate that text formatting controller has been dismissed.
  *
  * @param viewController  The text formatting controller that is being presented.
  */
-- (void)textView:(UITextView *)textView didEndFormattingWithViewController:(UITextFormattingViewController *)viewController API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+- (void)textView:(UITextView *)textView didEndFormattingWithViewController:(UITextFormattingViewController *)viewController API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
 /// Tells the delegate when the keyboard delivers an input suggestion.
 ///
@@ -198,7 +222,13 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property(nullable,nonatomic,strong) UIFont *font;
 @property(nullable,nonatomic,strong) UIColor *textColor;
 @property(nonatomic) NSTextAlignment textAlignment;    // default is NSLeftTextAlignment
-@property(nonatomic) NSRange selectedRange;
+/// A union of all the `selectedRanges`.
+@property(nonatomic) NSRange selectedRange API_DEPRECATED_WITH_REPLACEMENT("selectedRanges", ios(2.0, API_TO_BE_DEPRECATED));
+/**
+ * The `NSRange`s of the selection. In most cases, there will only be a single selected range. For cases where bidirectional text is selected, there may be multiple discontiguous ranges. These selected ranges will always be in the normal form, which means they are sorted in ascending order and there are no overlaps. The selected ranges will always be converted to its normal form when they are set. Empty array corresponds to no selection.
+ */
+@property(nonatomic, copy, nonnull) NSArray<NSValue *> *selectedRanges API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0), watchos(26.0)) NS_REFINED_FOR_SWIFT;
+
 @property(nonatomic,getter=isEditable) BOOL editable API_UNAVAILABLE(tvos);
 // Toggle selectability, which controls the ability of the user to select content and interact with URLs & attachments. On tvOS this also makes the text view focusable.
 // By default, text item interaction follows selectable if the text item methods on UITextViewDelegate are not implemented; otherwise, they follow the result of the specified delegate methods.
@@ -288,7 +318,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// when its presentation is requested.
 /// 
 /// It has a non-nil default value.
-@property(nonatomic, nullable, readwrite, copy) UITextFormattingViewControllerConfiguration *textFormattingConfiguration API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(visionos, macCatalyst) API_UNAVAILABLE(watchos, tvos);
+@property(nonatomic, nullable, readwrite, copy) UITextFormattingViewControllerConfiguration *textFormattingConfiguration API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
 
 @end
 

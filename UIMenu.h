@@ -153,8 +153,11 @@ UIKIT_EXTERN const UIMenuIdentifier UIMenuQuit API_AVAILABLE(ios(13.0)) API_UNAV
 
 /// -- Identifiers for File submenus
 
+/// New item menu
+UIKIT_EXTERN const UIMenuIdentifier UIMenuNewItem API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+
 /// New scene menu
-UIKIT_EXTERN const UIMenuIdentifier UIMenuNewScene API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN const UIMenuIdentifier UIMenuNewScene API_DEPRECATED_WITH_REPLACEMENT("UIMenuNewItem", ios(13.0, 26.0)) API_UNAVAILABLE(watchos);
 
 /// Open menu
 UIKIT_EXTERN const UIMenuIdentifier UIMenuOpen API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
@@ -179,8 +182,11 @@ UIKIT_EXTERN const UIMenuIdentifier UIMenuUndoRedo API_AVAILABLE(ios(13.0)) API_
 /// Cut, Copy, Paste, Delete, Select, Select All menu
 UIKIT_EXTERN const UIMenuIdentifier UIMenuStandardEdit API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
 
-/// Find menu; empty in the default menubar configuration. Applications should use this when adding their own Find-related menu items.
+/// Find menu, containing Find Panel items and other finding operations like Use Selection for Find
 UIKIT_EXTERN const UIMenuIdentifier UIMenuFind API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
+
+/// Find panel menu (Find, Find and Replace, Find Next, Find Previous)
+UIKIT_EXTERN const UIMenuIdentifier UIMenuFindPanel API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
 
 /// Replace..., Transliterate Chinese menu
 UIKIT_EXTERN const UIMenuIdentifier UIMenuReplace API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);

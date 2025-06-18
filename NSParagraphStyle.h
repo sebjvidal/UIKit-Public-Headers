@@ -8,7 +8,7 @@
 //  NSParagraphStyle.h
 //  UIKit
 //
-//  Copyright (c) 2011-2024, Apple Inc. All rights reserved.
+//  Copyright (c) 2011-2025, Apple Inc. All rights reserved.
 //
 // NSParagraphStyle and NSMutableParagraphStyle hold paragraph style information
 // NSTextTab holds information about a single tab stop

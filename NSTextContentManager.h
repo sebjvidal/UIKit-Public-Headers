@@ -3,7 +3,7 @@
 //  NSTextContentManager.h
 //  Text Kit
 //
-//  Copyright (c) 2018-2024, Apple Inc. All rights reserved.
+//  Copyright (c) 2018-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSArray.h>
@@ -124,6 +124,9 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE
 @interface NSTextContentStorage : NSTextContentManager <NSTextStorageObserving>
 #pragma mark Basic properties
 @property (weak, nullable) id <NSTextContentStorageDelegate> delegate;
+
+// When YES, NSTextContentStorage assumes the paragraph with NSTextList includes the text list marker string. Utilizes NSTextList.includesTextListMarkers as the default value.
+@property BOOL includesTextListMarkers API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 
 #pragma mark Document contents
 // The document contents. KVO-compliant

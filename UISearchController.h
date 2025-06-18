@@ -79,7 +79,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
  On tvOS, default is NO when contained in UISearchContainerViewController, YES otherwise.
  */
 @property (nonatomic, assign) BOOL obscuresBackgroundDuringPresentation API_AVAILABLE(ios(9.1));
-@property (nonatomic, assign) BOOL hidesNavigationBarDuringPresentation;     // default is YES
+
+/// Default is `YES` for apps linked before iOS 19.0, other than on MacCatalyst, where the default is `NO`.
+/// On iOS 19.0 and visionOS 3.0 for apps linked on iOS 19.0 and later, the value is determined by context unless directly set through the API. The default remains `NO` on MacCatalyst.
+@property (nonatomic, assign) BOOL hidesNavigationBarDuringPresentation;
 
 @property (nullable, nonatomic, strong, readonly) UIViewController *searchResultsController;
 

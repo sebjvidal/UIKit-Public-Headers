@@ -99,6 +99,17 @@ typedef NS_ENUM(NSInteger, UIImageDynamicRange) {
     UIImageDynamicRangeHigh = 2
 } API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);
 
+typedef NS_ENUM(NSInteger, UIHDRHeadroomUsageLimit) {
+    /// Headroom usage limits are not defined
+    UIHDRHeadroomUsageLimitUnspecified = -1,
+#ifdef __APPLE_BLEACH_SDK__
+    /// Headroom usage limits are in effect, HDR headroom usage should be restricted
+    UIHDRHeadroomUsageLimitEnabled,
+    /// Headroom usage limits are disabled, HDR headroom usage is unrestricted.
+    UIHDRHeadroomUsageLimitDisabled,
+#endif
+};
+
 // System colors
 
 @interface UIColor (UIColorSystemColors)

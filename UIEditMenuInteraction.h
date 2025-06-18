@@ -95,7 +95,7 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos)  NS_SWIF
 
 #pragma mark - UIEditMenuInteractionDelegate
 
-API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
+API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos)
 @protocol UIEditMenuInteractionDelegate<NSObject>
 
 @optional

@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, UIPrintRenderingQuality) {
     UIPrintRenderingQualityResponsive
 } API_AVAILABLE(ios(14.5)) API_UNAVAILABLE(watchos);
 
-UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(4.2)) API_UNAVAILABLE(tvos, watchos)
 @interface UIPrintPageRenderer : NSObject
 
 @property(nonatomic) CGFloat   headerHeight;   // top of contentRect from printableRect

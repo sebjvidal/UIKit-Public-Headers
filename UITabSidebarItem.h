@@ -31,7 +31,7 @@ API_AVAILABLE(ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(wa
 /// The current configuration state of the sidebar item.
 @property (nonatomic, strong, readonly) UICellConfigurationState *configurationState NS_REFINED_FOR_SWIFT;
 
-/// The content coinfiguration to use when displaying this item.
+/// The content configuration to use when displaying this item.
 @property (nonatomic, copy) id<UIContentConfiguration> contentConfiguration NS_REFINED_FOR_SWIFT;
 
 /// The background configuration to use when displaying this item.

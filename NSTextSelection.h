@@ -3,7 +3,7 @@
 //  NSTextSelection.h
 //  Text Kit
 //
-//  Copyright (c) 2018-2024, Apple Inc. All rights reserved.
+//  Copyright (c) 2018-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSAttributedString.h>

@@ -3,7 +3,7 @@
 //  NSTextSelectionNavigation.h
 //  Text Kit
 //
-//  Copyright (c) 2019-2024, Apple Inc. All rights reserved.
+//  Copyright (c) 2019-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSObject.h>

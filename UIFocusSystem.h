@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIFocus.h>
-#import <UIKit/UIKitDefines.h>
-#import <UIKit/UIWindowScene.h>
+#import <UIKit/UIFocusDefines.h>
+
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -42,21 +42,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 @end
 
-
-@interface UIFocusSystem (Sound)
-
-/// Registers a sound file for a given identifier.
-+ (void)registerURL:(NSURL *)soundFileURL forSoundIdentifier:(UIFocusSoundIdentifier)identifier API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(ios, watchos);
-
-@end
-
-
-@interface UIWindowScene (UIFocusSystem)
-/// Returns the focus system that is responsible for this scene or nil if this scene does not support focus.
-@property (nullable, nonatomic, readonly) UIFocusSystem *focusSystem API_AVAILABLE(ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos);
-@end
-
 NS_HEADER_AUDIT_END(nullability, sendability)
+
+
+#import <UIKit/UIFocusSystem+UIKitAdditions.h>
 
 #else
 #import <UIKitCore/UIFocusSystem.h>

@@ -17,7 +17,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 /// Contains detailed information about the current state of the UI update. This information may change as UI update
 /// progresses through its phases. Note, that single UI update might service views on different displays simultaneously,
 /// in which case such views may have different `UIUpdateInfo` (e.g. `estimatedPresentationTime` may differ).
-UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos) API_UNAVAILABLE(macCatalyst)
+UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos, macCatalyst)
 @interface UIUpdateInfo: NSObject
 
 +(instancetype)new NS_UNAVAILABLE;

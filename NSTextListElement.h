@@ -3,7 +3,7 @@
 //  NSTextListElement.h
 //  Text Kit
 //
-//  Copyright (c) 2021-2022, Apple Inc. All rights reserved.
+//  Copyright (c) 2021-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

@@ -21,8 +21,17 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 typedef NS_ENUM(NSInteger, UIBarButtonItemStyle) {
     UIBarButtonItemStylePlain,
-    UIBarButtonItemStyleBordered API_DEPRECATED_WITH_REPLACEMENT("UIBarButtonItemStylePlain", ios(2.0, 8.0)) API_UNAVAILABLE(visionos, watchos),
-    UIBarButtonItemStyleDone,
+
+    /// A button item style for a prominent button.
+    ///
+    /// For example, use this for a button that completes or finalizes some task.
+    /// Buttons with this style will not be visually grouped with other items
+    /// in a navigation bar or toolbar, and will also have other styling changes
+    /// appropriate to their context to indicate their prominence.
+    UIBarButtonItemStyleProminent API_AVAILABLE(ios(26.0)) = 2,
+
+    UIBarButtonItemStyleBordered API_DEPRECATED_WITH_REPLACEMENT("UIBarButtonItemStylePlain", ios(2.0, 8.0)) API_UNAVAILABLE(visionos, watchos) = 1,
+    UIBarButtonItemStyleDone API_DEPRECATED_WITH_REPLACEMENT("UIBarButtonItemStyleProminent", ios(2.0, 26.0)) = UIBarButtonItemStyleProminent,
 } API_UNAVAILABLE(watchos);
 
 typedef NS_ENUM(NSInteger, UIBarButtonSystemItem) {
@@ -97,6 +106,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Construct a new flexible space item.
 + (instancetype)flexibleSpaceItem API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
+/// Creates a new fixed space item of zero width.
+///
+/// A fixed space of 0 width separates the shared background used
+/// in navigation bars and toolbars to visually group items.
++ (instancetype)fixedSpaceItem API_AVAILABLE(ios(26.0));
+
 @property (nonatomic, readwrite, assign) UIBarButtonItemStyle style;            // default is UIBarButtonItemStylePlain
 @property (nonatomic, readwrite, assign) CGFloat              width;            // default is 0.0
 @property (nonatomic, readwrite, copy  , nullable) NSSet<NSString *>   *possibleTitles;   // default is nil
@@ -104,7 +119,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property (nonatomic, readwrite, assign, nullable) SEL                  action;           // default is NULL
 @property (nonatomic, readwrite, weak  , nullable) id                   target;           // default is nil
 
-/// Set the primaryAction on this item, updating the title & image of the item if appropriate (primaryAction is non-nil, and this is not a system item). When primaryAction is non-nil, the target & action properties are ignored. If primaryAction is set to nil, the title & image properties are left unchanged.
+/// Set the primaryAction on this item, updating the title & image of the item if appropriate (primaryAction's title is non-nil for the title update, primaryAction's image is non-nil for the image update, and if this is not a system item). When primaryAction is non-nil, the target & action properties are ignored. If primaryAction is set to nil, the title & image properties are left unchanged.
 @property (nonatomic, readwrite, copy, nullable) UIAction *primaryAction API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
 /// When non-nil the menu is presented, the gesture used to trigger the menu is based on if the bar button item would normally trigger an action when tapped.
@@ -128,6 +143,27 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 /// A UIMenuElement that should substitute for the UIBarButtonItem when displayed in a menu.
 @property (nonatomic, readwrite, copy, nullable) UIMenuElement *menuRepresentation API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
+
+/// A boolean value indicating whether the background this item may share with other items in the bar
+/// should be hidden.
+///
+/// Set this property to `YES` to prevent the standard shared background (typically using the Glass effect)
+/// from being drawn behind this bar button item.
+///
+/// This item will not be visually grouped with any other items,
+/// without the standard shared background.
+/// This property is ignored if the item is in a `UIBarButtonItemGroup` with more than one item.
+/// The default value is `NO`.
+@property (nonatomic) BOOL hidesSharedBackground API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos, watchos);
+
+/// A boolean value indicating whether this bar button item can share a background with other items
+/// in a navigation bar or a toolbar.
+///
+/// When `NO`, This item will not be visually grouped with any other items.
+///
+/// This property is ignored if the item is in a `UIBarButtonItemGroup` with more than one item.
+/// The default value is `YES`.
+@property (nonatomic) BOOL sharesBackground API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos, watchos);
 
 /// Create a fixed group containing this bar button item. UIBarButtonItems may only be in a single UIBarButtonItemGroup at a time, adding a bar button item to a group removes it from any previous group.
 - (UIBarButtonItemGroup *)creatingFixedGroup API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);

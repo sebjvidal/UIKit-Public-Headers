@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, UISplitViewControllerColumn) {
     UISplitViewControllerColumnSupplementary, // Valid for UISplitViewControllerStyleTripleColumn only
     UISplitViewControllerColumnSecondary,
     UISplitViewControllerColumnCompact, // If a vc is set for this column, it will be used when the UISVC is collapsed, instead of stacking the vc’s for the Primary, Supplementary, and Secondary columns
+    UISplitViewControllerColumnInspector API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, visionos, watchos),
 } API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
 // Allowed displayModes depend on the splitBehavior
@@ -79,15 +80,16 @@ UIKIT_EXTERN API_AVAILABLE(ios(3.2)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithStyle:(UISplitViewControllerStyle)style NS_DESIGNATED_INITIALIZER API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
-@property(nonatomic, readonly) UISplitViewControllerStyle style API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos); // For information only, will not be called from UIKit code
+
+@property (nonatomic, readonly) UISplitViewControllerStyle style API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos); // For information only, will not be called from UIKit code
 @property (nullable, nonatomic, weak) id <UISplitViewControllerDelegate> delegate;
 
 // Default NO. The secondary-only shortcut button is applicable only for UISplitViewControllerStyleTripleColumn
-@property(nonatomic) BOOL showsSecondaryOnlyButton API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(visionos, watchos);
+@property (nonatomic) BOOL showsSecondaryOnlyButton API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(visionos, watchos);
 
 // Controls allowed display modes
-@property(nonatomic) UISplitViewControllerSplitBehavior preferredSplitBehavior API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos); // default Automatic, actual behavior will be determined by width buckets and view aspect ration
-@property(nonatomic, readonly) UISplitViewControllerSplitBehavior splitBehavior API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) UISplitViewControllerSplitBehavior preferredSplitBehavior API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos); // default Automatic, actual behavior will be determined by width buckets and view aspect ration
+@property (nonatomic, readonly) UISplitViewControllerSplitBehavior splitBehavior API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
 - (void)setViewController:(nullable UIViewController *)vc forColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos); // If the vc is not a UINavigationController, one will be created, except for UISplitViewControllerColumnCompact.
 - (nullable __kindof UIViewController *)viewControllerForColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
@@ -117,13 +119,16 @@ If an animation is started due to -show/hideColumn:, the transitionCoordinator f
 - (void)hideColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 - (void)showColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
+// Returns whether a given column is visible in the split view controller.
+- (BOOL)isShowingColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
 @property (nonatomic, copy) NSArray<__kindof UIViewController *> *viewControllers; // -setViewController:forColumn:/-viewControllerForColumn: recommended for column-style UISplitViewController
 
 // If 'YES', hidden view can be presented and dismissed via a swipe gesture. Defaults to 'YES'.
 @property (nonatomic) BOOL presentsWithGesture API_AVAILABLE(ios(5.1)) API_UNAVAILABLE(visionos);
 
-// Specifies whether the split view controller has collapsed its primary and secondary view controllers together
-@property(nonatomic, readonly, getter=isCollapsed) BOOL collapsed  API_AVAILABLE(ios(8.0));
+// Specifies whether the split view controller has collapsed its primary and secondary view controllers together.
+@property (nonatomic, readonly, getter=isCollapsed) BOOL collapsed API_AVAILABLE(ios(8.0));
 
 // An animatable property that controls how the primary view controller is hidden and displayed. A value of `UISplitViewControllerDisplayModeAutomatic` specifies the default behavior split view controller, which on an iPad, corresponds to an overlay mode in portrait and a side-by-side mode in landscape.
 @property (nonatomic) UISplitViewControllerDisplayMode preferredDisplayMode API_AVAILABLE(ios(8.0));
@@ -140,35 +145,70 @@ If an animation is started due to -show/hideColumn:, the transitionCoordinator f
     Set to UISplitViewControllerDisplayModeButtonVisibilityNever to prevent the displayModeButton from showing.
     Set to UISplitViewControllerDisplayModeButtonVisibilityAlways to allow the displayModeButton to show when presentsWithGesture is NO. Note that in displayModes that would not be expected to show the button when presentsWithGesture is YES (e.g., UISplitViewControllerDisplayModeTwoOverSecondary), a value of Always will not force the button to show.
  */
-@property(nonatomic) UISplitViewControllerDisplayModeButtonVisibility displayModeButtonVisibility API_AVAILABLE(ios(14.5)) API_UNAVAILABLE(visionos, watchos); // default: automatic
+@property (nonatomic) UISplitViewControllerDisplayModeButtonVisibility displayModeButtonVisibility API_AVAILABLE(ios(14.5)) API_UNAVAILABLE(visionos, watchos); // default: automatic
 
 
-// An animatable property that can be used to adjust the relative width of the primary view controller in the split view controller. This preferred width will be limited by the maximum and minimum properties (and potentially other system heuristics).
-@property(nonatomic, assign) CGFloat preferredPrimaryColumnWidthFraction API_AVAILABLE(ios(8.0)); // default: UISplitViewControllerAutomaticDimension
+// An animatable property that specifies the preferred relative width of the primary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat preferredPrimaryColumnWidthFraction API_AVAILABLE(ios(8.0));
 
-// Allow setting the primary column width with point values. This is especially useful in Catalyst where the window may be resized more often.
-// If set to non-Automatic, takes precedence over preferredPrimaryColumnWidthFraction.
-@property(nonatomic, assign) CGFloat preferredPrimaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos); // default: UISplitViewControllerAutomaticDimension
+// An animatable property that specifies the preferred absolute width of the primary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+// If set to non-automatic, takes precedence over preferredPrimaryColumnWidthFraction.
+@property (nonatomic, assign) CGFloat preferredPrimaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
-// An animatable property that can be used to adjust the minimum absolute width of the primary view controller in the split view controller.
-@property(nonatomic, assign) CGFloat minimumPrimaryColumnWidth API_AVAILABLE(ios(8.0)); // default: UISplitViewControllerAutomaticDimension
+// An animatable property that specifies the minimum absolute width of the primary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat minimumPrimaryColumnWidth API_AVAILABLE(ios(8.0));
 
-// An animatable property that can be used to adjust the maximum absolute width of the primary view controller in the split view controller.
-@property(nonatomic, assign) CGFloat maximumPrimaryColumnWidth API_AVAILABLE(ios(8.0)); // default: UISplitViewControllerAutomaticDimension
+// An animatable property that specifies the maximum absolute width of the primary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat maximumPrimaryColumnWidth API_AVAILABLE(ios(8.0));
 
-// The current primary view controller's column width.
-@property(nonatomic,readonly) CGFloat primaryColumnWidth API_AVAILABLE(ios(8.0));
+// The current width of the primary column.
+@property (nonatomic, readonly) CGFloat primaryColumnWidth API_AVAILABLE(ios(8.0));
 
-// Same as the "Primary" versions but applying to the Supplementary column for the triple-column style UISplitViewController
-@property(nonatomic, assign) CGFloat preferredSupplementaryColumnWidthFraction API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
-@property(nonatomic, assign) CGFloat preferredSupplementaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
-@property(nonatomic, assign) CGFloat minimumSupplementaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
-@property(nonatomic, assign) CGFloat maximumSupplementaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
-@property(nonatomic, readonly) CGFloat supplementaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
+// An animatable property that specifies the preferred relative width of the supplementary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat preferredSupplementaryColumnWidthFraction API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 
-// The edge of the UISplitViewController where the primary view controller should be positioned
-@property(nonatomic) UISplitViewControllerPrimaryEdge primaryEdge API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos); // default: UISplitViewControllerPrimaryEdgeLeading
+// An animatable property that specifies the preferred absolute width of the supplementary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+// If set to non-automatic, takes precedence over preferredSupplementaryColumnWidthFraction.
+@property (nonatomic, assign) CGFloat preferredSupplementaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
+
+// An animatable property that specifies the minimum absolute width of the supplementary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat minimumSupplementaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
+
+// An animatable property that specifies the maximum absolute width of the supplementary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat maximumSupplementaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
+
+// The current width of the supplementary column.
+@property (nonatomic, readonly) CGFloat supplementaryColumnWidth API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
+
+
+// An animatable property that specifies the preferred relative width of the secondary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat preferredSecondaryColumnWidthFraction API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+// An animatable property that specifies the preferred absolute width of the secondary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+// If set to non-automatic, takes precedence over preferredSecondaryColumnWidthFraction.
+@property (nonatomic, assign) CGFloat preferredSecondaryColumnWidth API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+// An animatable property that specifies the minimum absolute width of the secondary column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat minimumSecondaryColumnWidth API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+
+// An animatable property that specifies the preferred relative width of the inspector column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat preferredInspectorColumnWidthFraction API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, visionos, watchos);
+
+// An animatable property that specifies the preferred absolute width of the inspector column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+// If set to non-automatic, takes precedence over preferredInspectorColumnWidthFraction.
+@property (nonatomic, assign) CGFloat preferredInspectorColumnWidth API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, visionos, watchos);
+
+// An animatable property that specifies the minimum absolute width of the inspector column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat minimumInspectorColumnWidth API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, visionos, watchos);
+
+// An animatable property that specifies the maximum absolute width of the inspector column in the split view controller. Default is UISplitViewControllerAutomaticDimension.
+@property (nonatomic, assign) CGFloat maximumInspectorColumnWidth API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, visionos, watchos);
+
+
+// The edge of the UISplitViewController where the primary view controller should be positioned.
+@property (nonatomic) UISplitViewControllerPrimaryEdge primaryEdge API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos); // default: UISplitViewControllerPrimaryEdgeLeading
 
 // In a horizontally-regular environment this will set either the master or detail view controller depending on the original target. In a compact environment this defaults to a full screen presentation. In general the master or detail view controller will have implemented showViewController:sender: so this method would not be invoked.
 - (void)showViewController:(UIViewController *)vc sender:(nullable id)sender API_AVAILABLE(ios(8.0));
@@ -247,6 +287,8 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (void)splitViewControllerDidExpand:(UISplitViewController *)svc API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 - (void)splitViewController:(UISplitViewController *)svc willShowColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 - (void)splitViewController:(UISplitViewController *)svc willHideColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
+- (void)splitViewController:(UISplitViewController *)svc didShowColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+- (void)splitViewController:(UISplitViewController *)svc didHideColumn:(UISplitViewControllerColumn)column API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 - (void)splitViewControllerInteractivePresentationGestureWillBegin:(UISplitViewController *)svc API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 - (void)splitViewControllerInteractivePresentationGestureDidEnd:(UISplitViewController *)svc API_AVAILABLE(ios(14.0)) API_UNAVAILABLE(watchos);
 

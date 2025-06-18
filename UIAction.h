@@ -19,6 +19,7 @@ UIKIT_EXTERN const UIActionIdentifier UIActionPaste API_AVAILABLE(ios(15.0)) API
 UIKIT_EXTERN const UIActionIdentifier UIActionPasteAndMatchStyle API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
 UIKIT_EXTERN const UIActionIdentifier UIActionPasteAndGo API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
 UIKIT_EXTERN const UIActionIdentifier UIActionPasteAndSearch API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN const UIActionIdentifier UIActionNewFromPasteboard API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
 
 @class UIAction;
 

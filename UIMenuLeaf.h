@@ -35,6 +35,11 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// The element's selection state.
 @property (nonatomic) UIMenuElementState state;
 
+/// The leaf's preferred repeat behavior.
+/// Menu leaves can repeatedly perform their primary actions on prolonged interactions,
+/// such as by holding down their keyboard shortcut.
+@property (nonatomic) UIMenuElementRepeatBehavior repeatBehavior;
+
 /// The object on behalf of which the element's primary action is being performed.
 /// This property is only populated during the execution of the element's
 /// primary action (i.e. its handler or selector) if available.
