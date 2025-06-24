@@ -28,6 +28,7 @@ API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos,tvos) @interface UIDocumentBrow
 @property (nonatomic, readonly) UIDocumentBrowserActionAvailability availability;
 
 @property (nonatomic, strong, nullable) UIImage *image;
+@property (nonatomic, strong, nullable) UIImage *imageOnlyForContextMenu;
 
 /// Allows clients to restrict the action to only a specific set of content types. Default: [UTTypeItem.identifier]
 @property (nonatomic, copy) NSArray<NSString*> *supportedContentTypes;

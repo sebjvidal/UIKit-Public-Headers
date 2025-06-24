@@ -145,7 +145,7 @@ API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property (nonatomic) UILegibilityWeight legibilityWeight;
 @property (nonatomic) UIUserInterfaceActiveAppearance activeAppearance;
 @property (nonatomic) UINSToolbarItemPresentationSize toolbarItemPresentationSize API_AVAILABLE(macCatalyst(17.0));
-@property (nonatomic) UIImageDynamicRange imageDynamicRange;
+@property (nonatomic) UIImageDynamicRange imageDynamicRange API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);
 @property (nonatomic) UISceneCaptureState sceneCaptureState API_AVAILABLE(ios(17.0), tvos(17.0), visionos(1.0));
 @property (nonatomic, copy) NSString *typesettingLanguage;
 @property (nonatomic) UIListEnvironment listEnvironment API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);

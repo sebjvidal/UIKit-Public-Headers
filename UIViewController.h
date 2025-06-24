@@ -47,7 +47,7 @@ typedef NS_ENUM(NSInteger, UIModalTransitionStyle) {
 typedef NS_ENUM(NSInteger, UIModalPresentationStyle) {
     UIModalPresentationFullScreen = 0,
     UIModalPresentationPageSheet API_AVAILABLE(ios(3.2)) API_UNAVAILABLE(tvos),
-    UIModalPresentationFormSheet API_AVAILABLE(ios(3.2)) API_UNAVAILABLE(tvos),
+    UIModalPresentationFormSheet API_AVAILABLE(ios(3.2), tvos(26.0)),
     UIModalPresentationCurrentContext API_AVAILABLE(ios(3.2)),
     UIModalPresentationCustom API_AVAILABLE(ios(7.0)),
     UIModalPresentationOverFullScreen API_AVAILABLE(ios(8.0)),

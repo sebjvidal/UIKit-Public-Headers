@@ -47,9 +47,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property(nonatomic, readonly, getter=isAnimating) BOOL animating;
 
 /// The preferred treatment to use for HDR images. By default the image view will defer to the value from its traitCollection.
-@property (nonatomic, readwrite, assign) UIImageDynamicRange preferredImageDynamicRange;
+@property (nonatomic, readwrite, assign) UIImageDynamicRange preferredImageDynamicRange API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);
 /// The resolved treatment to use for HDR images.
-@property (nonatomic, readonly , assign) UIImageDynamicRange imageDynamicRange;
+@property (nonatomic, readonly , assign) UIImageDynamicRange imageDynamicRange API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);
 
 // if YES, the UIImageView will display a focused appearance when any of its immediate or distant superviews become focused
 @property (nonatomic) BOOL adjustsImageWhenAncestorFocused UIKIT_AVAILABLE_TVOS_ONLY(9_0);

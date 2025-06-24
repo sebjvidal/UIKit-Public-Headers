@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, UIBarButtonSystemItem) {
     UIBarButtonSystemItemRedo API_AVAILABLE(ios(3.0)),
     UIBarButtonSystemItemPageCurl API_DEPRECATED("", ios(4.0, 11.0)) API_UNAVAILABLE(visionos, watchos),
     UIBarButtonSystemItemClose API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(tvos, watchos),
-    UIBarButtonSystemItemWritingTools API_AVAILABLE(ios(18.2)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos, watchos)
+    UIBarButtonSystemItemWritingTools API_AVAILABLE(ios(18.2), visionos(26.0)) API_UNAVAILABLE(tvos, watchos)
 } API_UNAVAILABLE(watchos);
 
 @class UIImage, UIView;
@@ -164,6 +164,20 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// This property is ignored if the item is in a `UIBarButtonItemGroup` with more than one item.
 /// The default value is `YES`.
 @property (nonatomic) BOOL sharesBackground API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos, watchos);
+
+/// An identifier used to match bar button items across transitions in a navigation bar or toolbar.
+///
+/// When the set of bar button items in a navigation bar or toolbar changes (for example, when pushing
+/// or popping view controllers), UIKit automatically animates the transition between the different sets
+/// of items. By default, UIKit uses heuristics based on item position and content to determine which items
+/// should be matched for these transitions.
+///
+/// Set this property with the same value on two different bar button items in different navigation item
+/// configurations to indicate that they should be treated as the same item during transitions. This allows
+/// for more natural animations when the visuals or function of an item changes across contexts.
+///
+/// The default value is `nil`, which means UIKit will use its default heuristics for transitions.
+@property (nonatomic, copy, nullable) NSString *identifier API_AVAILABLE(ios(26.0));
 
 /// Create a fixed group containing this bar button item. UIBarButtonItems may only be in a single UIBarButtonItemGroup at a time, adding a bar button item to a group removes it from any previous group.
 - (UIBarButtonItemGroup *)creatingFixedGroup API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);

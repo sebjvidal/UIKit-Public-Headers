@@ -118,7 +118,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(10.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 /// The priority this item has in its focus group. The higher the priority, the more likely it is to get picked when focus moves into this group.
 /// Note: this method can only be used to increase an item's priority, not decrease it. For example if an item is currently selected, the actual priority of this item will be determined by MAX(focusGroupPriority, UIFocusGroupPrioritySelected).
-@property (nonatomic, readonly) UIFocusGroupPriority focusGroupPriority API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos);
+@property (nonatomic, readonly) UIFocusGroupPriority focusGroupPriority API_AVAILABLE(ios(15.0))  API_UNAVAILABLE(tvos, watchos);
 
 /// If this property is present and returns `UIFocusItemDeferralModeNever`, the focus deferral will not be enabled again
 /// after the user engagement timeout has expired if this item is currently focused and programmatic focus updates pointing
