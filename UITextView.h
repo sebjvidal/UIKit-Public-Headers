@@ -71,6 +71,8 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /**
  * @abstract Asks the delegate for the menu to be shown for the specified text ranges.
  *
+ * @discussion If the delegate does not implement this method then the `textView:editMenuForTextInRange:suggestedActions:` method will be called and passed the union range instead. If the delegate also does not implement that method then `nil` is assumed.
+ *
  * @param textView                     The text view requesting the menu.
  * @param ranges                          The text ranges for which the menu is presented for.
  * @param suggestedActions   The actions and commands that the system suggests.

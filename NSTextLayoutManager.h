@@ -58,6 +58,12 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE
 // When YES, NSTextLayoutManager will attempt to hyphenate when wrapping lines. May be overridden on a per-paragraph basis by the NSParagraphStyle's usesDefaultHyphenation. The receiver makes the best effort to decide the exact logic including the hyphenation factor based on the context. The default value is NO. Can be overridden by the preference key @"NSUsesDefaultHyphenation".
 @property BOOL usesHyphenation;
 
+/// Specifies the behavior for resolving ``NSTextAlignment.natural`` to the visual alignment.
+///
+/// When set to ``true``, the resolved visual alignment is determined by the resolved base writing direction; otherwise, it is using the user’s preferred language.
+/// The default value is ``true``.
+@property BOOL resolvesNaturalAlignmentWithBaseWritingDirection API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
 #pragma mark NSTextContentManager interface
 // Pointing to the NSTextContentManager object strongly referencing the text layout manager.
 @property (nullable, weak, readonly) NSTextContentManager *textContentManager;

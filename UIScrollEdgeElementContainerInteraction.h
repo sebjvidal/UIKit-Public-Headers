@@ -27,10 +27,10 @@ UIKIT_FINAL UIKIT_EXTERN NS_SWIFT_UI_ACTOR API_AVAILABLE(ios(26.0), tvos(26.0), 
 @interface UIScrollEdgeElementContainerInteraction : NSObject <UIInteraction>
 
 /// The scroll view to affect
-@property (nonatomic, nullable, weak, setter=_setScrollView:) UIScrollView *scrollView;
+@property (nonatomic, nullable, weak) UIScrollView *scrollView;
 
 /// The edge of the scroll view to affect
-@property (nonatomic, setter=_setEdge:) UIRectEdge edge;
+@property (nonatomic) UIRectEdge edge;
 
 @end
 

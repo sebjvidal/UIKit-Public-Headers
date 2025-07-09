@@ -116,6 +116,13 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_SENDABLE
 @property (nonatomic, readonly) UIHDRHeadroomUsageLimit hdrHeadroomUsageLimit API_AVAILABLE(ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
 + (UITraitCollection *)traitCollectionWithHDRHeadroomUsageLimit:(UIHDRHeadroomUsageLimit)hdrHeadroomUsageLimit API_AVAILABLE(ios(26.0), tvos(26.0), watchos(26.0), visionos(26.0));
 
++ (UITraitCollection *)traitCollectionWithResolvesNaturalAlignmentWithBaseWritingDirection:(BOOL)resolvesNaturalAlignmentWithBaseWritingDirection API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// Specifies the behavior for resolving ``NSTextAlignment.natural`` to the visual alignment.
+///
+/// When set to ``true``, the resolved visual alignment is determined by the resolved base writing direction; otherwise, it is using the user’s preferred language.
+@property (nonatomic, readonly) BOOL resolvesNaturalAlignmentWithBaseWritingDirection API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
 @end
 
 
@@ -151,6 +158,7 @@ API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property (nonatomic) UIListEnvironment listEnvironment API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 @property (nonatomic) UITabAccessoryEnvironment tabAccessoryEnvironment API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos, tvos, watchos);
 @property (nonatomic) UISplitViewControllerLayoutEnvironment splitViewControllerLayoutEnvironment API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) BOOL resolvesNaturalAlignmentWithBaseWritingDirection API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 @end
 
 typedef void (^UITraitMutations)(id<UIMutableTraits> mutableTraits) API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);

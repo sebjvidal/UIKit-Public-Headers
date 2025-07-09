@@ -127,6 +127,10 @@ UIKIT_EXTERN NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(26.0), tvos(26.0), visionos(
 @interface UITraitHDRHeadroomUsageLimit : NSObject <UINSIntegerTraitDefinition> // UIHDRHeadroomUsageLimit
 @end
 
+UIKIT_EXTERN API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos)
+@interface UITraitResolvesNaturalAlignmentWithBaseWritingDirection : NSObject <UIObjectTraitDefinition> // Bool
+@end
+
 NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else

@@ -117,6 +117,8 @@ Classes:
   SwiftPrivate: true
 - Name: UITraitImageDynamicRange
   SwiftPrivate: true
+- Name: UITraitResolvesNaturalAlignmentWithBaseWritingDirection
+  SwiftPrivate: true
 - Name: UITraitTypesettingLanguage
   SwiftPrivate: true
 - Name: UICollectionViewCompositionalLayout
@@ -988,6 +990,8 @@ Classes:
   SwiftName: UIScene.CollectionJoinBehavior
 - Name: UITraitCollection
   Properties:
+  - Name: 'resolvesNaturalAlignmentWithBaseWritingDirection'
+    SwiftPrivate: true
   - Name: 'systemTraitsAffectingColorAppearance'
     PropertyKind: Class
     SwiftPrivate: true
@@ -1038,6 +1042,9 @@ Classes:
     SwiftPrivate: true
   - Selector: 'changedTraitsFromTraitCollection:'
     MethodKind: Instance
+    SwiftPrivate: true
+  - Selector: 'traitCollectionWithResolvesNaturalAlignmentWithBaseWritingDirection:'
+    MethodKind: Class
     SwiftPrivate: true
   - Selector: 'traitCollectionWithTypesettingLanguage:'
     MethodKind: Class
