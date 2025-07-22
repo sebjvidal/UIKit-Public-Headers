@@ -12,6 +12,13 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
+typedef NS_ENUM(NSInteger, UIGlassEffectStyle) {
+    /// Standard glass effect style.
+    UIGlassEffectStyleRegular,
+    /// Clear glass effect style.
+    UIGlassEffectStyleClear
+} API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos, watchos) NS_SWIFT_NAME(UIGlassEffect.Style);
+
 /// A visual effect that renders a glass material.
 UIKIT_EXTERN NS_SWIFT_UI_ACTOR
 API_AVAILABLE(ios(26.0))
@@ -23,6 +30,10 @@ API_UNAVAILABLE(visionos, watchos)
 
 /// A tint color applied to the glass.
 @property (nonatomic, copy, nullable) UIColor *tintColor;
+
+/// Creates a glass effect with the specified style.
++ (UIGlassEffect *)effectWithStyle:(UIGlassEffectStyle)style NS_SWIFT_NAME(init(style:));
+
 @end
 
 /// A `UIGlassContainerEffect` renders multiple glass elements into a combined effect.

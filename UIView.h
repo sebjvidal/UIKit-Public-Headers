@@ -19,6 +19,7 @@
 #import <UIKit/UIFocus.h>
 #import <UIKit/UIViewLayoutRegion.h>
 #import <UIKit/UIFocusEffect.h>
+#import <UIKit/UICornerConfiguration.h>
 #import <UIUtilities/UICoordinateSpace.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
@@ -747,6 +748,23 @@ API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos)
 - (UILayoutGuide *)layoutGuideForLayoutRegion:(UIViewLayoutRegion *)layoutRegion NS_REFINED_FOR_SWIFT;
 - (UIEdgeInsets)edgeInsetsForLayoutRegion:(UIViewLayoutRegion *)layoutRegion NS_REFINED_FOR_SWIFT;
 - (NSDirectionalEdgeInsets)directionalEdgeInsetsForLayoutRegion:(UIViewLayoutRegion *)layoutRegion NS_REFINED_FOR_SWIFT;
+
+@end
+
+API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos)
+@interface UIView (CornerConfiguration)
+
+/// A configuration that defines the corners of the view.
+@property (nonatomic, copy, nonnull) UICornerConfiguration *cornerConfiguration NS_REFINED_FOR_SWIFT;
+
+/// Returns the effective radius for the given `corner`, calculated using the view's current `cornerConfiguration`.
+///
+/// When invoked within ``UIView.layoutSubviews()``, ``UIView.updateProperties()``, or ``UIViewController.updateProperties()`` automatic invalidation will occur if the effective radius changes.
+/// If more than one `corner` is provided, the returned radius represents the maximum effective radius of those corners.
+///
+/// - Parameter corner: The corner.
+/// - Returns: The effective radius.
+- (CGFloat)effectiveRadiusForCorner:(UIRectCorner)corner NS_SWIFT_NAME(effectiveRadius(corner:));
 
 @end
 

@@ -69,7 +69,7 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (void)move:(nullable id)sender API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
 - (void)export:(nullable id)sender API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
 
-- (void)toggleSidebar:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
+- (void)toggleSidebar:(nullable id)sender API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
 - (void)toggleInspector:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);
 
 - (void)performClose:(nullable id)sender API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos);

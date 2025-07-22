@@ -182,7 +182,19 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar;                        // return NO to not resign first responder
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar;                       // called when text ends editing
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText;   // called when text changes (including clear)
-- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text API_AVAILABLE(ios(3.0)); // called before text changes
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text API_DEPRECATED_WITH_REPLACEMENT("-searchBar:shouldChangeTextInRanges:replacementText:", ios(3.0, API_TO_BE_DEPRECATED)); // called before text changes
+/**
+ * @abstract Asks the delegate if the text at the specified `ranges` should be replaced with `text`.
+ *
+ * @discussion If this method returns YES then the search bar will, at its own discretion, choose any one of the specified `ranges` of text and replace it with the specified `replacementText` before deleting the text at the other ranges. If the delegate does not implement this method then the `searchBar:shouldChangeTextInRange:replacementText:` method will be called and passed the union range instead. If the delegate also does not implement that method then YES is assumed.
+ *
+ * @param searchBar                 The search bar asking the delegate
+ * @param ranges                       The ranges of the text that should be deleted before replacing
+ * @param replacementText   The replacement text
+ *
+ * @return Returns true if the text at the `ranges` should be replaced.
+ */
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRanges:(NSArray<NSValue *> *)ranges replacementText:(NSString *)replacementText API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0), watchos(26.0)); // called before text changes
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;                     // called when keyboard search button pressed
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar API_UNAVAILABLE(tvos); // called when bookmark button pressed

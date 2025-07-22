@@ -79,6 +79,8 @@
 #import <UIKit/UIContentSizeCategoryAdjusting.h>
 #import <UIKit/UIContentSizeCategory.h>
 #import <UIKit/UIControl.h>
+#import <UIKit/UICornerConfiguration.h>
+#import <UIKit/UICornerRadius.h>
 #import <UIKit/UIDataDetectors.h>
 #import <UIKit/UIDatePicker.h>
 #import <UIKit/UIDevice.h>

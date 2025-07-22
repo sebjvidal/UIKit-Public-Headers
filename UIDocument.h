@@ -41,6 +41,13 @@ UIKIT_EXTERN UIDocumentCreationIntent const UIDocumentCreationIntentDefault API_
 
 UIKIT_EXTERN NSNotificationName const UIDocumentStateChangedNotification API_AVAILABLE(ios(5.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NONISOLATED;
 
+/// A notification that the document posts when copying the file from a readonly location in order to write changes.
+/// This notification will be posted on the file presenter queue.
+UIKIT_EXTERN NSNotificationName const UIDocumentDidMoveToWritableLocationNotification API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NONISOLATED NS_SWIFT_NAME(UIDocument.didMoveToWritableLocationNotification);
+
+/// The key in a `UIDocumentDidMoveToWritableLocationNotification`'s `userInfo` dictionary that contains the previous readonly file URL.
+UIKIT_EXTERN NSString * const UIDocumentDidMoveToWritableLocationOldURLKey API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NAME(UIDocument.didMoveToWritableLocationOldURLKey);
+
 UIKIT_EXTERN API_AVAILABLE(ios(5.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
 @interface UIDocument : NSObject <NSFilePresenter, NSProgressReporting>
 
