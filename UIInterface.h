@@ -102,12 +102,10 @@ typedef NS_ENUM(NSInteger, UIImageDynamicRange) {
 typedef NS_ENUM(NSInteger, UIHDRHeadroomUsageLimit) {
     /// Headroom usage limits are not defined
     UIHDRHeadroomUsageLimitUnspecified = -1,
-#ifdef __APPLE_BLEACH_SDK__
     /// Headroom usage limits are in effect, HDR headroom usage should be restricted
-    UIHDRHeadroomUsageLimitEnabled,
+    UIHDRHeadroomUsageLimitActive,
     /// Headroom usage limits are disabled, HDR headroom usage is unrestricted.
-    UIHDRHeadroomUsageLimitDisabled,
-#endif
+    UIHDRHeadroomUsageLimitInactive,
 };
 
 // System colors
