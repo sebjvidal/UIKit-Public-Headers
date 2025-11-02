@@ -719,7 +719,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 /// Override to return a child view controller or nil. If non-nil, that view controller's preference for interface orientation lock will be used. If nil, `self` is used.
 /// Whenever the return value changes, call `setNeedsUpdateOfPrefersInterfaceOrientationLocked()`.
-@property (nonatomic, readonly, nullable) UIViewController *childViewControllerForInterfaceOrientationLock API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
+@property (nonatomic, readonly, nullable) UIViewController *childViewControllerForInterfaceOrientationLock API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(childForInterfaceOrientationLock);
 
 /// Whether this view controller prefers the scene's interface orientation to be locked when shown. The default is `NO`. Note that this preference may or may not be honored.
 /// See `UIWindowScene.Geometry` for the current state of interface orientation lock.

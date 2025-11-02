@@ -46,9 +46,9 @@ typedef NS_ENUM(NSInteger, UINavigationItemSearchBarPlacement) {
     UINavigationItemSearchBarPlacementStacked,
     /// Placement is the same as Integrated, except that in regular width on iPad, the search bar is centered in the navigation bar.
     /// Only respected when used in a view controller that is a descendant of a tab bar controller or when using a navigation item style that requires a leading aligned title
-    UINavigationItemSearchBarPlacementIntegratedCentered API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos),
+    UINavigationItemSearchBarPlacementIntegratedCentered API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, watchos, visionos),
     /// Placement is the same as Integrated, except that the inactive search bar is always shown as a button even when space permits a search field.
-    UINavigationItemSearchBarPlacementIntegratedButton API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos),
+    UINavigationItemSearchBarPlacementIntegratedButton API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, watchos, visionos),
     UINavigationItemSearchBarPlacementInline API_DEPRECATED_WITH_REPLACEMENT("UINavigationItemSearchBarPlacementIntegrated", ios(16.0, 26.0)) API_UNAVAILABLE(tvos, watchos)
         = UINavigationItemSearchBarPlacementIntegrated,
 } API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
@@ -247,20 +247,20 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// This bar button item will be ignored during toolbar layout if `searchController` is `nil`.
 /// UIBarButtonItemGroup will throw an NSInvalidArgumentException when this bar button item is included in its initialization.
 /// UINavigationItem will throw an NSInvalidArgumentException when this bar button item is included in leftBarButtonItems or rightBarButtonItems.
-@property (nonatomic, readonly, strong) UIBarButtonItem *searchBarPlacementBarButtonItem API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
+@property (nonatomic, readonly, strong) UIBarButtonItem *searchBarPlacementBarButtonItem API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, watchos, visionos);
 
 /// Defaults to `YES`
 /// Set to `NO` to prevent the search bar from being placed among other UIToolbar items on iPhone
-@property (nonatomic) BOOL searchBarPlacementAllowsToolbarIntegration API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
+@property (nonatomic) BOOL searchBarPlacementAllowsToolbarIntegration API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, watchos, visionos);
 
 /// `AllowsExternalIntegration` means that something at a higher scope may take the search bar and integrate it somewhere other than the navigation bar (or toolbar) directly associated with this navigation item.
-/// On iOS 19, UISplitViewController uses this to allow Mac-like placement of the search bar on iPad.
+/// On iOS 26, UISplitViewController uses this to allow Mac-like placement of the search bar on iPad.
 /// Defaults to `NO`
 /// Set to `YES` to allow the containing UISplitViewController to place the search bar in the navigation bar for the trailingmost column independent of the column used for this view controller.
 /// Ignored when `searchController` is `nil`, when `searchBarPlacement` is `.stacked`, or when not contained in a UISplitViewController.
 /// When the top view controller's navigation item has this property set to `YES` in more than one column at the same time, only one will be respected; the columns are checked in order of `.inspector`, `.secondary`, `.supplementary`, `.primary`
 /// If the search bar has a scope bar, the scope bar will not be moved into a different column.
-@property (nonatomic) BOOL searchBarPlacementAllowsExternalIntegration API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
+@property (nonatomic) BOOL searchBarPlacementAllowsExternalIntegration API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, watchos, visionos);
 
 ///  When set and this item is topmost, overrides the hosting navigation bar's standardAppearance. See UINavigationBar.standardAppearance for further details.
 @property (nonatomic, readwrite, copy, nullable) UINavigationBarAppearance *standardAppearance API_AVAILABLE(ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos);
