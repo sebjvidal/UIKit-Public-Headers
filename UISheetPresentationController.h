@@ -11,7 +11,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@class UISheetPresentationController;
+@class UISheetPresentationController, UIVisualEffect;
 
 
 typedef NSString *UISheetPresentationControllerDetentIdentifier NS_TYPED_EXTENSIBLE_ENUM API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos, visionos);
@@ -64,6 +64,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos, visionos) N
 
 // The identifier of this detent.
 @property (nonatomic, strong, readonly) UISheetPresentationControllerDetentIdentifier identifier API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos, visionos);
+
+// Set the background effect for this detent. Set to nil to use default background. Default is nil.
+@property (nonatomic, strong, nullable) UIVisualEffect *backgroundEffect API_AVAILABLE(ios(26.1)) API_UNAVAILABLE(macCatalyst, watchos, tvos, visionos, macos);
 
 // Resolves a detent to its value. Returns UISheetPresentationControllerDetentInactive if the detent is inactive in the provided context.
 // This may be used to get the values of the system medium and large detents, or the value of a custom detent.

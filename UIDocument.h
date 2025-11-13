@@ -48,7 +48,7 @@ UIKIT_EXTERN NSNotificationName const UIDocumentDidMoveToWritableLocationNotific
 /// The key in a `UIDocumentDidMoveToWritableLocationNotification`'s `userInfo` dictionary that contains the previous readonly file URL.
 UIKIT_EXTERN NSString * const UIDocumentDidMoveToWritableLocationOldURLKey API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NAME(UIDocument.didMoveToWritableLocationOldURLKey);
 
-UIKIT_EXTERN API_AVAILABLE(ios(5.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(5.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NONISOLATED
 @interface UIDocument : NSObject <NSFilePresenter, NSProgressReporting>
 
 #pragma mark *** Initialization ***
@@ -190,13 +190,14 @@ UIKIT_EXTERN API_AVAILABLE(ios(5.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_
 
 #pragma mark *** Renaming ***
 
-UIKIT_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(tvos, watchos)
+UIKIT_EXTERN API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
 @interface UIDocument () <UINavigationItemRenameDelegate> @end
 
 #pragma mark *** Activity Continuation ***
 
 UIKIT_EXTERN NSString* const NSUserActivityDocumentURLKey API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(tvos, watchos);
 
+NS_SWIFT_UI_ACTOR
 @interface UIDocument (ActivityContinuation) <UIUserActivityRestoring>
 @property (nonatomic, strong, nullable) NSUserActivity *userActivity API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(tvos);
 - (void)updateUserActivityState:(NSUserActivity *)userActivity API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(tvos);

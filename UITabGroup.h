@@ -42,7 +42,7 @@ API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 @property (nonatomic, copy) NSArray<NSString *> *displayOrderIdentifiers;
 
 /// Determines if elements in `children` can be reordered from the sidebar. Default is NO.
-/// Changes in the display order are notified via `tabBarController:didCustomizeDisplayOrderForGroup:`
+/// Changes in the display order are notified via `tabBarController:displayOrderDidChangeForGroup:`
 /// in `UITabBarControllerDelegate`.
 @property (nonatomic, assign) BOOL allowsReordering;
 
@@ -78,6 +78,13 @@ API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 
 /// The preferred appearance of the group and its children in the sidebar. Default is `automatic`
 @property (nonatomic, assign) UITabGroupSidebarAppearance sidebarAppearance API_UNAVAILABLE(tvos, watchos);
+
+/// Determines if the tab group itself can be selected as a destination in the sidebar.
+///
+/// By default, tab groups are not destinations when displayed in the sidebar, and cannot be selected directly
+/// by users. When enabled, the tab group becomes a selectable item in the sidebar, and will no longer perform
+/// automatic selection for a default child if no child is currently selected. The default value is NO.
+@property (nonatomic, assign) BOOL isSidebarDestination API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
 
 /// Creates a `UITabGroup` using the specified parameters.
 - (instancetype)initWithTitle:(NSString *)title

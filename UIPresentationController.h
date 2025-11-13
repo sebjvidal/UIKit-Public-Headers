@@ -18,7 +18,7 @@
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@class UIPresentationController;
+@class UIPresentationController, UIVisualEffect;
 
 API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @protocol UIAdaptivePresentationControllerDelegate <NSObject>
@@ -113,6 +113,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 // Modifies the trait collection for the presentation controller.
 @property(nullable, nonatomic, copy) UITraitCollection *overrideTraitCollection API_DEPRECATED("Use the traitOverrides property instead", ios(8.0, 17.0), visionos(1.0, 1.0)) API_UNAVAILABLE(watchos);
+
+// Set the background effect for this presentation. Set to nil to use default background. Default is nil. Custom presentations are responsible for implementing the background effect if set.
+@property (nonatomic, strong, nullable) UIVisualEffect *backgroundEffect  API_AVAILABLE(ios(26.1)) API_UNAVAILABLE(macCatalyst, watchos, tvos, visionos);
 
 @end
 

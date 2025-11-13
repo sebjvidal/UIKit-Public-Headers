@@ -275,7 +275,7 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property(nonatomic,strong,nullable) UIConversationContext *conversationContext API_AVAILABLE(ios(18.4)) API_UNAVAILABLE(tvos, watchos, visionos, macCatalyst);
 
 // Set this property to NO to disallow the display of the number pad popover for the text input view.  Default value is YES.
-@property(nonatomic) BOOL allowsNumberPadPopover;
+@property(nonatomic) BOOL allowsNumberPadPopover API_AVAILABLE(ios(26.0));
 
 @end
 

@@ -16,6 +16,18 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 @end
 
+@class UIColor;
+
+/// A visual effect that applies a solid color background.
+UIKIT_EXTERN API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
+@interface UIColorEffect : UIVisualEffect
+
+/// Creates a color effect with the specified color.
+/// @param color The color to use for the background.
++ (instancetype)effectWithColor:(nullable UIColor *)color API_AVAILABLE(ios(26.1)) API_UNAVAILABLE(watchos);
+
+@end
+
 NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else

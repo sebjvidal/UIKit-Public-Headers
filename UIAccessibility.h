@@ -551,8 +551,8 @@ UIKIT_EXTERN BOOL UIAccessibilityIsBoldTextEnabled(void) API_AVAILABLE(ios(8.0))
 UIKIT_EXTERN NSNotificationName const UIAccessibilityBoldTextStatusDidChangeNotification API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 
 // Returns whether the system preference for button shapes is enabled
-UIKIT_EXTERN BOOL UIAccessibilityButtonShapesEnabled(void) API_AVAILABLE(ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR;
-UIKIT_EXTERN NSNotificationName const UIAccessibilityButtonShapesEnabledStatusDidChangeNotification API_AVAILABLE(ios(14.0), tvos(14.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN BOOL UIAccessibilityButtonShapesEnabled(void) API_DEPRECATED_WITH_REPLACEMENT("AXShowBordersEnabled", ios(14.0, 26.1), tvos(14.0, 26.1)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR;
+UIKIT_EXTERN NSNotificationName const UIAccessibilityButtonShapesEnabledStatusDidChangeNotification API_DEPRECATED_WITH_REPLACEMENT("AXShowBordersEnabledStatusDidChangeNotification", ios(14.0, 26.1), tvos(14.0, 26.1)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 
 // Returns whether the system preference for grayscale is enabled
 UIKIT_EXTERN BOOL UIAccessibilityIsGrayscaleEnabled(void) API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR;

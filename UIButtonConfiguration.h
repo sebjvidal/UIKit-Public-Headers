@@ -87,7 +87,6 @@ UIKIT_EXTERN API_AVAILABLE(ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos) NS_SW
 
 + (instancetype)glassButtonConfiguration API_AVAILABLE(ios(26.0), tvos(26.0)) API_UNAVAILABLE(watchos, visionos);
 + (instancetype)prominentGlassButtonConfiguration API_AVAILABLE(ios(26.0), tvos(26.0)) API_UNAVAILABLE(watchos, visionos);
-+ (instancetype)tintedGlassButtonConfiguration API_UNAVAILABLE(ios, tvos, watchos, visionos);
 + (instancetype)clearGlassButtonConfiguration API_AVAILABLE(ios(26.0), tvos(26.0)) API_UNAVAILABLE(watchos, visionos);
 + (instancetype)prominentClearGlassButtonConfiguration API_AVAILABLE(ios(26.0), tvos(26.0)) API_UNAVAILABLE(watchos, visionos);
 
@@ -159,6 +158,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos) NS_SW
 @property (nonatomic, readwrite, assign) BOOL automaticallyUpdateForSelection;
 
 @end
+
+
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 
