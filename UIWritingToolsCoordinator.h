@@ -60,9 +60,8 @@ typedef NS_ENUM(NSInteger, UIWritingToolsCoordinatorState) {
     /// The coordinator starts in the `inactive` state, and transitions
     /// immediately to the ``noninteractive`` or ``interactiveResting``
     /// state when someone chooses an option from the Writing Tools UI.
-    /// After the coordinator finishes incorporating any changes for the
-    /// current operation, it returns to the `inactive` state and waits
-    /// for the person to choose a different option or dismiss the Writing Tools UI.
+    /// The coordinator returns to the `inactive` state when the person
+    /// accepts the changes or dismisses the Writing Tools UI.
     UIWritingToolsCoordinatorStateInactive, // Writing Tools is not active
     
     /// A state that indicates Writing Tools is handling interactions in

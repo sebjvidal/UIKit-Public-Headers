@@ -272,6 +272,16 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Inserts the user or system’s input suggestion into the document.
 - (void)insertInputSuggestion:(UIInputSuggestion *)inputSuggestion API_AVAILABLE(ios(18.4)) API_UNAVAILABLE(tvos, watchos, visionos, macCatalyst);
 
+/// The visible content region, excluding parts covered by view-specific UI.
+///
+/// Account for scroll position, insets, and any custom UI elements (toolbars,
+/// accessories, etc.) that obscure content. The system automatically accounts for
+/// keyboard obscuring when editing.
+///
+/// The rectangle is in the `textInputView` coordinate space.
+/// @return The visible content rectangle, or CGRectNull if there is no specific constraint.
+@property (nonatomic, readonly) CGRect unobscuredContentRect API_AVAILABLE(ios(26.4), tvos(26.4), visionos(26.4), watchos(26.4), macos(26.4));
+
 @end
 //---------------------------------------------------------------------------------------------------
 
