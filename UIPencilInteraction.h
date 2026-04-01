@@ -32,15 +32,15 @@ typedef NS_ENUM(NSInteger, UIPencilPreferredAction) {
     UIPencilPreferredActionShowColorPalette,
     
     /// Show the ink attributes palette
-    UIPencilPreferredActionShowInkAttributes API_AVAILABLE(ios(16.0)),
+    UIPencilPreferredActionShowInkAttributes API_AVAILABLE(ios(16.0), visionos(26.2)),
 
     /// Show a contextual palette of markup tools, or undo/redo options if tools are not available
-    UIPencilPreferredActionShowContextualPalette API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos),
+    UIPencilPreferredActionShowContextualPalette API_AVAILABLE(ios(17.5), visionos(26.2)),
 
     /// The user has selected a system shortcut to run
-    UIPencilPreferredActionRunSystemShortcut API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos),
+    UIPencilPreferredActionRunSystemShortcut API_AVAILABLE(ios(17.5), visionos(26.2)),
 
-} API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(watchos, tvos);
+} API_AVAILABLE(ios(12.1), visionos(26.2)) API_UNAVAILABLE(watchos, tvos);
 
 /// The phase of an interaction gesture performed on the pencil.
 ///
@@ -59,27 +59,27 @@ typedef NS_ENUM(NSUInteger, UIPencilInteractionPhase) {
     /// A continuous gesture on the pencil was cancelled
     UIPencilInteractionPhaseCancelled,
 
-} API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UIPencilInteraction.Phase);
+} API_AVAILABLE(ios(17.5), visionos(26.2)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UIPencilInteraction.Phase);
 
 #pragma mark - Interaction
 
-UIKIT_EXTERN API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(12.1), visionos(26.2)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 @interface UIPencilInteraction : NSObject <UIInteraction>
 
 /// The user’s preferred double-tap action as set in Settings app
 @property (class, nonatomic, readonly) UIPencilPreferredAction preferredTapAction;
 
 /// The user’s preferred squeeze action as set in Settings app
-@property (class, nonatomic, readonly) UIPencilPreferredAction preferredSqueezeAction API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos);
+@property (class, nonatomic, readonly) UIPencilPreferredAction preferredSqueezeAction API_AVAILABLE(ios(17.5), visionos(26.2));
 
 /// The user's preference for drawing with pencil only as set in Settings app or the system tool picker
 @property (class, nonatomic, readonly) BOOL prefersPencilOnlyDrawing;
 
 /// The user's preference for if hovering with pencil should show a preview of the current drawing tool as set in Settings app
-@property (class, nonatomic, readonly) BOOL prefersHoverToolPreview API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos);
+@property (class, nonatomic, readonly) BOOL prefersHoverToolPreview API_AVAILABLE(ios(17.5), visionos(26.2));
 
 /// Initialize an interaction and set the provided delegate
-- (instancetype)initWithDelegate:(id<UIPencilInteractionDelegate>)delegate API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos);
+- (instancetype)initWithDelegate:(id<UIPencilInteractionDelegate>)delegate API_AVAILABLE(ios(17.5), visionos(26.2));
 
 /// The interaction's delegate
 @property (nonatomic, weak, nullable) id<UIPencilInteractionDelegate> delegate;
@@ -92,7 +92,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(
 #pragma mark - External Gestures
 
 /// An object that describes the hover pose of the pencil while performing a gesture on the pencil
-UIKIT_EXTERN API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(17.5), visionos(26.2)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 @interface UIPencilHoverPose : NSObject
 
 + (instancetype)new NS_UNAVAILABLE;
@@ -122,7 +122,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(
 @end
 
 /// An object that describes a tap performed on the pencil
-UIKIT_EXTERN API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UIPencilInteraction.Tap) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(17.5), visionos(26.2)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UIPencilInteraction.Tap) NS_SWIFT_UI_ACTOR
 @interface UIPencilInteractionTap : NSObject
 
 + (instancetype)new NS_UNAVAILABLE;
@@ -137,7 +137,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(
 @end
 
 /// An object that describes a squeeze performed on the pencil
-UIKIT_EXTERN API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UIPencilInteraction.Squeeze) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(17.5), visionos(26.2)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UIPencilInteraction.Squeeze) NS_SWIFT_UI_ACTOR
 @interface UIPencilInteractionSqueeze : NSObject
 
 + (instancetype)new NS_UNAVAILABLE;
@@ -156,7 +156,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(
 
 #pragma mark - Interaction Delegate
 
-UIKIT_EXTERN API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(watchos, tvos) API_UNAVAILABLE(visionos) NS_SWIFT_UI_ACTOR
+UIKIT_EXTERN API_AVAILABLE(ios(12.1), visionos(26.2)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 @protocol UIPencilInteractionDelegate <NSObject>
 
 @optional
@@ -175,13 +175,13 @@ UIKIT_EXTERN API_AVAILABLE(ios(12.1)) API_UNAVAILABLE(watchos, tvos) API_UNAVAIL
 /// of ``UIPencilInteraction``.
 ///
 /// - Note: If both this method and the deprecated ``pencilInteractionDidTap(_:)`` are implemented, then only this method will be called.
-- (void)pencilInteraction:(UIPencilInteraction *)interaction didReceiveTap:(UIPencilInteractionTap *)tap API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) NS_SWIFT_NAME(pencilInteraction(_:didReceiveTap:));
+- (void)pencilInteraction:(UIPencilInteraction *)interaction didReceiveTap:(UIPencilInteractionTap *)tap API_AVAILABLE(ios(17.5), visionos(26.2)) NS_SWIFT_NAME(pencilInteraction(_:didReceiveTap:));
 
 /// Called when the user squeezes side of the pencil if the interaction's view is in a visible view hierarchy.
 ///
 /// The delegate may do anything in this method.  To perform the user's preferred squeeze action (as set in Settings), consult the ``preferredSqueezeAction`` class
 /// property of ``UIPencilInteraction``.
-- (void)pencilInteraction:(UIPencilInteraction *)interaction didReceiveSqueeze:(UIPencilInteractionSqueeze *)squeeze API_AVAILABLE(ios(17.5)) API_UNAVAILABLE(visionos) NS_SWIFT_NAME(pencilInteraction(_:didReceiveSqueeze:));
+- (void)pencilInteraction:(UIPencilInteraction *)interaction didReceiveSqueeze:(UIPencilInteractionSqueeze *)squeeze API_AVAILABLE(ios(17.5), visionos(26.2)) NS_SWIFT_NAME(pencilInteraction(_:didReceiveSqueeze:));
 
 @end
 
