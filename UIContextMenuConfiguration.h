@@ -52,6 +52,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0), tvos(17.0)) API_UNAVAILABLE(watchos) NS_SW
 /// Preferred menu element ordering strategy for this menu.
 @property (nonatomic) UIContextMenuConfigurationElementOrder preferredMenuElementOrder API_AVAILABLE(ios(16.0), tvos(17.0));
 
+/// Determines if the context menu should enable type-select. This is disabled for certain menus to avoid conflicting with typing. Default is YES.
+@property (nonatomic) BOOL allowsTypeSelect API_AVAILABLE(ios(27.0), visionos(27.0)) API_UNAVAILABLE(tvos);
+
 /*!
  * @abstract Returns a UIContextMenuConfiguration.
  *

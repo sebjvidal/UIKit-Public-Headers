@@ -1,15 +1,14 @@
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIFoundation/NSTextAttachment.h>)
-#import <UIKit/UIKitDefines.h>
-
 //
 //  NSTextAttachment.h
-//  UIKit
+//  Text Kit
 //
-//  Copyright (c) 2011-2025, Apple Inc. All rights reserved.
+//  Copyright (c) 1994-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSAttributedString.h>
 #import <CoreGraphics/CGGeometry.h>
+#import <UIKit/UIKitDefines.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 

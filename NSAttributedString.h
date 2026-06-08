@@ -1,17 +1,16 @@
-#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/NSAttributedString.h>)
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIFoundation/NSAttributedString.h>)
 #import <UIKit/UIKitDefines.h>
 #if UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
-#import <UIKit/UIKitDefines.h>
-
 //
 //  NSAttributedString.h
-//  UIKit
+//  Text Kit
 //
-//  Copyright (c) 2011-2025, Apple Inc. All rights reserved.
+//  Copyright (c) 1994-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSAttributedString.h>
+#import <Foundation/NSItemProvider.h>
+#import <UIKit/UIKitDefines.h>
 
 @class NSAttributedString;
 @class NSFileWrapper;
@@ -198,7 +197,7 @@ UIKIT_EXTERN NSAttributedStringDocumentReadingOptionKey const NSTextKit1ListMark
 
 @interface NSMutableAttributedString (NSMutableAttributedStringDocumentFormats)
 // Methods replacing the receiver contents with an external document data.  options specify document attributes for interpreting the document contents.  NSDocumentTypeDocumentAttribute, NSCharacterEncodingDocumentAttribute, and NSDefaultAttributesDocumentAttribute are supported options key.  When they are not specified, these methods will examine the data and do their best to detect the appropriate attributes.  If dict is non-NULL, it will return a dictionary with various document-wide attributes accessible via NS...DocumentAttribute keys.
-- (BOOL)readFromURL:(NSURL *)url options:(NSDictionary<NSAttributedStringDocumentReadingOptionKey, id> *)opts documentAttributes:(NSDictionary<NSAttributedStringDocumentAttributeKey, id> * __nullable * __nullable)dict error:(NSError **)error  API_AVAILABLE(macosx(10.5), ios(9.0), watchos(2.0), tvos(9.0));
+- (BOOL)readFromURL:(NSURL *)url options:(NSDictionary<NSAttributedStringDocumentReadingOptionKey, id> *)opts documentAttributes:(NSDictionary<NSAttributedStringDocumentAttributeKey, id> * __nullable * __nullable)dict error:(NSError **)error  API_AVAILABLE(macos(10.5), ios(9.0), watchos(2.0), tvos(9.0));
 - (BOOL)readFromData:(NSData *)data options:(NSDictionary<NSAttributedStringDocumentReadingOptionKey, id> *)opts documentAttributes:(NSDictionary<NSAttributedStringDocumentAttributeKey, id> * __nullable * __nullable)dict error:(NSError **)error API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), watchos(2.0), visionos(1.0));
 @end
 
@@ -212,25 +211,9 @@ UIKIT_EXTERN NSAttributedStringDocumentReadingOptionKey const NSTextKit1ListMark
 - (BOOL)prefersRTFDInRange:(NSRange)range API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), watchos(11.0), visionos(2.0));
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
-
-#endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
-#else
-#import <UIFoundation/NSAttributedString.h>
-#endif
-
-#import <Foundation/NSAttributedString.h>
-#import <Foundation/NSItemProvider.h>
-#import <UIKit/UIKitDefines.h>
-@class NSAttributedString;
-@class NSFileWrapper;
-@class NSURL;
-
-#if UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
-
 UIKIT_EXTERN NSAttributedStringDocumentAttributeKey const NSPaperMarginDocumentAttribute API_AVAILABLE(ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0));  // @"PaperMargin", NSValue containing UIEdgeInsets
 
+API_AVAILABLE(ios(12.0), tvos(12.0), watchos(5.0), visionos(1.0), macCatalyst(12.0))
 @interface NSAttributedString (NSAttributedString_ItemProvider) <NSItemProviderReading, NSItemProviderWriting>
 @end
 
@@ -245,15 +228,13 @@ static const NSUnderlineStyle NSUnderlinePatternSolid API_DEPRECATED_WITH_REPLAC
 static const NSUnderlineStyle NSUnderlinePatternDot API_DEPRECATED_WITH_REPLACEMENT("NSUnderlineStylePatternDot", macos(10.0, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED), visionos(1.0, 1.0)) = NSUnderlineStylePatternDot;
 static const NSUnderlineStyle NSUnderlinePatternDash API_DEPRECATED_WITH_REPLACEMENT("NSUnderlineStylePatternDash", macos(10.0, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED), visionos(1.0, 1.0)) = NSUnderlineStylePatternDash;
 static const NSUnderlineStyle NSUnderlinePatternDashDot API_DEPRECATED_WITH_REPLACEMENT("NSUnderlineStylePatternDashDot", macos(10.0, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED), visionos(1.0, 1.0)) = NSUnderlineStylePatternDashDot;
-static const NSUnderlineStyle NSUnderlinePatternDashDotDot API_DEPRECATED_WITH_REPLACEMENT("NSUnderlinePatternDashDotDot", macos(10.0, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED), visionos(1.0, 1.0)) = NSUnderlineStylePatternDashDotDot;
+static const NSUnderlineStyle NSUnderlinePatternDashDotDot API_DEPRECATED_WITH_REPLACEMENT("NSUnderlineStylePatternDashDotDot", macos(10.0, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED), visionos(1.0, 1.0)) = NSUnderlineStylePatternDashDotDot;
 static const NSUnderlineStyle NSUnderlineByWord API_DEPRECATED_WITH_REPLACEMENT("NSUnderlineStyleByWord", macos(10.0, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED), visionos(1.0, 1.0)) = NSUnderlineStyleByWord;
 
-#if TARGET_OS_IPHONE
 typedef NS_ENUM(NSInteger, NSTextWritingDirection) {
     NSTextWritingDirectionEmbedding     = (0 << 1),
     NSTextWritingDirectionOverride      = (1 << 1)
 } API_DEPRECATED_WITH_REPLACEMENT("NSWritingDirectionFormatType", ios(7.0, 9.0), watchos(2.0, 2.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos);
-#endif // TARGET_OS_IPHONE
 
 @interface NSAttributedString(NSDeprecatedKitAdditions)
 - (nullable instancetype)initWithFileURL:(NSURL *)url options:(NSDictionary *)options documentAttributes:(NSDictionary* __nullable * __nullable)dict error:(NSError **)error API_DEPRECATED_WITH_REPLACEMENT("initWithURL:options:documentAttributes:error:", ios(7.0, 9.0), watchos(2.0, 2.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos);
@@ -262,12 +243,12 @@ typedef NS_ENUM(NSInteger, NSTextWritingDirection) {
 @interface NSMutableAttributedString (NSDeprecatedKitAdditions)
 - (BOOL)readFromFileURL:(NSURL *)url options:(NSDictionary *)opts documentAttributes:(NSDictionary* __nullable * __nullable)dict error:(NSError **)error API_DEPRECATED_WITH_REPLACEMENT("readFromURL:options:documentAttributes:error:", ios(7.0, 9.0), watchos(2.0, 2.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos);
 @end
-
 NS_HEADER_AUDIT_END(nullability, sendability)
-#elif TARGET_OS_OSX
-#import <AppKit/NSAttributedString.h>
-#endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS
 
+#endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
 #else
-#import <UIKitCore/NSAttributedString.h>
+#import <UIFoundation/NSAttributedString.h>
 #endif
+#if TARGET_OS_OSX
+#import <AppKit/NSAttributedString.h>
+#endif // TARGET_OS_OSX

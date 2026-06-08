@@ -82,7 +82,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(visionos, watchos) NS_SWIFT
 @property(nonatomic,readonly) CGRect  nativeBounds API_AVAILABLE(ios(8.0));  // Native bounds of the physical screen in pixels
 @property(nonatomic,readonly) CGFloat nativeScale  API_AVAILABLE(ios(8.0));  // Native scale factor of the physical screen
 
-- (nullable CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)sel API_AVAILABLE(ios(4.0));
+- (nullable CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)sel API_DEPRECATED("Use the equivalent display link API on UIWindowScene", ios(4.0, 27.0), tvos(9.0, 27.0), visionos(1.0, 27.0)) API_UNAVAILABLE(watchos);
 
 @property (readonly) NSInteger maximumFramesPerSecond  API_AVAILABLE(ios(10.3)) API_UNAVAILABLE(watchos); // The maximumFramesPerSecond this screen is capable of
 

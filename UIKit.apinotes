@@ -967,11 +967,6 @@ Classes:
   Properties:
   - Name: sourceRect
     SwiftPrivate: true
-- Name: UIFocusSystem
-  Methods:
-  - Selector: 'environment:containsEnvironment:'
-    MethodKind: Class
-    SwiftPrivate: true
 - Name: UINavigationItem
   Properties:
   - Name: renameDelegate
@@ -2589,10 +2584,6 @@ Globals:
   SwiftName: UIPasteboard.changedNotification
 - Name: UIPasteboardRemovedNotification
   SwiftName: UIPasteboard.removedNotification
-- Name: UIFocusDidUpdateNotification
-  SwiftName: UIFocusSystem.didUpdateNotification
-- Name: UIFocusMovementDidFailNotification
-  SwiftName: UIFocusSystem.movementDidFailNotification
 - Name: NSTextStorageDidProcessEditingNotification
   SwiftName: NSTextStorage.didProcessEditingNotification
 - Name: NSTextStorageWillProcessEditingNotification
@@ -2665,10 +2656,6 @@ Globals:
   SwiftName: UIPasteboard.changedTypesRemovedUserInfoKey
 - Name: UITextFieldDidEndEditingReasonKey
   SwiftName: UITextField.didEndEditingReasonUserInfoKey
-- Name: UIFocusUpdateAnimationCoordinatorKey
-  SwiftName: UIFocusSystem.animationCoordinatorUserInfoKey
-- Name: UIFocusUpdateContextKey
-  SwiftName: UIFocusSystem.focusUpdateContextUserInfoKey
 - Name: UIAccessibilityAnnouncementKeyStringValue
   SwiftName: UIAccessibility.announcementStringValueUserInfoKey
 - Name: UIAccessibilityAnnouncementKeyWasSuccessful
@@ -2876,6 +2863,7 @@ Functions:
   SwiftPrivate: true
 - Name: UIFontWeightForImageSymbolWeight
   SwiftName: "UIImageSymbolWeight.fontWeight(self:)"
+# This mapping is available only for public SDK via the UIKit module. rdar://162943859
 - Name: UIImageSymbolWeightForFontWeight
   SwiftName: "UIFontWeight.symbolWeight(self:)"
 - Name: UIInterfaceOrientationIsPortrait

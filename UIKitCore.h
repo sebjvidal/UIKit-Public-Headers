@@ -22,12 +22,7 @@
 #import <UIKit/UIImageSymbolConfiguration.h>
 #import <UIKit/NSDataAsset.h>
 #import <UIKit/UILocalNotification.h>
-#import <UIKit/NSAttributedString.h>
 #import <UIKit/NSItemProvider+UIKitAdditions.h>
-#import <UIKit/NSParagraphStyle.h>
-#import <UIKit/NSShadow.h>
-#import <UIKit/NSStringDrawing.h>
-#import <UIKit/NSText.h>
 
 #if !TARGET_OS_WATCH || (__has_include(<QuartzCore/QuartzCore.h>) && __has_include(<UIKit/UIAccelerometer.h>))
 #import <UIKit/UIAccelerometer.h>
@@ -244,9 +239,6 @@
 #import <UIKit/UIKeyboardLayoutGuide.h>
 #import <UIKit/UITrackingLayoutGuide.h>
 #import <UIKit/UIStackView.h>
-#import <UIKit/NSLayoutManager.h>
-#import <UIKit/NSTextContainer.h>
-#import <UIKit/NSTextStorage.h>
 #import <UIKit/UIStateRestoration.h>
 #import <UIKit/UIViewControllerTransitioning.h>
 #import <UIKit/UIViewControllerTransitionCoordinator.h>
@@ -275,6 +267,7 @@
 #import <UIKit/UISelectionFeedbackGenerator.h>
 #import <UIKit/UIImpactFeedbackGenerator.h>
 #import <UIKit/UINotificationFeedbackGenerator.h>
+#import <UIKit/UILookToScrollInteraction.h>
 #import <UIKit/UICanvasFeedbackGenerator.h>
 #import <UIKit/UITimingCurveProvider.h>
 #import <UIKit/NSIndexPath+UIKitAdditions.h>
@@ -321,8 +314,11 @@
 #import <UIKit/UISceneSessionActivationRequest.h>
 #import <UIKit/UISceneActivationConditions.h>
 #import <UIKit/UISceneDestructionCondition.h>
+#import <UIKit/UISceneClosureConfirmation.h>
 #import <UIKit/UISceneSizeRestrictions.h>
 #import <UIKit/UISceneWindowingControlStyle.h>
+#import <UIKit/UISceneAccessory.h>
+#import <UIKit/UISceneAccessoryRegistration.h>
 #import <UIKit/UIWindowSceneGeometry.h>
 #import <UIKit/UIWindowSceneGeometryPreferences.h>
 #import <UIKit/UIWindowSceneGeometryPreferencesMac.h>
@@ -416,3 +412,15 @@
 #import <UIKit/UIMessageConversationContext.h>
 #import <UIKit/UIMessageConversationEntry.h>
 #endif
+
+#if __has_include(<UIFoundation/NSAttributedString.h>)
+#import <UIFoundation/NSAttributedString.h>
+#import <UIFoundation/NSLayoutManager.h>
+#import <UIFoundation/NSParagraphStyle.h>
+#import <UIFoundation/NSShadow.h>
+#import <UIFoundation/NSStringDrawing.h>
+#import <UIFoundation/NSText.h>
+#import <UIFoundation/NSTextContainer.h>
+#import <UIFoundation/NSTextStorage.h>
+#endif // __has_include(<UIFoundation/NSAttributedString.h>)
+

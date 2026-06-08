@@ -25,6 +25,18 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 + (instancetype)configurationWithName:(nullable NSString *)name sessionRole:(UISceneSessionRole)sessionRole;
 - (instancetype)initWithName:(nullable NSString *)name sessionRole:(UISceneSessionRole)sessionRole NS_DESIGNATED_INITIALIZER;
 
+/// Creates a scene-configuration object.
+///
+/// Scene sessions created from this configuration will have their role
+/// automatically set by the system.
+- (instancetype)init;
+
+/// Creates a scene-configuration object with the specified name.
+///
+/// Scene sessions created from this configuration will have their role
+/// automatically set by the system.
+- (instancetype)initWithName:(nullable NSString *)name API_AVAILABLE(ios(27.0), macCatalyst(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
 @property (nonatomic, nullable, readonly) NSString *name;
 @property (nonatomic, readonly) UISceneSessionRole role;
 

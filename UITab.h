@@ -54,6 +54,9 @@ API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 /// The image of the tab. Default is nil.
 @property (nonatomic, strong, nullable) UIImage *image;
 
+/// An alternate image to display when the tab is selected. Default is nil.
+@property (nonatomic, strong, nullable) UIImage *selectedImage API_AVAILABLE(ios(26.1), tvos(26.1), visionos(26.1)) API_UNAVAILABLE(watchos);
+
 /// The subtitle of the tab. This is displayed only in certain contexts, like the sidebar. Default is nil.
 @property (nonatomic, copy, nullable) NSString *subtitle;
 

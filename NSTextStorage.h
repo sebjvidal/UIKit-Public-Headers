@@ -1,30 +1,29 @@
-#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/NSTextStorage.h>)
+#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIFoundation/NSTextStorage.h>)
 //
 //  NSTextStorage.h
-//  UIKit
+//  Text Kit
 //
-//  Copyright (c) 2011-2018, Apple Inc. All rights reserved.
+//  Copyright (c) 1994-2025, Apple Inc. All rights reserved.
 //
 
 #import <Foundation/NSObject.h>
 #import <Foundation/NSNotification.h>
-#import <UIKit/NSAttributedString.h>
 #import <UIKit/UIKitDefines.h>
+#import <UIKit/NSAttributedString.h>
+
+NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @class NSArray, NSLayoutManager, NSNotification;
 
 @protocol NSTextStorageDelegate;
 @protocol NSTextStorageObserving;
 
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
-
-#if UIKIT_HAS_UIFOUNDATION_SYMBOLS
-
 typedef NS_OPTIONS(NSUInteger, NSTextStorageEditActions) {
-    NSTextStorageEditedAttributes = (1 << 0),
-    NSTextStorageEditedCharacters = (1 << 1)
-} API_AVAILABLE(macos(10.11), ios(7.0)) API_UNAVAILABLE(watchos);
-
+    NSTextStorageEditedAttributes API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos) = (1 << 0),
+    NSTextStorageEditedCharacters API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos) = (1 << 1)
+} API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
+NS_SWIFT_NAME(NSTextStorage.EditActions)
+;
 
 /* Note for subclassing NSTextStorage: NSTextStorage is a semi-abstract subclass of NSMutableAttributedString. It implements change management (beginEditing/endEditing), verification of attributes, delegate handling, and layout management notification. The one aspect it does not implement is the actual attributed string storage --- this is left up to the subclassers, which need to override the two NSMutableAttributedString primitives in addition to two NSAttributedString primitives:
  
@@ -37,21 +36,8 @@ typedef NS_OPTIONS(NSUInteger, NSTextStorageEditActions) {
  These primitives should perform the change then call edited:range:changeInLength: to get everything else to happen.
 */
 
-UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0)) API_UNAVAILABLE(watchos)
+UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
 @interface NSTextStorage : NSMutableAttributedString <NSSecureCoding>
-
-/**************************** Layout manager ****************************/
-
-// NSLayoutManager objects owned by the receiver.
-@property (readonly, copy, NS_NONATOMIC_IOSONLY) NSArray<NSLayoutManager *> *layoutManagers;
-
-// Adds aLayoutManager to the receiver.  Sends -[NSLayoutManager setTextStorage:] to aLayoutManager with the receiver.
-- (void)addLayoutManager:(NSLayoutManager *)aLayoutManager;
-
-// Removes aLayoutManager from the receiver if already owned by it.  Sends -[NSLayoutManager setTextStorage:] to aLayoutManager with nil.
-- (void)removeLayoutManager:(NSLayoutManager *)aLayoutManager;
-
-
 /**************************** Pending edit info ****************************/
 // These methods return information about the editing status. Especially useful when there are outstanding beginEditing calls or during processEditing...
 
@@ -98,21 +84,22 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0)) API_UNAVAILABLE(watchos)
 
 /****  NSTextStorage delegate methods ****/
 
-API_UNAVAILABLE(watchos) @protocol NSTextStorageDelegate <NSObject>
+API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
+@protocol NSTextStorageDelegate <NSObject>
 @optional
 
 // Sent inside -processEditing right before fixing attributes.  Delegates can change the characters or attributes.
-- (void)textStorage:(NSTextStorage *)textStorage willProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta API_AVAILABLE(macos(10.11), ios(7.0));
+- (void)textStorage:(NSTextStorage *)textStorage willProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 // Sent inside -processEditing right before notifying layout managers.  Delegates can change the attributes.
-- (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta API_AVAILABLE(macos(10.11), ios(7.0));
+- (void)textStorage:(NSTextStorage *)textStorage didProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 @end
 
 /**** Notifications ****/
 
-UIKIT_EXTERN NSNotificationName const NSTextStorageWillProcessEditingNotification API_AVAILABLE(macos(10.0), ios(7.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSNotificationName const NSTextStorageDidProcessEditingNotification API_AVAILABLE(macos(10.0), ios(7.0)) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN NSNotificationName  const NSTextStorageWillProcessEditingNotification API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN NSNotificationName  const NSTextStorageDidProcessEditingNotification API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 #pragma mark NSTextStorageObserving
 // NSTextStorageObserving defines the protocol for NSTextStorage controller objects observing changes in the text backing-store.
@@ -128,10 +115,21 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0)) API_UNAVAILABLE(watchos)
 - (void)performEditingTransactionForTextStorage:(NSTextStorage *)textStorage usingBlock:(void (NS_NOESCAPE ^) (void))transaction;
 @end
 
-#endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS
+/**************************** Layout Manager  ****************************/
+API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
+@interface NSTextStorage (NSTextStorage_NSLayoutManagerInterface)
+
+// NSLayoutManager objects owned by the receiver.
+@property (readonly, copy, NS_NONATOMIC_IOSONLY) NSArray<NSLayoutManager *> *layoutManagers;
+
+// Adds aLayoutManager to the receiver.  Sends -[NSLayoutManager setTextStorage:] to aLayoutManager with the receiver.
+- (void)addLayoutManager:(NSLayoutManager *)aLayoutManager;
+
+// Removes aLayoutManager from the receiver if already owned by it.  Sends -[NSLayoutManager setTextStorage:] to aLayoutManager with nil.
+- (void)removeLayoutManager:(NSLayoutManager *)aLayoutManager;
+@end
 
 NS_HEADER_AUDIT_END(nullability, sendability)
-
 #else
-#import <UIKitCore/NSTextStorage.h>
+#import <UIFoundation/NSTextStorage.h>
 #endif

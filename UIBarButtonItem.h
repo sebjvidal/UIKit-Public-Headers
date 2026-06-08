@@ -63,6 +63,12 @@ typedef NS_ENUM(NSInteger, UIBarButtonSystemItem) {
     UIBarButtonSystemItemWritingTools API_AVAILABLE(ios(18.2), visionos(26.0)) API_UNAVAILABLE(tvos, watchos)
 } API_UNAVAILABLE(watchos);
 
+typedef NSInteger UIBarButtonItemVisibilityPriority NS_TYPED_EXTENSIBLE_ENUM API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
+UIKIT_EXTERN const UIBarButtonItemVisibilityPriority UIBarButtonItemVisibilityPriorityStandard API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN const UIBarButtonItemVisibilityPriority UIBarButtonItemVisibilityPriorityLow API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
+UIKIT_EXTERN const UIBarButtonItemVisibilityPriority UIBarButtonItemVisibilityPriorityHigh API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
+
 @class UIImage, UIView;
 
 UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
@@ -140,6 +146,18 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 /// Whether or not symbol animations are enabled for this bar button item.
 @property (nonatomic, readwrite, assign, getter=isSymbolAnimationEnabled) BOOL symbolAnimationEnabled API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);
+
+/// Visibility priority for this item when placed in a button bar.
+///
+/// Items with higher priority values are preserved longer when space is constrained.
+/// When an item is placed in an implicit group, the group inherits this priority.
+///
+/// The default value is `UIBarButtonItemVisibilityPriorityStandard`.
+@property (nonatomic, readwrite, assign) UIBarButtonItemVisibilityPriority visibilityPriority API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
+/// Whether the standard padding around the item should be removed.
+/// Default: NO
+@property (nonatomic, readwrite, getter=isPaddingRemoved, setter=setPaddingRemoved:) BOOL paddingRemoved API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 
 /// A UIMenuElement that should substitute for the UIBarButtonItem when displayed in a menu.
 @property (nonatomic, readwrite, copy, nullable) UIMenuElement *menuRepresentation API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);

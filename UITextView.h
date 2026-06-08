@@ -22,11 +22,15 @@
 #import <UIKit/UILetterformAwareAdjusting.h>
 #import <UIKit/UITextPasteConfigurationSupporting.h>
 #import <UIKit/UIInputSuggestion.h>
-
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@class UIFindInteraction, UIFont, UIColor, UIMenu, UIMenuElement, UITextView, NSTextContainer, NSTextLayoutManager, NSLayoutManager, NSTextStorage, NSTextAttachment, UITextItem, UITextItemMenuConfiguration, NSTextRange, UITextFormattingViewController, UITextFormattingViewControllerConfiguration, UIWritingToolsCoordinator;
-@protocol UIEditMenuInteractionAnimating, UIContextMenuInteractionAnimating;
+@class UIFindInteraction, UIFont, UIColor, UIMenu, UIMenuElement, UITextView, NSTextContainer, NSTextLayoutManager, NSLayoutManager, NSTextStorage, NSTextAttachment, UITextItem, UITextItemMenuConfiguration, NSTextRange, UITextFormattingViewController, UITextFormattingViewControllerConfiguration, UIWritingToolsCoordinator, NSTextViewportLayoutController, NSTextLayoutFragment;
+@protocol UIEditMenuInteractionAnimating, UIContextMenuInteractionAnimating, NSTextViewportLayoutControllerDelegate;
+
+typedef NS_OPTIONS(NSUInteger, UITextAttachmentViewProviderReusePolicy) {
+    UITextAttachmentViewProviderReusePolicyOnScrollingOutOfViewport = 1 << 0, // Cache text attachment related objects when they are scrolled out of the viewport
+    UITextAttachmentViewProviderReusePolicyOnEditingInlineParagraphs = 1 << 1, // Cache text attachment related objects when the paragraphs containing them are recycled because of editing
+};
 
 API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @protocol UITextViewDelegate <NSObject, UIScrollViewDelegate>
@@ -216,7 +220,7 @@ typedef NS_ENUM(NSInteger, UITextViewBorderStyle) {
 } API_AVAILABLE(ios(17.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
-@interface UITextView : UIScrollView <UITextInput, UIContentSizeCategoryAdjusting, UILetterformAwareAdjusting>
+@interface UITextView : UIScrollView <UITextInput, UIContentSizeCategoryAdjusting, UILetterformAwareAdjusting, NSTextViewportLayoutControllerDelegate>
 
 @property(nullable,nonatomic,weak) id<UITextViewDelegate> delegate;
 
@@ -321,6 +325,24 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// 
 /// It has a non-nil default value.
 @property(nonatomic, nullable, readwrite, copy) UITextFormattingViewControllerConfiguration *textFormattingConfiguration API_AVAILABLE(ios(18.0), visionos(26.0)) API_UNAVAILABLE(macCatalyst) API_UNAVAILABLE(watchos, tvos);
+
+/// Register the UITextAttachmentViewProviderReusePolicy for all instances of a particular subclass of NSTextAttachmentViewProvider.
+- (void)registerTextAttachmentViewProviderReusePolicy:(UITextAttachmentViewProviderReusePolicy)policy forTextAttachmentViewProviderType:(Class)viewProviderType API_AVAILABLE(ios(27.0),tvos(27.0),visionos(27.0)) API_UNAVAILABLE(watchos);
+
+/// `NSTextViewportLayoutControllerDelegate` method that the framework calls when the layout controller lays out a text layout fragment in the UI. Requires a call to super.
+- (void)textViewportLayoutController:(NSTextViewportLayoutController *)textViewportLayoutController configureRenderingSurfaceForTextLayoutFragment:(NSTextLayoutFragment *)textLayoutFragment API_AVAILABLE(ios(27.0),tvos(27.0),visionos(27.0)) API_UNAVAILABLE(watchos) NS_REQUIRES_SUPER;
+
+/// `NSTextViewportLayoutControllerDelegate` method that the framework calls to request the current viewport, which is the view visible bounds plus the overdraw area. Requires a call to super.
+- (CGRect)viewportBoundsForTextViewportLayoutController:(NSTextViewportLayoutController *)textViewportLayoutController API_AVAILABLE(ios(27.0),tvos(27.0),visionos(27.0)) API_UNAVAILABLE(watchos) NS_REQUIRES_SUPER;
+
+/// `NSTextViewportLayoutControllerDelegate` method that the framework calls when the text viewport layout controller starts its layout process. Requires a call to super.
+- (void)textViewportLayoutControllerWillLayout:(NSTextViewportLayoutController *)textViewportLayoutController API_AVAILABLE(ios(27.0),tvos(27.0),visionos(27.0)) API_UNAVAILABLE(watchos) NS_REQUIRES_SUPER;
+
+/// `NSTextViewportLayoutControllerDelegate` method that the framework calls when the text viewport layout controller finishes its layout process. Requires a call to super.
+- (void)textViewportLayoutControllerDidLayout:(NSTextViewportLayoutController *)textViewportLayoutController API_AVAILABLE(ios(27.0),tvos(27.0),visionos(27.0)) API_UNAVAILABLE(watchos) NS_REQUIRES_SUPER;
+
+/// `NSTextViewportLayoutControllerDelegate` method that the framework calls when the text viewport layout controller receives a `setNeedsLayout` call. Requires a call to super.
+- (void)textViewportLayoutControllerReceivedSetNeedsLayout:(NSTextViewportLayoutController *)textViewportLayoutController API_AVAILABLE(ios(27.0),tvos(27.0),visionos(27.0)) API_UNAVAILABLE(watchos) NS_REQUIRES_SUPER;
 
 @end
 

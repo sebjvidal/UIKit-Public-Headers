@@ -21,6 +21,10 @@
 #import <UIKit/UIFocusEffect.h>
 #import <UIKit/UICornerConfiguration.h>
 #import <UIUtilities/UICoordinateSpace.h>
+#import <CoreLocation/CLBody.h>
+#if __has_include(<CoreMotion/CMBody.h>)
+#import <CoreMotion/CMBody.h>
+#endif
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -767,6 +771,12 @@ API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos)
 - (CGFloat)effectiveRadiusForCorner:(UIRectCorner)corner NS_SWIFT_NAME(effectiveRadius(corner:));
 
 @end
+
+@interface UIView () <CLBodyIdentifiable> @end
+
+#if __has_include(<CoreMotion/CMBody.h>)
+@interface UIView () <CMBodyIdentifiable> @end
+#endif
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 

@@ -12,10 +12,11 @@
 #import <UIKit/UILayoutGuide.h>
 #import <UIKit/UIBarButtonItem.h>
 #import <UIKit/UITabBarItem.h>
+#import <TargetConditionals.h>
 
-#if TARGET_OS_MACCATALYST || TARGET_OS_OSX
+#if TARGET_OS_OSX || TARGET_OS_MACCATALYST
 #import <AppKit/NSToolbarItem.h>
-#endif // TARGET_OS_MACCATALYST
+#endif // TARGET_OS_OSX || TARGET_OS_MACCATALYST
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -42,11 +43,11 @@ API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos)
 @interface UITabBarItem (UIPopoverPresentationControllerSourceItem) <UIPopoverPresentationControllerSourceItem>
 @end
 
-#if TARGET_OS_MACCATALYST || TARGET_OS_OSX
+#if TARGET_OS_OSX || TARGET_OS_MACCATALYST
 API_AVAILABLE(macCatalyst(16.0))
 @interface NSToolbarItem (UIPopoverPresentationControllerSourceItem) <UIPopoverPresentationControllerSourceItem>
 @end
-#endif // TARGET_OS_MACCATALYST
+#endif // TARGET_OS_OSX || TARGET_OS_MACCATALYST
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 

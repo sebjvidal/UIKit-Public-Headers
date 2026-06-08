@@ -1,4 +1,4 @@
-#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/NSLayoutManager.h>)
+#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIFoundation/NSLayoutManager.h>)
 //
 //  NSLayoutManager.h
 //  UIKit
@@ -9,11 +9,14 @@
 #import <Foundation/NSObject.h>
 #import <UIKit/NSTextStorage.h>
 #import <UIKit/UIKitDefines.h>
-#import <UIKit/UIFont.h>
 #import <CoreGraphics/CoreGraphics.h>
+#if __has_include(<UIKit/UIFont.h>)
+#import <UIKit/UIFont.h>
+#endif
 
 @class NSTextContainer;
 @class UIColor;
+@class UIFont;
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -21,13 +24,19 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 @protocol NSLayoutManagerDelegate;
 
-#if !__NSLAYOUT_MANAGER_SHARED_SECTION__
-#define __NSLAYOUT_MANAGER_SHARED_SECTION__ 1
+#if !__NSTEXT_LAYOUT_ORIENTATION_SECTION__
+#define __NSTEXT_LAYOUT_ORIENTATION_SECTION__ 1
 typedef NS_ENUM(NSInteger, NSTextLayoutOrientation) {
     NSTextLayoutOrientationHorizontal = 0, // Lines rendered horizontally, grow top to bottom
     NSTextLayoutOrientationVertical = 1, // Lines rendered vertically, grow right to left
-} API_AVAILABLE(macosx(10.0), ios(7.0), tvos(9.0)) API_UNAVAILABLE(watchos);
-#endif // !__NSLAYOUT_MANAGER_SHARED_SECTION__
+} API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
+#endif // !__NSTEXT_LAYOUT_ORIENTATION_SECTION__
+
+API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
+@protocol NSTextLayoutOrientationProvider
+// A property describing the receiver's layout orientation.  This property defines the default value for the range of string laid out in the receiver in absence of explicit NSVerticalGlyphFormAttributeName attribute.  For example, when NSTextLayoutOrientationVertical, the default value for NSVerticalGlyphFormAttributeName is 1.  When rendering into the receiver, the Text System assumes the coordinate system is appropriately rotated.
+@property (readonly, NS_NONATOMIC_IOSONLY) NSTextLayoutOrientation layoutOrientation API_AVAILABLE(macos(10.7), ios(7.0));
+@end
 
 typedef NS_OPTIONS(NSInteger, NSGlyphProperty) {
     NSGlyphPropertyNull = (1 << 0), // null glyph ignored for layout and display
@@ -44,12 +53,6 @@ typedef NS_OPTIONS(NSInteger, NSControlCharacterAction) {
     NSControlCharacterActionParagraphBreak = (1 << 4), // Causes paragraph break; firstLineIndent will be used for the following glyph
     NSControlCharacterActionContainerBreak = (1 << 5) // Causes container break
 } API_AVAILABLE(macos(10.11), ios(7.0)) API_UNAVAILABLE(watchos);
-
-API_UNAVAILABLE(watchos) @protocol NSTextLayoutOrientationProvider
-// A property describing the receiver's layout orientation.  This property defines the default value for the range of string laid out in the receiver in absence of explicit NSVerticalGlyphFormAttributeName attribute.  For example, when NSTextLayoutOrientationVertical, the default value for NSVerticalGlyphFormAttributeName is 1.  When rendering into the receiver, the Text System assumes the coordinate system is appropriately rotated.
-@property (readonly, NS_NONATOMIC_IOSONLY) NSTextLayoutOrientation layoutOrientation API_AVAILABLE(macos(10.7), ios(7.0));
-@end
-
 
 UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0)) API_UNAVAILABLE(watchos)
 @interface NSLayoutManager : NSObject <NSSecureCoding>
@@ -379,7 +382,6 @@ enum {
 #endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS
 
 NS_HEADER_AUDIT_END(nullability, sendability)
-
 #else
-#import <UIKitCore/NSLayoutManager.h>
+#import <UIFoundation/NSLayoutManager.h>
 #endif

@@ -34,6 +34,20 @@ typedef NS_ENUM(NSInteger, UITabBarControllerSidebarLayout) {
     UITabBarControllerSidebarLayoutTile = 2,
 } NS_SWIFT_NAME(UITabBarControllerSidebar.Layout) API_AVAILABLE(ios(18.0), visionos(2.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
 
+#pragma mark - UITabBarControllerSidebarPlacement
+
+typedef NS_ENUM(NSInteger, UITabBarControllerSidebarPlacement) {
+    /// The system determines the appropriate placement.
+    UITabBarControllerSidebarPlacementAutomatic = 0,
+
+    /// Display the sidebar when it is supported.
+    UITabBarControllerSidebarPlacementSidebar = 1,
+
+    /// Display the tab bar.
+    UITabBarControllerSidebarPlacementTabBar = 2,
+} NS_SWIFT_NAME(UITabBarControllerSidebar.Placement) API_AVAILABLE(ios(27.0), visionos(27.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(watchos);
+
+
 #pragma mark - UITabSidebarScrollTarget
 
 UIKIT_EXTERN NS_SWIFT_UI_ACTOR NS_REFINED_FOR_SWIFT
@@ -60,6 +74,24 @@ NS_SWIFT_NAME(UITabBarController.Sidebar)
 
 /// The object managing the delegate of the sidebar.
 @property (nonatomic, weak, nullable) id<UITabBarControllerSidebarDelegate> delegate;
+
+/// Indicates when the tab sidebar is available to be displayed in the current context. When available, the sidebar is either visible, or
+/// can become visible depending on `isHidden`. Use this property to gate behaviors or UI that is dependent on the availability of
+/// the sidebar (like child tabs, or landing pages for groups).
+///
+/// Implement the delegate method `tabBarController:sidebarAvailabilityDidChange:` to be notified when the value of this property changes.
+@property (nonatomic, assign, readonly) BOOL isAvailable API_AVAILABLE(ios(27.0), visionos(27.0)) API_UNAVAILABLE(tvos);
+
+/// The preferred placement for the tab bar controller when the sidebar and tab bar
+/// are mutually exclusive, and only one placement can be displayed.
+///
+/// When set to `UITabBarControllerSidebarPlacementAutomatic`, the system
+/// resolves to the platform default. On iOS, this resolves to showing the tab bar by default.
+/// This property has no effect on platforms where multiple placements are supported, like
+/// on iPadOS, where the sidebar can be minimized into the top tab bar.
+///
+/// Default is `UITabBarControllerSidebarPlacementAutomatic`.
+@property (nonatomic, assign) UITabBarControllerSidebarPlacement preferredPlacement API_AVAILABLE(ios(27.0), visionos(27.0)) API_UNAVAILABLE(tvos);
 
 /// Determines if the sidebar is currently hidden.
 @property (nonatomic, assign, getter=isHidden) BOOL hidden;
@@ -124,6 +156,9 @@ NS_SWIFT_NAME(UITabBarControllerSidebar.Delegate)
 @protocol UITabBarControllerSidebarDelegate <NSObject>
 
 @optional
+
+/// Notifies the delegate when `UITabBarController.Sidebar.isAvailable` changes.
+- (void)tabBarController:(UITabBarController *)tabBarController sidebarAvailabilityDidChange:(UITabBarControllerSidebar *)sidebar API_AVAILABLE(ios(27.0), visionos(27.0)) API_UNAVAILABLE(tvos);
 
 /// Notifies the delegate when the visibility of the sidebar is about to change when `sidebar.isHidden` changes.
 /// Add animations to the animator to run alongside the visibility update. Alongside animations and completions will run immediately

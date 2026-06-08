@@ -24,6 +24,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NA
 /// The title of the view. Default is the application's name.
 @property (nonatomic, copy) NSString *title;
 
+/// The subtitle of the view. Default is `nil`.
+/// If `nil`, no subtitle will be displayed.
+@property (nonatomic, copy, nullable) NSString *subtitle API_AVAILABLE(ios(27.0));
+
 /// The primary action.
 @property (nonatomic, copy, nullable) UIAction *primaryAction;
 

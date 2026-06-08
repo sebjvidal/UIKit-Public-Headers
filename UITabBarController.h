@@ -87,6 +87,17 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// The default value is is `nil`, which would make all tabs available.
 @property (nonatomic, copy, nullable) NSArray<NSString *> *compactTabIdentifiers API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
 
+/// The identifier of the tab that should be displayed as prominent. Where supported, the specified tab receives
+/// enhanced visual emphasis in the tab bar. If this property is nil, and there is a `UISearchTab` that could
+/// become prominent (when `automaticallyActivatesSearch = true`), then the search tab will receive
+/// the prominent treatment by default.
+///
+/// Default is nil.
+@property (nonatomic, copy, nullable) NSString *prominentTabIdentifier API_AVAILABLE(ios(27.0), visionos(27.0)) API_UNAVAILABLE(tvos, watchos);
+
+/// Sets the prominent tab identifier with an option to animate the change.
+- (void)setProminentTabIdentifier:(nullable NSString *)identifier animated:(BOOL)animated API_AVAILABLE(ios(27.0), visionos(27.0)) API_UNAVAILABLE(tvos, watchos);
+
 /// The currently selected tab, which can be a root tab or any of their descendants.
 ///
 /// The default value for this property is `nil`.
@@ -102,6 +113,15 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 /// Returns the `tab` matching the specified `identifier` in the tab bar controller's tabs. Returns nil if no tab is found matching the `identifier`.
 - (nullable UITab *)tabForIdentifier:(NSString *)identifier API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);
+
+/// Animates multiple tab changes as a single update.
+///
+/// Use this method when you need to make several changes to tab properties simultaneously. Changes made
+/// inside the `updates` block are coalesced into a single animated layout pass, preventing intermediate states
+/// from being visible to the user.
+///
+/// The `updates` block is called synchronously. You can safely read and write any mutable tab properties inside this block.
+- (void)performBatchUpdates:(void (NS_NOESCAPE ^)(void))updates API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 
 /// Creates a tab bar controller with the specified tabs.
 - (instancetype)initWithTabs:(NSArray<UITab *> *)tabs API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos);

@@ -8,9 +8,11 @@
 
 #import <Foundation/NSObject.h>
 #import <CoreGraphics/CGGeometry.h>
+#import <UIKit/NSTextViewportRenderingSurface.h>
 
 @class NSTextRange;
 @class NSTextLayoutManager;
+@class NSTextContainer;
 @class NSTextViewportLayoutController;
 @class NSTextLayoutFragment;
 @protocol NSTextLocation;
@@ -42,6 +44,19 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE
 // Called when textViewportLayoutController is about to layout.
 // Layout information on textViewportLayoutController is up-to-date at the point of this call.
 - (void)textViewportLayoutControllerDidLayout:(NSTextViewportLayoutController *)textViewportLayoutController;
+
+// View Provider Caching Support
+- (void)textViewportLayoutController:(NSTextViewportLayoutController *)textViewportLayoutController cacheRenderingSurface:(id<NSTextViewportRenderingSurface>)renderingSurface forKey:(id<NSTextViewportRenderingSurfaceKey>)renderingSurfaceKey;
+
+- (id<NSTextViewportRenderingSurface>)textViewportLayoutController:(NSTextViewportLayoutController *)textViewportLayoutController retrieveCachedRenderingSurfaceForKey:(id<NSTextViewportRenderingSurfaceKey>)renderingSurfaceKey;
+
+// Triggers relayout of the view.
+- (void)textViewportLayoutControllerReceivedSetNeedsLayout:(NSTextViewportLayoutController *)textViewportLayoutController;
+
+#pragma mark NSTextViewportRenderingSurface support
+// Invoked right before textViewportLayoutController:configureRenderingSurfaceForTextLayoutFragment:. The returned rendering surface is registered and mapped by renderingSurfaceForKey:.
+- (nullable id <NSTextViewportRenderingSurface>)textViewportLayoutController:(NSTextViewportLayoutController *)textViewportLayoutController renderingSurfaceForTextLayoutFragment:(NSTextLayoutFragment *)textLayoutFragment API_UNAVAILABLE(macos, ios, tvos, visionos, watchos);
+
 @end
 
 #pragma mark NSTextViewportLayoutController
@@ -81,7 +96,13 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE
 // Adjusts the viewport rect by the specified offset if needed.
 // This is used to artificially move the viewport without affecting viewport content, can be both positive/negative offset.
 - (void)adjustViewportByVerticalOffset:(CGFloat)verticalOffset;
+
+#pragma mark NSTextViewportRenderingSurface support
+// Returns a rendering surface corresponding to key. The mapping is registered via the returned rendering surfaces from textViewportLayoutController:renderingSurfaceForTextLayoutFragment:. In addition, it can return auxiliary rendering surfaces registered through addRenderingSurface:key:group:placement:. The mappings are cleared at the beginning of each layoutViewport.
+- (nullable id <NSTextViewportRenderingSurface>)renderingSurfaceForKey:(id <NSTextViewportRenderingSurfaceKey>)key API_UNAVAILABLE(macos, ios, tvos, visionos, watchos);
+
 @end
+
 NS_HEADER_AUDIT_END(nullability, sendability)
 #else
 #import <UIFoundation/NSTextViewportLayoutController.h>

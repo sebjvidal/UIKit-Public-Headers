@@ -62,6 +62,26 @@ typedef NS_ENUM(NSInteger, UINavigationItemStyle) {
     UINavigationItemStyleEditor,
 } NS_SWIFT_NAME(UINavigationItem.ItemStyle) API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
+typedef NS_ENUM(NSInteger, UIBarMinimizeBehavior) {
+    /// The system determines the minimize behavior.
+    UIBarMinimizeBehaviorAutomatic = 0,
+    /// Bar minimization is disabled.
+    UIBarMinimizeBehaviorNever API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
+    /// Minimize when the user scrolls down.
+    UIBarMinimizeBehaviorOnScrollDown API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
+    /// Minimize when the user scrolls up.
+    UIBarMinimizeBehaviorOnScrollUp API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
+} API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
+typedef NS_ENUM(NSInteger, UIBarMinimizationSafeAreaAdjustment) {
+    /// The system determines the safe area adjustment.
+    UIBarMinimizationSafeAreaAdjustmentAutomatic = 0,
+    /// The safe area adjusts as bars minimize, allowing content to reflow.
+    UIBarMinimizationSafeAreaAdjustmentEnabled API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
+    /// The safe area remains unchanged as bars minimize.
+    UIBarMinimizationSafeAreaAdjustmentDisabled API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
+} API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
 UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
 @protocol UINavigationItemRenameDelegate <NSObject>
 
@@ -242,11 +262,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// The realized placement. Only valid if a search controller has been assigned to this item.
 @property (nonatomic, readonly, assign)  UINavigationItemSearchBarPlacement searchBarPlacement API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
 
-/// When `searchBarPlacement` is `.integrated` or `.integratedButton` and a search controller is present, use this bar button item in the view controller's `toolbarItems` to control the placement of the search bar among them when the search bar is appearing in the UIToolbar on iPhone.
-/// Without this bar button item, the positioning for the search bar defaults to trailingmost for the UIToolbar case.
-/// This bar button item will be ignored during toolbar layout if `searchController` is `nil`.
-/// UIBarButtonItemGroup will throw an NSInvalidArgumentException when this bar button item is included in its initialization.
-/// UINavigationItem will throw an NSInvalidArgumentException when this bar button item is included in leftBarButtonItems or rightBarButtonItems.
+/// When `searchBarPlacement` is `.integrated` or `.integratedButton` and a search controller is present, use this bar button item in `leadingItemGroups`, `centerItemGroups`, `trailingItemGroups`, `leftBarButtonItems`, `rightBarButtonItems`, or the view controller's `toolbarItems` to control the placement of the search bar among other items.
+/// Without this bar button item, the positioning for the search bar defaults to trailingmost for the UIToolbar case, or automatic for the navigation bar case.
+/// This bar button item will be ignored during layout if `searchController` is `nil`.
+/// When placed in a navigation bar item group, all other navigation bar content will be hidden during active search.
 @property (nonatomic, readonly, strong) UIBarButtonItem *searchBarPlacementBarButtonItem API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(tvos, watchos, visionos);
 
 /// Defaults to `YES`
@@ -270,6 +289,25 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property (nonatomic, readwrite, copy, nullable) UINavigationBarAppearance *scrollEdgeAppearance API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos);
 ///  When set and this item is topmost, overrides the hosting navigation bar's compactScrollEdgeAppearance. See UINavigationBar.h for further details.
 @property (nonatomic, readwrite, copy, nullable) UINavigationBarAppearance *compactScrollEdgeAppearance API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
+
+/// The minimize behavior for the navigation bar.
+///
+/// The default value is ``UIBarMinimizeBehavior/automatic``.
+/// When the navigation bar minimizes, an integrated top tab bar
+/// will also minimize.
+///
+/// By default, the safe area adjusts as the navigation bar minimizes.
+/// Use ``barMinimizationSafeAreaAdjustment`` to customize this.
+@property (nonatomic, readwrite, assign) UIBarMinimizeBehavior barMinimizeBehavior API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
+/// The safe area adjustment during navigation bar minimization.
+///
+/// Currently, only the navigation bar supports customizing the safe
+/// area adjustment.
+///
+/// The default value is ``UIBarMinimizationSafeAreaAdjustment/automatic``.
+@property (nonatomic, readwrite, assign) UIBarMinimizationSafeAreaAdjustment barMinimizationSafeAreaAdjustment API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

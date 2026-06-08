@@ -1,4 +1,10 @@
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/UIFocus.h>)
+#if __FOCUSENGINE_BUILDING_FOCUSENGINE__
+#import <FocusEngine/UIFocus.h>
+#import <UIKit/UIFocusGuide.h>
+#import <UIKit/UIFocusAnimationCoordinator.h>
+#import <UIKit/UIFocusUpdateContext+UIKitAdditions.h>
+#else
 //
 //  UIFocus.h
 //  UIKit
@@ -190,21 +196,22 @@ UIKIT_EXTERN API_AVAILABLE(ios(9.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @end
 
 
-UIKIT_EXTERN NSNotificationName const UIFocusDidUpdateNotification API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
-UIKIT_EXTERN NSNotificationName const UIFocusMovementDidFailNotification API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+UIKIT_EXTERN NSNotificationName const UIFocusDidUpdateNotification API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED NS_SWIFT_NAME(UIFocusSystem.didUpdateNotification);
+UIKIT_EXTERN NSNotificationName const UIFocusMovementDidFailNotification API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED NS_SWIFT_NAME(UIFocusSystem.movementDidFailNotification);
 
-UIKIT_EXTERN NSString * const UIFocusUpdateContextKey API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos);
-UIKIT_EXTERN NSString * const UIFocusUpdateAnimationCoordinatorKey API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos);
+UIKIT_EXTERN NSString * const UIFocusUpdateContextKey API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NAME(UIFocusSystem.focusUpdateContextUserInfoKey);
+UIKIT_EXTERN NSString * const UIFocusUpdateAnimationCoordinatorKey API_AVAILABLE(ios(11.0), tvos(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NAME(UIFocusSystem.animationCoordinatorUserInfoKey);
 
 /// Sound identifier for disabling sound during a focus update.
-UIKIT_EXTERN UIFocusSoundIdentifier const UIFocusSoundIdentifierNone API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(ios, watchos, visionos);
+UIKIT_EXTERN UIFocusSoundIdentifier const UIFocusSoundIdentifierNone API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(ios, watchos, visionos, macos);
 
 /// Sound identifier for playing the default sound during a focus update.
-UIKIT_EXTERN UIFocusSoundIdentifier const UIFocusSoundIdentifierDefault API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(ios, watchos, visionos);
+UIKIT_EXTERN UIFocusSoundIdentifier const UIFocusSoundIdentifierDefault API_AVAILABLE(tvos(11.0)) API_UNAVAILABLE(ios, watchos, visionos, macos);
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 
 #import <UIKit/UIFocusUpdateContext+UIKitAdditions.h>
+#endif // else __FOCUSENGINE_BUILDING_FOCUSENGINE__
 
 #else
 #import <UIKitCore/UIFocus.h>

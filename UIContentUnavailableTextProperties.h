@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKitDefines.h>
+#if __has_include(<UIFoundation/NSParagraphStyle.h>)
+#import <UIFoundation/NSParagraphStyle.h>
+#else
 #import <UIKit/NSParagraphStyle.h>
+#endif
+
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 

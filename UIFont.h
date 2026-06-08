@@ -1,4 +1,5 @@
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/UIFont.h>)
+#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIFoundation/UIFont.h>)
 //
 //  UIFont.h
 //  UIKit
@@ -76,8 +77,9 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0), watchos(2.0)) NS_SWIFT_SENDABLE
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)
-
- 
+#else
+#import <UIFoundation/UIFont.h>
+#endif
 
 #else
 #import <UIKitCore/UIFont.h>

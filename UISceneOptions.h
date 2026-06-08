@@ -45,6 +45,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 // A CloudKit share metadata item to handle on connection
 @property (nullable, nonatomic, readonly) CKShareMetadata *cloudKitShareMetadata;
+
+/// An optional user info object, provided when creating the `UISceneAccessory` for this scene accessory.
+///
+/// This object can be used to associate data to the scene accessory configuration to be passed to the scene delegate when the scene connects.
+@property (nullable, nonatomic, strong, readonly) id sceneAccessoryUserInfo API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(macCatalyst, tvos, visionos, watchos);
+
 @end
 
 #pragma mark - UISceneOpenURLOptions

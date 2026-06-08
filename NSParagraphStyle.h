@@ -1,22 +1,19 @@
-#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/NSParagraphStyle.h>)
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIFoundation/NSParagraphStyle.h>)
-#import <UIKit/UIKitDefines.h>
-#if UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
-#import <UIKit/UIKitDefines.h>
-
 //
 //  NSParagraphStyle.h
-//  UIKit
+//  Text Kit
 //
-//  Copyright (c) 2011-2025, Apple Inc. All rights reserved.
+//  Copyright (c) 1994-2025, Apple Inc. All rights reserved.
 //
 // NSParagraphStyle and NSMutableParagraphStyle hold paragraph style information
 // NSTextTab holds information about a single tab stop
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKitDefines.h>
 #import <UIKit/NSText.h>
 
 @class NSTextList;
+@class NSTextBlock;
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
@@ -59,6 +56,9 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), watchos(2.0), visio
 
 + (NSCharacterSet *)columnTerminatorsForLocale:(nullable NSLocale *)aLocale API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), watchos(2.0), visionos(1.0)); // Returns the column terminators for locale. Passing nil returns an instance corresponding to +[NSLocale systemLocale]. For matching user's formatting preferences, pass +[NSLocale currentLocale]. Can be used as the value for NSTabColumnTerminatorsAttributeName to make a decimal tab stop.
 
+- (instancetype)initWithTextAlignment:(NSTextAlignment)alignment location:(CGFloat)loc options:(NSDictionary<NSTextTabOptionKey, id> *)options NS_DESIGNATED_INITIALIZER; // Initializes a text tab with the text alignment, location, and options.  The text alignment is used to determine the position of text inside the tab column.
+
+@property (readonly, NS_NONATOMIC_IOSONLY) NSTextAlignment alignment;  // Defines the alignment of tab column contents. NSTextAlignmentNatural and NSTextAlignmentJustified are resolved either NSTextAlignmentLeft or NSTextAlignmentRight based on the user's preferred language.
 @property (readonly, NS_NONATOMIC_IOSONLY) CGFloat location; // Location of the tab stop inside the line fragment rect coordinate system
 @property (readonly, NS_NONATOMIC_IOSONLY) NSDictionary<NSTextTabOptionKey, id> *options; // Optional configuration attributes
 @end
@@ -67,6 +67,8 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), watchos(2.0), visio
 // NSParagraphStyle
 UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0))
 @interface NSParagraphStyle : NSObject <NSCopying, NSMutableCopying, NSSecureCoding>
+
+@property (readonly, NS_NONATOMIC_IOSONLY) NSTextAlignment alignment;
 
 @property (class, readonly, copy, NS_NONATOMIC_IOSONLY) NSParagraphStyle *defaultParagraphStyle; // This class property returns a shared and cached NSParagraphStyle instance with the default style settings, with same value as the result of [[NSParagraphStyle alloc] init].
 
@@ -102,6 +104,8 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), watchos(2.0), visio
 
 @property (readonly, copy, NS_NONATOMIC_IOSONLY) NSArray<NSTextList *> *textLists API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), watchos(2.0), visionos(1.0));     // Array to specify the text lists containing the paragraph, nested from outermost to innermost.
 
+@property (readonly, copy, NS_NONATOMIC_IOSONLY) NSArray<__kindof NSTextBlock *> *textBlocks API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), visionos(1.0), watchos(2.0));    // Array to specify the text blocks containing the paragraph, nested from outermost to innermost.
+
 @property (readonly, NS_NONATOMIC_IOSONLY) BOOL allowsDefaultTighteningForTruncation API_AVAILABLE(macos(10.11), ios(9.0), tvos(9.0), watchos(2.0), visionos(1.0)); // Tightens inter-character spacing in attempt to fit lines wider than the available space if the line break mode is one of the truncation modes before starting to truncate. NO by default. The maximum amount of tightening performed is determined by the system based on contexts such as font, line width, etc.
 
 @property (readonly, NS_NONATOMIC_IOSONLY) NSLineBreakStrategy lineBreakStrategy API_AVAILABLE(macos(10.11), ios(9.0), tvos(9.0), watchos(2.0), visionos(1.0)); // Specifies the line break strategies that may be used for laying out the paragraph.  The default value is NSLineBreakStrategyNone.
@@ -112,6 +116,7 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), watchos(2.0), visio
 UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0))
 @interface NSMutableParagraphStyle : NSParagraphStyle
 
+@property (NS_NONATOMIC_IOSONLY) NSTextAlignment alignment;
 @property (NS_NONATOMIC_IOSONLY) CGFloat lineSpacing;
 @property (NS_NONATOMIC_IOSONLY) CGFloat paragraphSpacing;
 @property (NS_NONATOMIC_IOSONLY) CGFloat firstLineHeadIndent;
@@ -130,6 +135,7 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), watchos(2.0), visio
 @property (NS_NONATOMIC_IOSONLY) BOOL allowsDefaultTighteningForTruncation API_AVAILABLE(macos(10.11), ios(9.0), tvos(9.0), watchos(2.0), visionos(1.0));
 @property (NS_NONATOMIC_IOSONLY) NSLineBreakStrategy lineBreakStrategy API_AVAILABLE(macos(10.11), ios(9.0), tvos(9.0), watchos(2.0), visionos(1.0));
 @property (NS_NONATOMIC_IOSONLY, copy) NSArray<NSTextList *> *textLists API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), watchos(2.0), visionos(1.0));
+@property (copy, NS_NONATOMIC_IOSONLY) NSArray<__kindof NSTextBlock *> *textBlocks API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), visionos(1.0), watchos(2.0));
 
 - (void)addTabStop:(NSTextTab *)anObject API_AVAILABLE(macos(10.0), ios(9.0), tvos(9.0), watchos(2.0), visionos(1.0));
 - (void)removeTabStop:(NSTextTab *)anObject API_AVAILABLE(macos(10.0), ios(9.0), tvos(9.0), watchos(2.0), visionos(1.0));
@@ -139,44 +145,6 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), watchos(2.0), visio
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)
-#endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
 #else
 #import <UIFoundation/NSParagraphStyle.h>
-#endif
-
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKitDefines.h>
-#import <UIKit/NSText.h>
-
-@class NSTextList;
-
-#if UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
-
-UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), watchos(2.0), visionos(1.0))
-@interface NSTextTab ()
-- (instancetype)initWithTextAlignment:(NSTextAlignment)alignment location:(CGFloat)loc options:(NSDictionary<NSTextTabOptionKey, id> *)options NS_DESIGNATED_INITIALIZER; // Initializes a text tab with the text alignment, location, and options.  The text alignment is used to determine the position of text inside the tab column.
-
-
-@property (readonly, NS_NONATOMIC_IOSONLY) NSTextAlignment alignment;  // Defines the alignment of tab column contents. NSTextAlignmentNatural and NSTextAlignmentJustified are resolved either NSTextAlignmentLeft or NSTextAlignmentRight based on the user's preferred language.
-@end
-
-UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0))
-@interface NSParagraphStyle ()
-@property (readonly, NS_NONATOMIC_IOSONLY) NSTextAlignment alignment;
-@end
-
-UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0))
-@interface NSMutableParagraphStyle ()
-@property (NS_NONATOMIC_IOSONLY) NSTextAlignment alignment;
-@end
-
-NS_HEADER_AUDIT_END(nullability, sendability)
-#elif TARGET_OS_OSX
-#import <AppKit/NSParagraphStyle.h>
-#endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS
-
-
-#else
-#import <UIKitCore/NSParagraphStyle.h>
 #endif

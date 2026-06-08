@@ -81,13 +81,27 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 @property(nullable, nonatomic, weak) id<UINavigationControllerDelegate> delegate;
 
-/// The interactive pop gesture recognizes on the leading screen edge and initiates an interactive pop.
-/// This property should only be used to set up failure requirements with it.
+/// The gesture recognizer that handles interactively popping the top view controller off the navigation stack
+/// when a person swipes from the leading screen edge.
+///
+/// The navigation controller installs this gesture recognizer on its view and uses it to pop the topmost view
+/// controller off the navigation stack when a person swipes horizontally from the leading edge of the screen.
+///
+/// Use this property to retrieve the gesture recognizer and tie it to the behavior of other gesture recognizers
+/// in your user interface.
 @property(nullable, nonatomic, readonly) UIGestureRecognizer *interactivePopGestureRecognizer API_AVAILABLE(ios(7.0)) API_UNAVAILABLE(tvos);
 
-/// The interactive content pop gesture recognizes on the entire content area of the navigation controller
-/// in cases that are not covered by the interactive pop gesture recognizer and initiates an interactive pop.
-/// This property should only be used to set up failure requirements with it.
+/// The gesture recognizer that handles interactively popping the top view controller off the navigation stack
+/// when a person pans horizontally in the view.
+///
+/// The navigation controller installs this gesture recognizer on its view and uses it to interactively pop the
+/// topmost view controller off the navigation stack when a person initially pans horizontally in a leading to
+/// trailing direction in the view. It recognizes a gesture on the entire content area of the navigation controller
+/// in cases that are not covered by ``UINavigationController/interactivePopGestureRecognizer``
+/// and initiates an interactive pop.
+///
+/// Use this property to retrieve the gesture recognizer and tie it to the behavior of other gesture recognizers
+/// in your user interface.
 @property(nullable, nonatomic, readonly) UIGestureRecognizer *interactiveContentPopGestureRecognizer API_AVAILABLE(ios(26.0), macCatalyst(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
 
 - (void)showViewController:(UIViewController *)vc sender:(nullable id)sender API_AVAILABLE(ios(8.0)); // Interpreted as pushViewController:animated:

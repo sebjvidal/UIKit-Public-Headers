@@ -36,15 +36,15 @@ API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 /// Child tabs of the tab group. Default is an empty array.
 @property (nonatomic, copy) NSArray<UITab *> *children;
 
-/// The display order of the children, represented by the identifiers. Default is empty.
-/// Any tab in `children` not contained in `displayOrderIdentifiers` will be appended after
-/// sorted items. Identifiers that do not match tabs in `children` will be ignored.
-@property (nonatomic, copy) NSArray<NSString *> *displayOrderIdentifiers;
-
 /// Determines if elements in `children` can be reordered from the sidebar. Default is NO.
 /// Changes in the display order are notified via `tabBarController:displayOrderDidChangeForGroup:`
 /// in `UITabBarControllerDelegate`.
 @property (nonatomic, assign) BOOL allowsReordering;
+
+/// The display order of the children, represented by the identifiers. Default is empty.
+/// Any tab in `children` not contained in `displayOrderIdentifiers` will be appended after
+/// sorted items. Identifiers that do not match tabs in `children` will be ignored.
+@property (nonatomic, copy) NSArray<NSString *> *displayOrderIdentifiers;
 
 /// Returns the `children` array sorted by `displayOrderIdentifiers` if it is specified.
 /// Any tab in `children` not contained in the identifiers will be appended after
@@ -85,6 +85,19 @@ API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 /// by users. When enabled, the tab group becomes a selectable item in the sidebar, and will no longer perform
 /// automatic selection for a default child if no child is currently selected. The default value is NO.
 @property (nonatomic, assign) BOOL isSidebarDestination API_AVAILABLE(ios(26.0), visionos(26.0)) API_UNAVAILABLE(tvos, watchos);
+
+/// Whether the group is initially displayed in a collapsed state in the sidebar.
+///
+/// When true, the group renders collapsed the first time it appears in
+/// the sidebar. The user can expand the group manually, and any
+/// subsequent user interactions or customization changes take precedence
+/// over this default.
+///
+/// This property has no effect in contexts where groups are not
+/// collapsible, such as when `sidebarAppearance == .inline`.
+///
+/// Default is `NO`.
+@property (nonatomic, assign, getter=isCollapsedByDefault) BOOL collapsedByDefault API_AVAILABLE(ios(26.1), visionos(26.1)) API_UNAVAILABLE(tvos, watchos);
 
 /// Creates a `UITabGroup` using the specified parameters.
 - (instancetype)initWithTitle:(NSString *)title

@@ -1,24 +1,25 @@
-#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/NSTextContainer.h>)
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIFoundation/NSTextContainer.h>)
-#import <UIKit/UIKitDefines.h>
-#if UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
-#import <UIKit/UIKitDefines.h>
-
 //
 //  NSTextContainer.h
-//  UIKit
+//  Text Kit
 //
 //  Copyright (c) 1994-2025, Apple Inc. All rights reserved.
 //
+
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKitDefines.h>
 #import <UIKit/NSParagraphStyle.h>
+#import <UIKit/NSText.h>
+#import <UIKit/NSLayoutManager.h>
 
 @class NSTextLayoutManager;
+@class NSTextView;
+@class UIBezierPath;
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos)
-@interface NSTextContainer : NSObject <NSSecureCoding>
+@interface NSTextContainer : NSObject <NSSecureCoding, NSTextLayoutOrientationProvider>
 
 /**************************** Initialization ****************************/
 
@@ -35,6 +36,9 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_
 
 // Default value: NSLineBreakByWordWrapping  The line break mode defines the behavior of the last line inside the text container.
 @property (NS_NONATOMIC_IOSONLY) NSLineBreakMode lineBreakMode API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
+
+// Default value : empty array  An array of UIBezierPath representing the exclusion paths inside the receiver's bounding rect.
+@property (copy, NS_NONATOMIC_IOSONLY) NSArray<UIBezierPath *> *exclusionPaths API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 /************************* Layout constraint properties *************************/
 
@@ -61,24 +65,10 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(7.0), tvos(9.0), visionos(1.0)) API_
 
 @end
 
-NS_HEADER_AUDIT_END(nullability, sendability)
-#endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
-#else
-#import <UIFoundation/NSTextContainer.h>
-#endif
+#pragma mark NSLayoutManager Interface
+@class NSLayoutManager;
 
-#import <Foundation/Foundation.h>
-#import <UIKit/NSParagraphStyle.h>
-#import <UIKit/UIKitDefines.h>
-#import <UIKit/NSLayoutManager.h>
-
-@class UIBezierPath;
-@class NSTextLayoutManager;
-
-#if UIKIT_HAS_UIFOUNDATION_SYMBOLS && !TARGET_OS_OSX
-NS_HEADER_AUDIT_BEGIN(nullability, sendability)
-
-@interface NSTextContainer () <NSTextLayoutOrientationProvider>
+@interface NSTextContainer (NSTextContainer_NSLayoutManagerInterface)
 
 // Accessor for the NSLayoutManager object owning the receiver.
 // Avoid assigning a layout manager directly through this property.  Adding a text container to a layout manager through -[NSLayoutManager addTextContainer:] will use the property for assigning the new layout manager.
@@ -86,15 +76,9 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 // This method should be used instead of the primitive -setLayoutManager: if you need to replace a container's layoutManager with a new one leaving the rest of the web intact.  All the NSTextContainers on the old NSLayoutManager get transferred to the new one.  This method deals with all the work of making sure the containers don't get deallocated and removing the old layoutManager from the text storage and replacing it with the new one.
 - (void)replaceLayoutManager:(NSLayoutManager *)newLayoutManager NS_SWIFT_NAME(replaceLayoutManager(_:)) API_AVAILABLE(macos(10.0), ios(9.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
-
-// Default value : empty array  An array of UIBezierPath representing the exclusion paths inside the receiver's bounding rect.
-@property (copy, NS_NONATOMIC_IOSONLY) NSArray<UIBezierPath *> *exclusionPaths API_AVAILABLE(macos(10.11), ios(7.0), tvos(9.0), visionos(1.0)) API_UNAVAILABLE(watchos);
-
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)
-#endif // UIKIT_HAS_UIFOUNDATION_SYMBOLS
-
 #else
-#import <UIKitCore/NSTextContainer.h>
+#import <UIFoundation/NSTextContainer.h>
 #endif

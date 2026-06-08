@@ -38,6 +38,18 @@ typedef NS_ENUM(NSInteger, UIMenuElementRepeatBehavior) {
     UIMenuElementRepeatBehaviorNonRepeatable,
 } API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NAME(UIMenuElement.RepeatBehavior);
 
+/// Visibility options for a menu element's image.
+typedef NS_ENUM(NSInteger, UIMenuElementImageVisibility) {
+    /// The element's image visibility is determined by the platform and context.
+    UIMenuElementImageVisibilityAutomatic = 0,
+    /// The element prefers its image to be visible, even in contexts where
+    /// images are not shown by default.
+    UIMenuElementImageVisibilityVisible = 1,
+    /// The element prefers its image to be hidden, even in contexts where
+    /// images are shown by default.
+    UIMenuElementImageVisibilityHidden = 2,
+} API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NAME(UIMenuElement.ImageVisibility);
+
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
@@ -51,6 +63,14 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 /// Image to be displayed alongside the element's title.
 @property (nonatomic, nullable, readonly) UIImage *image;
+
+/// The preferred visibility of the element's image.
+@property (nonatomic) UIMenuElementImageVisibility preferredImageVisibility API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(watchos);
+
+/// This block gets called when the element is being highlighted or unhighlighted in a menu.
+/// @param element The element being highlighted or unhighlighted.
+/// @param isHighlighted YES when the element is highlighted, NO when unhighlighted.
+@property (nonatomic, copy, nullable) void (^highlightStateUpdateHandler)(UIMenuElement *element, BOOL isHighlighted) API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(watchos);
 
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
 

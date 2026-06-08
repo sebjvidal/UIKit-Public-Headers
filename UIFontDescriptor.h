@@ -1,4 +1,5 @@
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/UIFontDescriptor.h>)
+#if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIFoundation/UIFontDescriptor.h>)
 //
 //  UIFontDescriptor.h
 //  UIKit
@@ -188,6 +189,9 @@ UIKIT_EXTERN UIFontTextStyle const UIFontTextStyleCaption2 API_AVAILABLE(ios(7.0
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 
+#else
+#import <UIFoundation/UIFontDescriptor.h>
+#endif
 
 #else
 #import <UIKitCore/UIFontDescriptor.h>

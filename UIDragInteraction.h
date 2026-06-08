@@ -31,33 +31,55 @@ API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 
 @end
 
+/// Determines the gesture lift behaviors for the interaction.
+typedef NS_ENUM(NSUInteger, UIDragLiftBehavior) {
+    /// The default lift behavior, which configures the `UIDragInteraction` with the default timing parameters.
+    UIDragLiftBehaviorDefault   = 0,
+
+    /// An extended lift behavior, which has a longer lift delay for the `UIDragInteraction`, allowing better disambiguation of
+    /// gestures in the same view. This is useful for 'canvas' like views where they can be many gestures involved in the manipulation
+    /// of objects on screen. For extended lifts, when a second touch is recognized in the view, the gesture will be cancelled.
+    UIDragLiftBehaviorExtended  = 1,
+} API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_NAME(UIDragInteraction.LiftBehavior);
 
 UIKIT_EXTERN API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos, tvos) NS_SWIFT_UI_ACTOR
 @interface UIDragInteraction : NSObject <UIInteraction>
 
+/// The object managing the delegate for the interaction.
+@property (nonatomic, nullable, readonly, weak) id<UIDragInteractionDelegate> delegate;
+
+/// Determines whether this interaction allows recognition of other gesture recognizers during the lift.
+/// If true, the interaction will be cancelled during the lift if another gesture recognizer recognizes.
+/// If false (the default value), all competing gesture recognizers will be failed when the lift begins.
+/// Note: `UILongPressGestureRecognizers` are always delayed and simultaneous during the lift.
+@property (nonatomic, assign) BOOL allowsSimultaneousRecognitionDuringLift;
+
+/// For pointer-initiated drags, whether to wait for the lift delay. Similar to `liftBehavior`, this is useful to disambiguate drag initiation
+/// gestures alongside other gestures in the same view.
+///
+/// If `YES`, then when the pointer moves past its activation hysteresis , the drag will begin, regardless of whether the lift delay has elapsed.
+/// If `NO`, then just like the touch-based drag initiation gesture, the drag waits for the lift delay to elapse first, then checks for the activation hysteresis.
+///
+/// Default is `YES` on iOS, and `NO` on macOS.
+@property (nonatomic, assign) BOOL allowsPointerDragBeforeLiftDelay API_AVAILABLE(ios(27.0));
+
+/// Determines the lift behavior for the drag gesture.
+///
+/// The default value is `UIDragLiftBehaviorDefault`
+@property (nonatomic, assign) UIDragLiftBehavior liftBehavior API_AVAILABLE(ios(27.0));
+
+/// Whether this interaction is allowed to drag.
+/// If true, the interaction will use touches to begin drags and/or add items to drags.
+/// If false, it will ignore touches.
+@property (nonatomic, getter=isEnabled) BOOL enabled;
+
+/// The default value of `enabled` in newly created `UIDragInteraction` instances.
+/// The value depends on the device.
+@property (class, nonatomic, readonly, getter=isEnabledByDefault) BOOL enabledByDefault;
+
 - (instancetype)initWithDelegate:(id<UIDragInteractionDelegate>)delegate NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-
-@property (nonatomic, nullable, readonly, weak) id<UIDragInteractionDelegate> delegate;
-
-/* Determines whether this interaction allows recognition of other gesture recognizers during the lift.
- * If true, the interaction will be cancelled during the lift if another gesture recognizer recognizes.
- * If false (the default value), all competing gesture recognizers will be failed when the lift begins.
- * Note: UILongPressGestureRecognizers are always delayed and simultaneous during the lift.
- */
-@property (nonatomic) BOOL allowsSimultaneousRecognitionDuringLift;
-
-/* Whether this interaction is allowed to drag.
- * If true, the interaction will use touches to begin drags and/or add items to drags.
- * If false, it will ignore touches.
- */
-@property (nonatomic, getter=isEnabled) BOOL enabled;
-
-/* The default value of `enabled` in newly created UIDragInteractions.
- * The value depends on the device.
- */
-@property (class, nonatomic, readonly, getter=isEnabledByDefault) BOOL enabledByDefault;
 
 @end
 

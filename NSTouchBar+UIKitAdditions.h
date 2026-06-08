@@ -7,7 +7,7 @@
 //
 
 #import <TargetConditionals.h>
-#if TARGET_OS_MACCATALYST || TARGET_OS_OSX
+#if TARGET_OS_OSX || TARGET_OS_MACCATALYST
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKitDefines.h>
 #import <UIKit/UIResponder.h>
@@ -54,7 +54,7 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 
-#endif // TARGET_OS_MACCATALYST || TARGET_OS_OSX
+#endif // TARGET_OS_OSX || TARGET_OS_MACCATALYST
 
 #else
 #import <UIKitCore/NSTouchBar+UIKitAdditions.h>

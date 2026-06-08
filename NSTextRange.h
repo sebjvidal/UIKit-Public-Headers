@@ -17,6 +17,13 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0), visionos(1.0)) N
 
 // Compares and returns the logical ordering to location
 - (NSComparisonResult)compare:(id <NSTextLocation>)location API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0), visionos(1.0));
+
+// Basic comparison of location equivalence, should have the result of NSOrderedSame from compare:
+- (BOOL)isEqual:(nullable id)location;
+
+// Must be consistent with results from isEqual while also avoiding hash collisions
+@property (readonly) NSUInteger hash;
+
 @end
 
 #pragma mark NSTextRange

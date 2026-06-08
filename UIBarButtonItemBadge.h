@@ -45,7 +45,7 @@ API_UNAVAILABLE(watchos, tvos)
 @end
 
 @interface UIBarButtonItem (Badging)
-/// Sets a badge on the bar button item. Currently only supported in navigation bars.
+/// Sets a badge on the bar button item. Supported in navigation bars and toolbars.
 @property (nonatomic, readwrite, nullable, strong) UIBarButtonItemBadge *badge NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(tvos, watchos);
 @end
 

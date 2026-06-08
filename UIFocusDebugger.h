@@ -1,4 +1,7 @@
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/UIFocusDebugger.h>)
+#if __FOCUSENGINE_BUILDING_FOCUSENGINE__
+#import <FocusEngine/UIFocusDebugger.h>
+#else
 //
 //  UIFocusDebugger.h
 //  UIKit Framework
@@ -56,6 +59,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)
+#endif // else __FOCUSENGINE_BUILDING_FOCUSENGINE__
 
 #else
 #import <UIKitCore/UIFocusDebugger.h>

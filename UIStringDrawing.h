@@ -8,11 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKitDefines.h>
-#if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+#if (TARGET_OS_IPHONE || TARGET_OS_SIMULATOR)
 #import <CoreGraphics/CoreGraphics.h>
 #endif
+#if __has_include(<UIFoundation/NSParagraphStyle.h>)
+#import <UIFoundation/NSParagraphStyle.h>
+#else
 #import <UIKit/NSParagraphStyle.h>
+#endif
+#if __has_include(<UIFoundation/NSText.h>)
+#import <UIFoundation/NSText.h>
+#else
 #import <UIKit/NSText.h>
+#endif
 
 /* Keys for text attributes dictionaries.
  These keys are superseded by the corresponding attribute name keys (NSFontAttributeName, NSForegroundColorAttributeName, NSShadowAttributeName)

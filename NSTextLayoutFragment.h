@@ -8,6 +8,7 @@
 
 #import <Foundation/NSArray.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/NSTextViewportRenderingSurface.h>
 
 @class NSTextLayoutManager;
 @class NSTextElement;
@@ -38,7 +39,7 @@ typedef NS_ENUM(NSUInteger, NSTextLayoutFragmentState) {
 } API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE(watchos);
 
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE(watchos)
-@interface NSTextLayoutFragment : NSObject <NSSecureCoding>
+@interface NSTextLayoutFragment : NSObject <NSSecureCoding, NSTextViewportRenderingSurfaceKey>
 #pragma mark Initialization
 - (instancetype)initWithTextElement:(NSTextElement *)textElement range:(nullable NSTextRange *)rangeInElement NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;

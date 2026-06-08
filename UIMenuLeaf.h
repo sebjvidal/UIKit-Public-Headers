@@ -20,11 +20,17 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Short display title.
 @property (nonatomic, copy) NSString *title;
 
+/// The element's subtitle.
+@property (nullable, nonatomic, copy) NSString *subtitle;
+
 /// Image that can appear next to this element.
 @property (nullable, nonatomic, copy) UIImage *image;
 
 /// Image that can appear next to this action when the `state` is `UIMenuElementStateOn`
 @property (nullable, nonatomic, copy) UIImage *selectedImage API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos);
+
+/// The preferred visibility of the element’s image.
+@property (nonatomic) UIMenuElementImageVisibility preferredImageVisibility API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(watchos);
 
 /// Elaborated title used in keyboard shortcut overlay.
 @property (nullable, nonatomic, copy) NSString *discoverabilityTitle;

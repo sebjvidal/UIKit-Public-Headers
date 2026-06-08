@@ -1,4 +1,8 @@
 #if (defined(USE_UIKIT_PUBLIC_HEADERS) && USE_UIKIT_PUBLIC_HEADERS) || !__has_include(<UIKitCore/UIFocusSystem.h>)
+#if __FOCUSENGINE_BUILDING_FOCUSENGINE__
+#import <FocusEngine/UIFocusSystem.h>
+#import <UIKit/UIFocusSystem+UIKitAdditions.h>
+#else
 //
 //  UIFocusSystem.h
 //  UIKit
@@ -38,7 +42,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 - (void)updateFocusIfNeeded API_AVAILABLE(tvos(12.0), ios(12.0)) API_UNAVAILABLE(watchos);
 
 /// Returns true if `environment` is an ancestor of `otherEnvironment`, or false if otherwise.
-+ (BOOL)environment:(id<UIFocusEnvironment>)environment containsEnvironment:(id<UIFocusEnvironment>)otherEnvironment;
++ (BOOL)environment:(id<UIFocusEnvironment>)environment containsEnvironment:(id<UIFocusEnvironment>)otherEnvironment NS_REFINED_FOR_SWIFT;
 
 @end
 
@@ -46,6 +50,7 @@ NS_HEADER_AUDIT_END(nullability, sendability)
 
 
 #import <UIKit/UIFocusSystem+UIKitAdditions.h>
+#endif // else __FOCUSENGINE_BUILDING_FOCUSENGINE__
 
 #else
 #import <UIKitCore/UIFocusSystem.h>

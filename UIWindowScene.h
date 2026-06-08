@@ -11,10 +11,11 @@
 #import <UIKit/UISceneOptions.h>
 #import <UIKit/UISceneSizeRestrictions.h>
 #import <UIKit/UISceneWindowingControlStyle.h>
+#import <UIKit/UISceneClosureConfirmation.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
-@class UIScreen, UIWindow, UIWindowSceneDelegate, UISceneDestructionRequestOptions, CKShareMetadata, UISceneSizeRestrictions, UISceneWindowingBehaviors, UIWindowSceneGeometry, UIWindowSceneGeometryPreferences;
+@class CADisplayLink, UIScreen, UIWindow, UIWindowSceneDelegate, UISceneDestructionRequestOptions, CKShareMetadata, UISceneSizeRestrictions, UISceneWindowingBehaviors, UIWindowSceneGeometry, UIWindowSceneGeometryPreferences;
 @protocol UIActivityItemsConfigurationProviding;
 
 UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
@@ -52,7 +53,22 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /// Additional window behaviors which may be platform specific. This property will be nil on unsupported platforms, otherwise will provide a mutable object for window behavior customization.
 @property (nonatomic, readonly, nullable) UISceneWindowingBehaviors *windowingBehaviors API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(watchos);
 
+/// Creates a display link targeting the display associated with this scene.
+///
+/// The returned display link is automatically retargeted when the scene moves
+/// between displays.
+///
+/// - Parameters:
+///   - target: An object that is the target of the display link callback.
+///   - sel: A selector on `target` to call when the display link fires.
+/// - Returns: A new display link, or `nil` only in exceptional cases where the
+///   system cannot construct a display link.
+- (nullable CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)sel NS_SWIFT_NAME(displayLink(target:selector:)) API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
 @property (nonatomic, readonly, getter=isFullScreen) BOOL fullScreen API_AVAILABLE(macCatalyst(16.0)) API_UNAVAILABLE(watchos);
+
+/// A configuration describing a confirmation dialog to be shown when a user action will result in destruction of the scene session and disconnection of the scene.
+@property (nonatomic, copy, nullable) UISceneClosureConfirmation *closureConfirmation API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(tvos, watchos, visionos);
 @end
 
 API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos)
@@ -75,6 +91,11 @@ API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 ///
 /// Always called when a `UIWindowScene` moves between screens.
 - (void)windowScene:(UIWindowScene *)windowScene didUpdateEffectiveGeometry:(UIWindowSceneGeometry *)previousEffectiveGeometry API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+
+/// Returns the interface orientations supported by the window scene.
+/// The returned value replaces the app's UISupportedInterfaceOrientations Info.plist value
+/// for this scene. If not implemented, the Info.plist value is used.
+- (UIInterfaceOrientationMask)supportedInterfaceOrientationsForWindowScene:(UIWindowScene *)windowScene API_AVAILABLE(ios(27.0), visionos(27.0)) API_UNAVAILABLE(tvos, watchos);
 
 #pragma mark - System Integration
 // Called when the user activates your application by selecting a shortcut on the home screen,

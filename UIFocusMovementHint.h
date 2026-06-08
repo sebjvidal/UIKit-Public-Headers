@@ -6,7 +6,7 @@
 //  Copyright © 2018 Apple Inc. All rights reserved.
 //
 
-#import <UIKit/UIFocus.h>
+#import <UIUtilities/UIDefines.h>
 #import <QuartzCore/CATransform3D.h>
 
 /// Provides information about the current state of hinting for the focused item.

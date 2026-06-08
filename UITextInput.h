@@ -11,7 +11,11 @@
 #import <UIKit/UITextInputTraits.h>
 #import <UIKit/UIKitDefines.h>
 #import <UIKit/UIResponder.h>
+#if __has_include(<UIFoundation/NSText.h>)
+#import <UIFoundation/NSText.h>
+#else
 #import <UIKit/NSText.h>
+#endif
 
 
 //===================================================================================================

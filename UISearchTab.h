@@ -14,6 +14,9 @@ UIKIT_EXTERN NS_SWIFT_UI_ACTOR
 API_AVAILABLE(ios(18.0), tvos(18.0), visionos(2.0)) API_UNAVAILABLE(watchos)
 @interface UISearchTab : UITab
 
+/// The system-assigned identifier for search tabs.
+@property (class, nonatomic, copy, readonly) NSString *identifier API_AVAILABLE(ios(26.4), tvos(26.4), visionos(26.4));
+
 /// Determines if the search tab should automatically activate the embedded search field when the tab becomes visible.
 ///
 /// When this property is set to `YES`, the search field will be activated when the tab is selected. Moreover, when search is cancelled,

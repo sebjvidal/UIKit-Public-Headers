@@ -530,7 +530,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(6.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 // Drag & Drop
 
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS || TARGET_OS_OSX
 @interface UICollectionView (UIDragAndDrop) <UISpringLoadedInteractionSupporting>
 @end
 #endif

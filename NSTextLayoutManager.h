@@ -18,6 +18,8 @@
 @class NSTextSelection;
 @class NSTextSelectionNavigation;
 @class NSTextViewportLayoutController;
+@class NSTextAttachment;
+@class NSTextAttachmentViewProvider;
 @protocol NSTextLocation;
 @protocol NSTextLayoutManagerDelegate;
 @protocol NSTextSelectionDataSource;
@@ -58,10 +60,10 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE
 // When YES, NSTextLayoutManager will attempt to hyphenate when wrapping lines. May be overridden on a per-paragraph basis by the NSParagraphStyle's usesDefaultHyphenation. The receiver makes the best effort to decide the exact logic including the hyphenation factor based on the context. The default value is NO. Can be overridden by the preference key @"NSUsesDefaultHyphenation".
 @property BOOL usesHyphenation;
 
-/// Specifies the behavior for resolving ``NSTextAlignment.natural`` to the visual alignment.
+/// Specifies the behavior for resolving ``NSTextAlignment/natural`` to the visual alignment.
 ///
-/// When set to ``true``, the resolved visual alignment is determined by the resolved base writing direction; otherwise, it is using the user’s preferred language.
-/// The default value is ``true``.
+/// When set to `true`, the resolved visual alignment is determined by the resolved base writing direction; otherwise, it is using the user’s preferred language.
+/// The default value is `true`.
 @property BOOL resolvesNaturalAlignmentWithBaseWritingDirection API_AVAILABLE(macos(26.0), ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 
 #pragma mark NSTextContentManager interface
@@ -162,6 +164,16 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), visionos(1.0)) API_UNAVAILABLE
 // Rendering attributes
 // Returns a dictionary of rendering attributes for rendering NSLinkAttributeName. Just as other rendering attributes, specifying NSNull removes the attribute from the final attributes used for rendering. It has priority over the general rendering attributes.
 - (nullable NSDictionary<NSAttributedStringKey, id> *)textLayoutManager:(NSTextLayoutManager *)textLayoutManager renderingAttributesForLink:(id)link atLocation:(id <NSTextLocation>)location defaultAttributes:(NSDictionary<NSAttributedStringKey, id> *)renderingAttributes;
+
+// Returns the text viewport layout container for textContainer. If this method returns nil, it will instantiate from NSTextViewportLayoutController.
+- (nullable  NSTextViewportLayoutController *)textLayoutManager:(NSTextLayoutManager *)textLayoutManager textViewportLayoutControllerForTextContainer:(NSTextContainer *)textContainer API_AVAILABLE(macos(14.0), ios(17.0), tvos(17.0), visionos(1.0)) API_UNAVAILABLE(watchos);
+
+// View Provider caching
+// When implemented, notifies delegate that the viewProvider associated with a particular textAttachment is about to be invalidated, and can be used to cache the viewProvider.
+- (void)textLayoutManager:(NSTextLayoutManager *)textLayoutManager cacheTextAttachmentViewProvider:(NSTextAttachmentViewProvider *)viewProvider forTextAttachment:(NSTextAttachment *)textAttachment API_AVAILABLE(macos(27.0), ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
+// Returns a cached NSTextAttachmentViewProvider to be associated with a particular attachment
+- (nullable NSTextAttachmentViewProvider *)textLayoutManager:(NSTextLayoutManager *)textLayoutManager retrieveCachedTextAttachmentViewProviderForTextAttachment:(NSTextAttachment *)attachment API_AVAILABLE(macos(27.0), ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 
 @end
 

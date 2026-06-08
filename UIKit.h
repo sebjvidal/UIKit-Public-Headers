@@ -6,16 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKitCore.h>
-
 #if __has_include(<UIKit/UIFoundation.h>)
 #import <UIKit/UIFoundation.h>
-#elif __has_include(<UIKit/NSAdaptiveImageGlyph.h>)
-#import <UIKit/NSAdaptiveImageGlyph.h>
-#import <UIKit/NSTextRange.h>
-#import <UIKit/NSTextList.h>
-#import <UIKit/NSTextAttachment.h>
 #endif
+
+#import <UIKit/UIKitCore.h>
 
 #if __has_include(<UIKit/DocumentManager.h>)
 #import <UIKit/DocumentManager.h>

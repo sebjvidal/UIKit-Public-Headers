@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKitDefines.h>
 #import <UIKit/UITextFormattingViewControllerFormattingDescriptor.h>
+#if __has_include(<UIFoundation/NSText.h>)
+#import <UIFoundation/NSText.h>
+#else
 #import <UIKit/NSText.h>
+#endif
 
 @class UIColor;
 @class UIFont;

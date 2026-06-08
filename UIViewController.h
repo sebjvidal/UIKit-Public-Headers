@@ -34,6 +34,8 @@ NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 @class UIScrollView;
 @class UIContentUnavailableConfiguration, UIContentUnavailableConfigurationState;
 @class UIViewControllerTransition;
+@class UISceneAccessory;
+@class UISceneAccessoryRegistration;
 @protocol UIViewControllerTransitionCoordinator;
 @protocol UIContentConfiguration;
 
@@ -354,6 +356,19 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
  * specific `UIUserInterfaceStyle`. This does not affect the application or any parent view controllers.
  */
 @property (nonatomic) UIUserInterfaceStyle overrideUserInterfaceStyle API_AVAILABLE(tvos(13.0), ios(13.0)) API_UNAVAILABLE(watchos); // Defaults to UIUserInterfaceStyleUnspecified
+
+/// Registers a new scene accessory configuration associated with this view controller.
+///
+/// The delegate type that the configuration defines will be called for all lifecycle events associated with the scene accessory.
+///
+/// - Parameter accessory: A configuration which defines system functionality necessary to present the scene accessory.
+/// - Returns: A registration object which can be used to monitor changes for the scene accessory or unregister it.
+- (UISceneAccessoryRegistration *)registerSceneAccessory:(UISceneAccessory *)accessory API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(macCatalyst, tvos, visionos, watchos) NS_SWIFT_NAME(registerSceneAccessory(_:));
+
+/// Unregisters a scene accessory with the specified registration.
+///
+/// If the scene accessory associated to this registration is currently being presented, it will be dismissed.
+- (void)unregisterSceneAccessory:(UISceneAccessoryRegistration *)registration API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(macCatalyst, tvos, visionos, watchos) NS_SWIFT_NAME(unregisterSceneAccessory(_:));
 
 @end
 

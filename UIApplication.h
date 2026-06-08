@@ -125,7 +125,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 // UIInterfaceOrientationMaskAllButUpsideDown on a phone.  The return value
 // should be one of the UIInterfaceOrientationMask values which indicates the
 // orientations supported by this application.
-- (UIInterfaceOrientationMask)supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window API_AVAILABLE(ios(6.0)) API_UNAVAILABLE(tvos);
+- (UIInterfaceOrientationMask)supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window API_DEPRECATED("Use UIWindowSceneDelegate.supportedInterfaceOrientations(for:) instead", ios(6.0, 27.0)) API_UNAVAILABLE(tvos, visionos, watchos);
 
 @property(nonatomic,readonly) NSTimeInterval statusBarOrientationAnimationDuration API_DEPRECATED("Use viewWillTransitionToSize:withTransitionCoordinator: instead.", ios(2.0, 13.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(visionos, watchos); // Returns the animation duration for the status bar during a 90 degree orientation change.  It should be doubled for a 180 degree orientation change.
 @property(nonatomic,readonly) CGRect statusBarFrame API_DEPRECATED("Use the statusBarManager property of the window scene instead.", ios(2.0, 13.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(visionos, watchos); // returns CGRectZero if the status bar is hidden
@@ -453,7 +453,7 @@ typedef NSString * UIApplicationOpenURLOptionsKey NS_TYPED_ENUM API_DEPRECATED("
 
 @property (nullable, nonatomic, strong) UIWindow *window API_AVAILABLE(ios(5.0));
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window  API_AVAILABLE(ios(6.0)) API_UNAVAILABLE(tvos);
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window API_DEPRECATED("Use UIWindowSceneDelegate.supportedInterfaceOrientations(for:) instead", ios(6.0, 27.0)) API_UNAVAILABLE(tvos, visionos, watchos);
 
 typedef NSString * UIApplicationExtensionPointIdentifier NS_TYPED_ENUM API_UNAVAILABLE(watchos);
 
@@ -524,15 +524,15 @@ typedef NSString * UIApplicationExtensionPointIdentifier NS_TYPED_ENUM API_UNAVA
 @property(nonatomic,getter=isProximitySensingEnabled) BOOL proximitySensingEnabled API_DEPRECATED("", ios(2.0, 3.0)) API_UNAVAILABLE(visionos, tvos, watchos); // default is NO. see UIDevice for replacement
 - (void)setStatusBarHidden:(BOOL)hidden animated:(BOOL)animated API_DEPRECATED("Use -[UIViewController prefersStatusBarHidden]", ios(2.0, 3.2)) API_UNAVAILABLE(visionos, tvos, watchos);
 
-// Explicit setting of the status bar orientation is more limited in iOS 6.0 and later.
+// Explicit setting of the status bar orientation is more limited in iOS 6.0 and later and entirely unsupported in iOS 27.0 and later.
 @property(readwrite, nonatomic) UIInterfaceOrientation statusBarOrientation API_DEPRECATED("Explicit setting of the status bar orientation is more limited in iOS 6.0 and later", ios(2.0, 9.0)) API_UNAVAILABLE(visionos, tvos, watchos);
 - (void)setStatusBarOrientation:(UIInterfaceOrientation)interfaceOrientation animated:(BOOL)animated API_DEPRECATED("Explicit setting of the status bar orientation is more limited in iOS 6.0 and later", ios(2.0, 9.0)) API_UNAVAILABLE(visionos, tvos, watchos);
 
-// Setting the statusBarStyle does nothing if your application is using the default UIViewController-based status bar system.
+// Setting the statusBarStyle does nothing if your application is using the default UIViewController-based status bar system or is linked against SDK versions 27.0 or later
 @property(readwrite, nonatomic) UIStatusBarStyle statusBarStyle API_DEPRECATED("Use -[UIViewController preferredStatusBarStyle]", ios(2.0, 9.0)) API_UNAVAILABLE(visionos, tvos, watchos);
 - (void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle animated:(BOOL)animated API_DEPRECATED("Use -[UIViewController preferredStatusBarStyle]", ios(2.0, 9.0)) API_UNAVAILABLE(visionos, tvos, watchos);
 
-// Setting statusBarHidden does nothing if your application is using the default UIViewController-based status bar system.
+// Setting statusBarHidden does nothing if your application is using the default UIViewController-based status bar system or is linked against SDK versions 27.0 or later.
 @property(readwrite, nonatomic,getter=isStatusBarHidden) BOOL statusBarHidden API_DEPRECATED("Use -[UIViewController prefersStatusBarHidden]", ios(2.0, 9.0)) API_UNAVAILABLE(visionos, tvos, watchos);
 - (void)setStatusBarHidden:(BOOL)hidden withAnimation:(UIStatusBarAnimation)animation API_DEPRECATED("Use -[UIViewController prefersStatusBarHidden]", ios(3.2, 9.0)) API_UNAVAILABLE(visionos, tvos, watchos);
 

@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKitDefines.h>
+#if __has_include(<UIFoundation/NSLayoutManager.h>)
+#import <UIFoundation/NSLayoutManager.h>
+#else
 #import <UIKit/NSLayoutManager.h>
+#endif
 
 @class UIImage;
 
