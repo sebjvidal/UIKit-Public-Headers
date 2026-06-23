@@ -46,8 +46,8 @@ typedef NS_ENUM(NSInteger, NSTextAlignment) {
 #endif // !__NSTEXT_ALIGNMENT_SHARED_SECTION__
 
 UIKIT_SWIFT_FORWARD_DECLARE(typedef CF_ENUM(uint8_t, CTTextAlignment))
-UIKIT_EXTERN CTTextAlignment NSTextAlignmentToCTTextAlignment(NSTextAlignment nsTextAlignment) API_AVAILABLE(macos(10.9), ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0));
-UIKIT_EXTERN NSTextAlignment NSTextAlignmentFromCTTextAlignment(CTTextAlignment ctTextAlignment) API_AVAILABLE(macos(10.9), ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0));
+UIKIT_EXTERN CTTextAlignment NSTextAlignmentToCTTextAlignment(NSTextAlignment nsTextAlignment) API_AVAILABLE(ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0)) API_UNAVAILABLE(macos);
+UIKIT_EXTERN NSTextAlignment NSTextAlignmentFromCTTextAlignment(CTTextAlignment ctTextAlignment) API_AVAILABLE(ios(6.0), tvos(9.0), watchos(2.0), visionos(1.0)) API_UNAVAILABLE(macos);
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 #else

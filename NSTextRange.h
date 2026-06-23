@@ -11,17 +11,33 @@
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
 
 #pragma mark NSTextLocation
-// NSTextLocation represents an abstract location inside document contents. A concrete class conforming to the protocol should be associated with a particular document backing store type. The interpretation of a location in enumeration operations is depending on the logical direction. When enumerating forward, it should start with the item containing the location. The enumeration should start with an item preceding the location for reverse operations.
+/// An interface you implement that represents an abstract location inside your document's content.
+///
+/// A concrete class conforming to the protocol should be associated with a
+/// particular document backing store type. The interpretation of a location in
+/// enumeration operations depends on the logical direction. When enumerating
+/// forward, it should start with the item containing the location. The
+/// enumeration should start with an item preceding the location for reverse
+/// operations.
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0), visionos(1.0)) NS_PROTOCOL_REQUIRES_EXPLICIT_IMPLEMENTATION
 @protocol NSTextLocation <NSObject>
 
-// Compares and returns the logical ordering to location
+/// Compares and returns the logical ordering to location.
+///
+/// - Parameters:
+///   - location: The location to compare the current location to.
+///
+/// - Returns: A <doc://com.apple.documentation/documentation/foundation/comparisonresult>.
 - (NSComparisonResult)compare:(id <NSTextLocation>)location API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0), visionos(1.0));
 
-// Basic comparison of location equivalence, should have the result of NSOrderedSame from compare:
+/// Returns `true` for locations representing the same document position.
+///
+/// Must not depend on auxiliary state such as affinity or visual-edge
+/// preference. Locations from different data source methods are compared using
+/// `isEqual:` and must agree when they refer to the same position.
 - (BOOL)isEqual:(nullable id)location;
 
-// Must be consistent with results from isEqual while also avoiding hash collisions
+/// Must be consistent with results from `isEqual:` while also avoiding hash collisions.
 @property (readonly) NSUInteger hash;
 
 @end
@@ -37,12 +53,13 @@ API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0), visionos(1.0)) N
 API_AVAILABLE(macos(12.0), ios(15.0), tvos(15.0), watchos(8.0), visionos(1.0))
 @interface NSTextRange : NSObject
 #pragma mark Initialization
-// Returns an empty range when endLocation=nil
 /// Creates a new text range with the starting and ending locations you specify.
+///
+/// Returns an empty range when `endLocation` is `nil`.
 ///
 /// - Parameters:
 ///   - location: The starting location.
-///   - endLocation: The ending location.
+///   - endLocation: The ending location, or `nil` for an empty range.
 - (nullable instancetype)initWithLocation:(id <NSTextLocation>)location endLocation:(nullable id <NSTextLocation>)endLocation NS_DESIGNATED_INITIALIZER;
 
 /// Creates a new text range at the location you specify.

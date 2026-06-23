@@ -61,7 +61,7 @@ typedef NS_ENUM(NSInteger, NSTextTableLayoutAlgorithm) {
     
 } API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), visionos(1.0), watchos(2.0))  NS_SWIFT_NAME(NSTextTable.LayoutAlgorithm);
 
-/* NSTextBlock is the basic object for text block layout, and the superclass of the other classes. */
+/// An object that defines the size, spacing, and appearance of a block of text in an attributed string.
 UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), visionos(1.0), watchos(2.0))
 @interface NSTextBlock : NSObject <NSSecureCoding, NSCopying>
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
@@ -93,7 +93,7 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), visionos(1.0), watc
 - (nullable UIColor *)borderColorForRectEdge:(CGRectEdge)rectEdge API_AVAILABLE(macos(27.0), ios(27.0), tvos(27.0), visionos(27.0), watchos(27.0));
 @end
 
-/* NSTextTableBlock is a subclass of NSTextBlock used for a block that appears as a cell in a text table. */
+/// An object that represents a single cell in a text table.
 UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), visionos(1.0), watchos(2.0))
 @interface NSTextTableBlock : NSTextBlock
 - (instancetype)initWithTable:(NSTextTable *)table startingRow:(NSInteger)row rowSpan:(NSInteger)rowSpan startingColumn:(NSInteger)column columnSpan:(NSInteger)columnSpan NS_DESIGNATED_INITIALIZER;     // Designated initializer
@@ -108,7 +108,7 @@ UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), visionos(1.0), watc
 
 @end
 
-/* NSTextTable represents a table as a whole. */
+/// An object that represents a table of rows and columns in an attributed string.
 UIKIT_EXTERN API_AVAILABLE(macos(10.0), ios(6.0), tvos(9.0), visionos(1.0), watchos(2.0))
 @interface NSTextTable : NSTextBlock
 /* These methods control the basic parameters of the table. */

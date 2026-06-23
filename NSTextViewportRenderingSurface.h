@@ -10,14 +10,18 @@
 #import <UIKit/UIKitDefines.h>
 
 #pragma mark - NSTextViewportRenderingSurface
-// A visual drawable element inside the viewport corresponding to a NSTextParagraph and NSTextLayoutFragment . Typically an NSView, UIView or CALayer.
+/// A protocol that identifies a view or layer as a drawable element for a text layout fragment.
+///
+/// Typically an `NSView`, `UIView`, or `CALayer`.
 API_AVAILABLE(macos(27.0), ios(27.0), tvos(27.0), visionos(27.0), watchos(27.0))
 @protocol NSTextViewportRenderingSurface <NSObject>
 
 @end
 
 #pragma mark - NSTextViewportRenderingSurfaceKey
-// The key for identifying a rendering surface inside a viewport. NSString and NSTextLayoutFragment conform to this protocol.
+/// A protocol that lets you use an object to identify a rendering surface when storing or retrieving it.
+///
+/// `NSString` and ``NSTextLayoutFragment`` conform to this protocol.
 API_AVAILABLE(macos(15.0), ios(18.0), tvos(18.0), visionos(2.0), watchos(11.0))
 @protocol NSTextViewportRenderingSurfaceKey <NSObject>
 @end

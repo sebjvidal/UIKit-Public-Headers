@@ -38,6 +38,12 @@ UIKIT_EXTERN API_AVAILABLE(ios(3.2)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 /* Entries in the availableLanguages list are all available spellchecking languages in user preference order, usually language abbreviations such as en_US. */
 @property(class, nonatomic, readonly) NSArray<NSString *> *availableLanguages;
 
+/* Requests grammar checking in the background. The completion handler will be called when results are available, with an array of NSTextCheckingResult objects describing particular items found during checking and their individual ranges, sorted by range origin, then range end, then result type. The result type may be either NSTextCheckingTypeGrammar or NSTextCheckingTypeCorrection. If waitForAllResults is true, this will not return until all grammar analysis has been performed; otherwise, the request will include those grammar results that are available quickly. */
+- (void)requestGrammarCheckingOfString:(NSString *)stringToCheck range:(NSRange)range waitForAllResults:(BOOL)waitForAllResults completionHandler:(void (^ _Nullable)(NSArray<NSTextCheckingResult *> *results))completionHandler API_AVAILABLE(ios(27.0), tvos(27.0), macos(27.0), visionos(27.0));
+
+/* This method should be called to ignore a particular grammar issue. The sentence should be the portion of the text corresponding to the range of an NSTextCheckingResult of grammar type. The grammarRange should be the range within that sentence of an individual issue, taken from the NSGrammarRange entry of one of the grammarDetails of the same NSTextCheckingResult. */
+- (void)ignoreGrammarRange:(NSRange)grammarRange inSentence:(NSString *)sentence API_AVAILABLE(ios(27.0), tvos(27.0), macos(27.0), visionos(27.0));
+
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

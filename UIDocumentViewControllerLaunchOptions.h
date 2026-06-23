@@ -21,10 +21,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NA
 /// The view controller for browsing documents to open.
 @property (nonatomic, strong) UIDocumentBrowserViewController *browserViewController;
 
-/// The title of the view. Default is the application's name.
+/// The title of the launch view. Default is the application's name.
 @property (nonatomic, copy) NSString *title;
 
-/// The subtitle of the view. Default is `nil`.
+/// The subtitle of the launch view. Default is `nil`.
 /// If `nil`, no subtitle will be displayed.
 @property (nonatomic, copy, nullable) NSString *subtitle API_AVAILABLE(ios(27.0));
 

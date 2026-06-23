@@ -404,6 +404,7 @@
 #import <UIKit/UIWritingToolsCoordinatorContext.h>
 #import <UIKit/UIWritingToolsCoordinatorAnimationParameters.h>
 #import <UIKit/UIInputSuggestion.h>
+#import <UIKit/UIPhotoSearchSuggestion.h>
 #import <UIKit/UISmartReplySuggestion.h>
 #import <UIKit/UIConversationContext.h>
 #import <UIKit/UIConversationEntry.h>

@@ -125,7 +125,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 // UIInterfaceOrientationMaskAllButUpsideDown on a phone.  The return value
 // should be one of the UIInterfaceOrientationMask values which indicates the
 // orientations supported by this application.
-- (UIInterfaceOrientationMask)supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window API_DEPRECATED("Use UIWindowSceneDelegate.supportedInterfaceOrientations(for:) instead", ios(6.0, 27.0)) API_UNAVAILABLE(tvos, visionos, watchos);
+- (UIInterfaceOrientationMask)supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window API_DEPRECATED("Use UIWindowSceneDelegate.supportedInterfaceOrientations(for:) instead", ios(6.0, 27.0)) API_UNAVAILABLE(tvos, watchos);
 
 @property(nonatomic,readonly) NSTimeInterval statusBarOrientationAnimationDuration API_DEPRECATED("Use viewWillTransitionToSize:withTransitionCoordinator: instead.", ios(2.0, 13.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(visionos, watchos); // Returns the animation duration for the status bar during a 90 degree orientation change.  It should be doubled for a 180 degree orientation change.
 @property(nonatomic,readonly) CGRect statusBarFrame API_DEPRECATED("Use the statusBarManager property of the window scene instead.", ios(2.0, 13.0)) API_UNAVAILABLE(tvos) API_UNAVAILABLE(visionos, watchos); // returns CGRectZero if the status bar is hidden
@@ -453,7 +453,7 @@ typedef NSString * UIApplicationOpenURLOptionsKey NS_TYPED_ENUM API_DEPRECATED("
 
 @property (nullable, nonatomic, strong) UIWindow *window API_AVAILABLE(ios(5.0));
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window API_DEPRECATED("Use UIWindowSceneDelegate.supportedInterfaceOrientations(for:) instead", ios(6.0, 27.0)) API_UNAVAILABLE(tvos, visionos, watchos);
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(nullable UIWindow *)window API_DEPRECATED("Use UIWindowSceneDelegate.supportedInterfaceOrientations(for:) instead", ios(6.0, 27.0)) API_UNAVAILABLE(tvos, watchos);
 
 typedef NSString * UIApplicationExtensionPointIdentifier NS_TYPED_ENUM API_UNAVAILABLE(watchos);
 
