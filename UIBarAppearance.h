@@ -57,6 +57,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0), tvos(13.0)) API_UNAVAILABLE(watchos) NS_SW
 /// Use an image for the shadow. See shadowColor for how they interact.
 @property (nonatomic, readwrite, strong, nullable) UIImage *shadowImage;
 
+/// Overrides the userInterfaceStyle of the bar.
+@property (nonatomic, readwrite, assign) UIUserInterfaceStyle overrideUserInterfaceStyle
+    API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos);
+
 @end
 
 NS_HEADER_AUDIT_END(nullability, sendability)

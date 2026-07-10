@@ -10,6 +10,7 @@
 #import <UIKit/UIView.h>
 #import <UIKit/UIKitDefines.h>
 #import <UIKit/UIBarButtonItem.h>
+#import <UIKit/UIBarMinimization.h>
 
 @class UISearchController, UINavigationBarAppearance, UIDocumentProperties, UIDeferredMenuElement;
 @class UINavigationItem;
@@ -61,26 +62,6 @@ typedef NS_ENUM(NSInteger, UINavigationItemStyle) {
     /// A style designed for use as an editor. The back button will always present as chevron-only, title is leading aligned, center items are displayed. Typically used without navigation.
     UINavigationItemStyleEditor,
 } NS_SWIFT_NAME(UINavigationItem.ItemStyle) API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos);
-
-typedef NS_ENUM(NSInteger, UIBarMinimizeBehavior) {
-    /// The system determines the minimize behavior.
-    UIBarMinimizeBehaviorAutomatic = 0,
-    /// Bar minimization is disabled.
-    UIBarMinimizeBehaviorNever API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
-    /// Minimize when the user scrolls down.
-    UIBarMinimizeBehaviorOnScrollDown API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
-    /// Minimize when the user scrolls up.
-    UIBarMinimizeBehaviorOnScrollUp API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
-} API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
-
-typedef NS_ENUM(NSInteger, UIBarMinimizationSafeAreaAdjustment) {
-    /// The system determines the safe area adjustment.
-    UIBarMinimizationSafeAreaAdjustmentAutomatic = 0,
-    /// The safe area adjusts as bars minimize, allowing content to reflow.
-    UIBarMinimizationSafeAreaAdjustmentEnabled API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
-    /// The safe area remains unchanged as bars minimize.
-    UIBarMinimizationSafeAreaAdjustmentDisabled API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(visionos) API_UNAVAILABLE(watchos, tvos),
-} API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 
 UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI_ACTOR
 @protocol UINavigationItemRenameDelegate <NSObject>
@@ -290,23 +271,16 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 ///  When set and this item is topmost, overrides the hosting navigation bar's compactScrollEdgeAppearance. See UINavigationBar.h for further details.
 @property (nonatomic, readwrite, copy, nullable) UINavigationBarAppearance *compactScrollEdgeAppearance API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(watchos);
 
-/// The minimize behavior for the navigation bar.
-///
-/// The default value is ``UIBarMinimizeBehavior/automatic``.
-/// When the navigation bar minimizes, an integrated top tab bar
-/// will also minimize.
-///
-/// By default, the safe area adjusts as the navigation bar minimizes.
-/// Use ``barMinimizationSafeAreaAdjustment`` to customize this.
-@property (nonatomic, readwrite, assign) UIBarMinimizeBehavior barMinimizeBehavior API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+@end
 
-/// The safe area adjustment during navigation bar minimization.
+@interface UINavigationItem (Minimization)
+
+/// The minimization configuration for the navigation bar.
 ///
-/// Currently, only the navigation bar supports customizing the safe
-/// area adjustment.
-///
-/// The default value is ``UIBarMinimizationSafeAreaAdjustment/automatic``.
-@property (nonatomic, readwrite, assign) UIBarMinimizationSafeAreaAdjustment barMinimizationSafeAreaAdjustment API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+/// Set the properties of this configuration to control how the navigation
+/// bar minimizes in response to scrolling. When the navigation bar
+/// minimizes, an integrated top tab bar will also minimize.
+@property (nonatomic, readwrite, copy) UIBarMinimization *navigationBarMinimization NS_REFINED_FOR_SWIFT API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 
 @end
 

@@ -41,6 +41,7 @@
 #import <UIKit/UIBarButtonItemGroup.h>
 #import <UIKit/UIBarButtonItemBadge.h>
 #import <UIKit/UIBarItem.h>
+#import <UIKit/UIBarMinimization.h>
 #import <UIKit/UIButton.h>
 #import <UIKit/UIButtonConfiguration.h>
 #import <UIKit/UICollectionView.h>
