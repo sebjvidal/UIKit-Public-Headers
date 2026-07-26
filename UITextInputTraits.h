@@ -104,6 +104,17 @@ typedef NS_ENUM(NSInteger, UITextMathExpressionCompletionType) {
 } API_AVAILABLE(ios(18.0)) API_UNAVAILABLE(watchos);
 
 //
+// UITextGrammarCheckingType
+//
+// Controls whether grammar checking is enabled or disabled during typing.
+//
+typedef NS_ENUM(NSInteger, UITextGrammarCheckingType) {
+    UITextGrammarCheckingTypeDefault,
+    UITextGrammarCheckingTypeNo,
+    UITextGrammarCheckingTypeYes,
+} API_AVAILABLE(ios(27.0));
+
+//
 // UIKeyboardType
 //
 // Requests that a particular keyboard type be displayed when a text widget
@@ -249,6 +260,8 @@ API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property(nonatomic) UITextInlinePredictionType inlinePredictionType API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos); // default is UITextInlinePredictionTypeDefault
 // Controls whether math expression completion is enabled or disabled during typing
 @property(nonatomic) UITextMathExpressionCompletionType mathExpressionCompletionType API_AVAILABLE(ios(18.0)); // default is UITextMathExpressionCompletionTypeDefault
+// This property controls whether grammar checking is enabled or disabled during typing
+@property(nonatomic) UITextGrammarCheckingType grammarCheckingType API_AVAILABLE(ios(27.0));  // default is UITextGrammarCheckingTypeDefault
 
 @property(nonatomic) UIKeyboardType keyboardType;                         // default is UIKeyboardTypeDefault
 @property(nonatomic) UIKeyboardAppearance keyboardAppearance;             // default is UIKeyboardAppearanceDefault
@@ -331,9 +344,18 @@ UIKIT_EXTERN UITextContentType const UITextContentTypeCreditCardExpirationMonth 
 UIKIT_EXTERN UITextContentType const UITextContentTypeCreditCardExpirationYear  API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos);
 UIKIT_EXTERN UITextContentType const UITextContentTypeCreditCardType            API_AVAILABLE(ios(17.0)) API_UNAVAILABLE(watchos);
 
-/// eSIM activation
+// MARK: eSIM activation
+
+/// A property that defines the content in a text input area to contain an embedded identity document number for an eSIM. This content type requires clients to have Carrier eSIM entitlements.
 UIKIT_EXTERN UITextContentType const UITextContentTypeCellularEID               API_AVAILABLE(ios(17.4)) API_UNAVAILABLE(watchos);
+/// A property that defines the content in a text input area to contain an international mobile equipment identity number for an eSIM. This content type requires clients to have Carrier eSIM entitlements.
 UIKIT_EXTERN UITextContentType const UITextContentTypeCellularIMEI              API_AVAILABLE(ios(17.4)) API_UNAVAILABLE(watchos);
+/// A property that defines the content in a text input area to contain an international mobile equipment identity number 1 for an eSIM. This content type requires clients to have Carrier eSIM entitlements.
+UIKIT_EXTERN UITextContentType const UITextContentTypeCellularIMEI1             API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(watchos);
+/// A property that defines the content in a text input area to contain an international mobile equipment identity number 2 for an eSIM. This content type requires clients to have Carrier eSIM entitlements.
+UIKIT_EXTERN UITextContentType const UITextContentTypeCellularIMEI2             API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(watchos);
+/// A property that defines the content in a text input area to contain a network access license for an eSIM. This content type requires clients to have Carrier eSIM entitlements.
+UIKIT_EXTERN UITextContentType const UITextContentTypeCellularNAL               API_AVAILABLE(ios(27.0)) API_UNAVAILABLE(watchos);
 
 NS_HEADER_AUDIT_END(nullability, sendability)
 

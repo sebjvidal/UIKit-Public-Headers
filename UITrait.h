@@ -131,6 +131,10 @@ UIKIT_EXTERN API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABL
 @interface UITraitResolvesNaturalAlignmentWithBaseWritingDirection : NSObject <UIObjectTraitDefinition> // Bool
 @end
 
+UIKIT_EXTERN API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos) NS_REFINED_FOR_SWIFT
+@interface UITraitSystemPrefersReducedResourceUsage : NSObject <UINSIntegerTraitDefinition> // Bool
+@end
+
 NS_HEADER_AUDIT_END(nullability, sendability)
 
 #else

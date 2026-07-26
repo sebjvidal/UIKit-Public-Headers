@@ -95,7 +95,7 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property(nonatomic,getter=isIdleTimerDisabled)       BOOL idleTimerDisabled;	  // default is NO
 
 - (BOOL)openURL:(NSURL*)url API_DEPRECATED_WITH_REPLACEMENT("openURL:options:completionHandler:", ios(2.0, 10.0)) API_UNAVAILABLE(visionos, watchos);
-- (BOOL)canOpenURL:(NSURL *)url API_AVAILABLE(ios(3.0)) NS_SWIFT_NONISOLATED;
+- (BOOL)canOpenURL:(NSURL *)url API_DEPRECATED("Prefer attempting to open URLs and handling any failures", ios(3.0, 27.0), visionos(1.0, 27.0), tvos(9.0, 27.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 
 // Options are specified in the section below for openURL options. An empty options dictionary will result in the same
 // behavior as the older openURL call, aside from the fact that this is asynchronous and calls the completion handler rather
@@ -164,6 +164,25 @@ UIKIT_EXTERN API_AVAILABLE(ios(2.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 
 // Return the size category
 @property(nonatomic,readonly) UIContentSizeCategory preferredContentSizeCategory API_AVAILABLE(ios(7.0));
+
+/// A Boolean value that indicates whether the system prefers that the app reduce its resource usage.
+///
+/// When this value is `YES`, the system has entered a state where it would prefer apps to scale back resource-intensive work.
+///
+/// Use this to avoid or reduce expensive work. For example:
+///
+/// - Gate or simplify resource-intensive UI, such as 3D or AR viewers, advanced camera modes, or live effects.
+/// - Choose lighter-weight paths, such as lower-resolution assets or fewer simultaneous operations.
+/// - Defer or shrink non-essential background work, such as prefetching or precomputation.
+///
+/// Avoid performing or scheduling expensive work in response to changes in this property, as this could worsen resource usage.
+///
+/// - Tip: For in-memory caching, consider using ``NSCache`` with ``NSPurgeableData``, which automatically evicts entries under system memory pressure.
+///   Use `systemPrefersReducedResourceUsage` for higher-level decisions that ``NSCache`` cannot make on its own.
+///
+/// To respond to changes in views, read the ``UITraitCollection/systemPrefersReducedResourceUsage`` trait.
+/// From other contexts, observe ``UIApplication/systemPrefersReducedResourceUsageDidChangeNotification`` and re-read this property.
+@property (nonatomic, readonly) BOOL systemPrefersReducedResourceUsage API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 
 #pragma mark -- UIScene --
 // All of the currently connected UIScene instances
@@ -566,6 +585,15 @@ UIKIT_EXTERN NSNotificationName const UIApplicationBackgroundRefreshStatusDidCha
 
 UIKIT_EXTERN NSNotificationName const UIApplicationProtectedDataWillBecomeUnavailable    API_AVAILABLE(ios(4.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
 UIKIT_EXTERN NSNotificationName const UIApplicationProtectedDataDidBecomeAvailable       API_AVAILABLE(ios(4.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED;
+
+/// A notification that posts when ``UIApplication/systemPrefersReducedResourceUsage`` changes.
+///
+/// The object of the notification is the `UIApplication` object.
+/// The `userInfo` dictionary is empty. Re-read `systemPrefersReducedResourceUsage` to get the new value.
+///
+/// Use this notification to re-read the value and adjust the scheduling of future work, the same way the property is read proactively.
+/// Avoid performing or scheduling expensive work directly in the handler, as this could worsen resource usage.
+UIKIT_EXTERN NSNotificationName const UIApplicationSystemPrefersReducedResourceUsageDidChangeNotification API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos) NS_SWIFT_NONISOLATED NS_SWIFT_NAME(UIApplication.systemPrefersReducedResourceUsageDidChangeNotification);
 
 /// UserInfo contains a ``NSURL`` with launch URL to open
 UIKIT_EXTERN UIApplicationLaunchOptionsKey const UIApplicationLaunchOptionsURLKey NS_SWIFT_NAME(url) API_DEPRECATED("Use UIScene lifecycle and UIScene.ConnectionOptions.URLContexts instead.", ios(3.0, 26.0), tvos(9.0, 26.0), visionos(1.0, 26.0)) API_UNAVAILABLE(watchos);

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIInteraction.h>
+#import <UIKit/UITextInput.h>
 #import <UIKit/UITextInputTraits.h>
 
 NS_HEADER_AUDIT_BEGIN(nullability, sendability)
@@ -364,6 +365,32 @@ typedef NS_ENUM(NSInteger, UIWritingToolsCoordinatorTextReplacementReason) {
     /// ``UIWritingToolsCoordinator/Delegate/writingToolsCoordinator(_:replaceRange:inContext:proposedText:reason:animationParameters:completion:)``
     /// method, update your view’s text storage without animating the change.
     UIWritingToolsCoordinatorTextReplacementReasonNoninteractive, // an unanimated replacement prompted from writing tools, perhaps copied from the overlay-panel experience, perhaps a reverted rewrite or individual proofreading suggestion, and so forth
+
+    /// An option to replace the text in your view when a grammar suggestion
+    /// is accepted.
+    ///
+    /// When the user interacts with a grammar issue and the UI is shown,
+    /// and the option to accept a suggestion is chosen, this reason will be
+    /// used. Update your view's text storage without animating the change.
+    UIWritingToolsCoordinatorTextReplacementReasonAccepted API_AVAILABLE(ios(27.0)) = 2, // a replacement from grammar presentation, representing acceptance of a proposed suggestion
+
+    /// An option to replace the text in your view when a grammar suggestion
+    /// is rejected.
+    ///
+    /// When the user interacts with a grammar issue and the UI is shown,
+    /// and the option to ignore a suggestion is chosen, this reason will be
+    /// used. Update your view's text storage without animating the change.
+    /// In addition, use ``ignoreGrammarRange`` on ``UITextChecker``
+    /// to make sure that the suggestion will continue to be ignored.
+    UIWritingToolsCoordinatorTextReplacementReasonRejected API_AVAILABLE(ios(27.0)) = 3, // a replacement from grammar presentation, representing rejection of a proposed suggestion, which should subsequently be ignored
+
+    /// An option to replace the text in your view when a grammar suggestion
+    /// is temporarily shown to preview the proposed change in the text.
+    ///
+    /// When the user interacts with a grammar issue and the UI is shown,
+    /// in some cases the suggestion needs to be shown temporarily.
+    /// Update your view's text storage without animating the change.
+    UIWritingToolsCoordinatorTextReplacementReasonTemporary API_AVAILABLE(ios(27.0)) = 4, // a replacement from grammar presentation, representing a temporary preview of a proposed suggestion
 } API_AVAILABLE(ios(18.2), visionos(2.4)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NAME(UIWritingToolsCoordinator.TextReplacementReason);
 
 /// Options that indicate how much of your content Writing Tools requested.
@@ -437,9 +464,66 @@ typedef NS_ENUM(NSInteger, UIWritingToolsCoordinatorTextAnimation) {
     /// also prepare any other animations you need. Writing Tools uses a preview
     /// object you provide to animate the insertion of the text.
     UIWritingToolsCoordinatorTextAnimationInsert, // The amimation effect for washing in replacement text from a Writing Tools delivery
+
+    /// The animation effect that Writing Tools performs on grammar issues
+    /// when they are first indicated.
+    ///
+    /// When preparing for this animation, hide the portion of the text for
+    /// which the grammar issue is going to be indicated. When finishing
+    /// the animation, show the text again.
+    UIWritingToolsCoordinatorTextAnimationIndicateGrammar API_AVAILABLE(ios(27.0)) = 10, // the animation effect performed on grammar issues when they are first indicated; when preparing, hide the text, and when finishing, show it again
 } API_AVAILABLE(ios(18.2), visionos(2.4)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_NAME(UIWritingToolsCoordinator.TextAnimation);
 
-UIKIT_EXTERN 
+/// Use the `UIWritingToolsCoordinator.TextDecoration` constants to determine
+/// the type of decoration to be applied to a preview for grammar animation.
+/// The grammar animation needs previews of the text of the issue in two forms,
+/// without and with the grammar indication underline applied. If you use
+/// grammar animation, you must implement the delegate method
+/// ``UIWritingToolsCoordinator/Delegate/writingToolsCoordinator(_:requestsPreviewFor:of:in:textDecoration:completion:)``
+/// to provide both forms of previews, based on the specified decoration.
+typedef NS_ENUM(NSInteger, UIWritingToolsCoordinatorTextDecoration) {
+    /// Requests a preview of the text without any additional decoration.
+    ///
+    UIWritingToolsCoordinatorTextDecorationNone,
+
+    /// Requests a preview of the text with the grammar indication underline.
+    ///
+    UIWritingToolsCoordinatorTextDecorationGrammarUnderline,
+} API_AVAILABLE(ios(27.0)) NS_SWIFT_NAME(UIWritingToolsCoordinator.TextDecoration);
+
+@interface UIWritingToolsCoordinator (GrammarPresentation)
+
+// Grammar presentation support
+
+/// Used to support the presentation of grammar issues in text. When an issue
+/// is first identified and indicated, call this to have it animated.
+///
+/// The context should be large enough to contain the range being indicated,
+/// and the range should be the range of the issue within the context. Returns a
+/// UUID that can be used to cancel the animation, or nil if the animation cannot
+/// be performed. Calls delegate methods to prepare for the animation (which
+/// should hide the text), request previews (with and without underlines), and
+/// finish the animation (which should show the text).
+- (nullable NSUUID *)startTextAnimation:(UIWritingToolsCoordinatorTextAnimation)textAnimation forRange:(NSRange)range inContext:(UIWritingToolsCoordinatorContext *)context writingDirection:(NSWritingDirection)writingDirection API_AVAILABLE(ios(27.0)) NS_SWIFT_NAME(startTextAnimation(_:for:in:writingDirection:));
+
+/// Used to support the presentation of grammar issues in text. If it is
+/// necessary to cancel the animation of one or more issues, call this
+/// to cancel theanimations.
+///
+/// The UUIDs passed in should be those returned when starting the
+/// animations. To cancel all ahimations, use ``stopWritingTools`` instead.
+- (void)cancelTextAnimationsWithIdentifiers:(NSArray <NSUUID *> *)identifiers API_AVAILABLE(ios(27.0)) NS_SWIFT_NAME(cancelTextAnimations(identifiers:));
+
+/// Used to support the presentation of grammar issues in text. When
+/// the user interacts with an issue, call this to bring up the relevant UI.
+///
+/// Pass in context and range to identify the issue the user selected.
+/// Returns NO if the UI cannot be brought up.
+- (BOOL)showGrammarPresentationForRange:(NSRange)range inContext:(UIWritingToolsCoordinatorContext *)context API_AVAILABLE(ios(27.0));
+
+@end
+
+UIKIT_EXTERN
 API_AVAILABLE(ios(18.2), visionos(2.4)) API_UNAVAILABLE(tvos, watchos)
 NSString *UIWritingToolsCoordinatorTextAnimationDebugDescription(UIWritingToolsCoordinatorTextAnimation animationType);
 
@@ -970,6 +1054,39 @@ NS_SWIFT_NAME(UIWritingToolsCoordinator.Delegate)
 /// your view’s content. For example, it moves to the ``UIWritingToolsCoordinator/State/interactiveStreaming``
 /// state when it’s making changes to your view’s text storage.
 - (void)writingToolsCoordinator:(UIWritingToolsCoordinator *)writingToolsCoordinator willChangeToState:(UIWritingToolsCoordinatorState)newState completion:(void(^)(void))completion;
+
+// Grammar presentation support
+
+/// Asks the delegate for preview images for the specified text.
+///
+/// To support grammar animation, the delegate should provide previews for the
+/// relevant text, as with the required ``requestsPreviewFor`` method, but
+/// in this case showing the text with the specified decoration applied. The
+/// grammar animation needs previews of the text of the issue in two forms,
+/// without and with the grammar indication underline applied. If you use
+/// grammar animation, you must implement this delegate method to provide
+/// them, based on the specified decoration.
+#if !TARGET_OS_WATCH
+- (void)writingToolsCoordinator:(UIWritingToolsCoordinator *)writingToolsCoordinator requestsPreviewForTextAnimation:(UIWritingToolsCoordinatorTextAnimation)textAnimation ofRange:(NSRange)range inContext:(UIWritingToolsCoordinatorContext *)context textDecoration:(UIWritingToolsCoordinatorTextDecoration)textDecoration completion:(void(^)(UITargetedPreview * _Nullable))completion API_AVAILABLE(ios(27.0)) NS_SWIFT_ASYNC_NAME(writingToolsCoordinator(_:previewFor:range:context:textDecoration:));
+#endif
+
+/// Asks the delegate for information about grammar issues in the specified context.
+///
+/// To support the grammar presentation UI, the delegate should provide information
+/// about the identified and currently indicated grammar issues in the specified context.
+/// The elements of the results array should be ``NSTextCheckingResult``
+/// objects of grammar type, of the sort that are returned from grammar checking,
+/// with ranges relative to the context. If you use grammar presentation, you must
+/// implement this delegate method to provide them.
+- (void)writingToolsCoordinator:(UIWritingToolsCoordinator *)writingToolsCoordinator requestsGrammarResultsForContext:(UIWritingToolsCoordinatorContext *)context completion:(void(^)(NSArray<NSTextCheckingResult *> *results))completion API_AVAILABLE(ios(27.0)) NS_SWIFT_ASYNC_NAME(writingToolsCoordinator(_:grammarResultsFor:));
+
+/// Notifies the delegate when the user chooses to disable grammar checking.
+///
+/// To support the grammar presentation UI, the delegate is notified if the user
+/// chooses the option provided in the grammar presentation UI to disable grammar
+/// checking for the view. If you use grammar presentation, you should implement
+/// this method to respond to that action.
+- (void)writingToolsCoordinator:(UIWritingToolsCoordinator *)writingToolsCoordinator setGrammarCheckingEnabled:(BOOL)enabled API_AVAILABLE(ios(27.0));
 
 
 // Deprecated. Not called in iOS 18.4 or visionOS 2.4 or later

@@ -123,6 +123,28 @@ UIKIT_EXTERN API_AVAILABLE(ios(8.0)) API_UNAVAILABLE(watchos) NS_SWIFT_SENDABLE
 /// When set to ``true``, the resolved visual alignment is determined by the resolved base writing direction; otherwise, it is using the user’s preferred language.
 @property (nonatomic, readonly) BOOL resolvesNaturalAlignmentWithBaseWritingDirection API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 
++ (UITraitCollection *)traitCollectionWithSystemPrefersReducedResourceUsage:(BOOL)systemPrefersReducedResourceUsage API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos) NS_REFINED_FOR_SWIFT;
+
+
+/// A Boolean value that indicates whether the system prefers that the app reduce its resource usage.
+///
+/// When this value is `YES`, the system has entered a state where it would prefer apps to scale back resource-intensive work.
+/// The default value is `NO`.
+///
+/// Use this to avoid or reduce expensive work. For example:
+///
+/// - Gate or simplify resource-intensive UI, such as 3D or AR viewers, advanced camera modes, or live effects.
+/// - Choose lighter-weight paths, such as lower-resolution assets or fewer simultaneous operations.
+/// - Defer or shrink non-essential background work, such as prefetching or precomputation.
+///
+/// Avoid performing or scheduling expensive work in response to changes in this property, as this could worsen resource usage.
+///
+/// - Tip: For in-memory caching, consider using ``NSCache`` with ``NSPurgeableData``, which automatically evicts entries under system memory pressure.
+///   Use `systemPrefersReducedResourceUsage` for higher-level decisions that ``NSCache`` cannot make on its own.
+///
+/// For point-in-time reads from contexts without a trait environment, use ``UIApplication/systemPrefersReducedResourceUsage``.
+@property (nonatomic, readonly) BOOL systemPrefersReducedResourceUsage API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos) NS_REFINED_FOR_SWIFT;
+
 @end
 
 
@@ -159,6 +181,7 @@ API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 @property (nonatomic) UITabAccessoryEnvironment tabAccessoryEnvironment API_AVAILABLE(ios(26.0)) API_UNAVAILABLE(visionos, tvos, watchos);
 @property (nonatomic) UISplitViewControllerLayoutEnvironment splitViewControllerLayoutEnvironment API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
 @property (nonatomic) BOOL resolvesNaturalAlignmentWithBaseWritingDirection API_AVAILABLE(ios(26.0), tvos(26.0), visionos(26.0)) API_UNAVAILABLE(watchos);
+@property (nonatomic) BOOL systemPrefersReducedResourceUsage API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 @end
 
 typedef void (^UITraitMutations)(id<UIMutableTraits> mutableTraits) API_AVAILABLE(ios(17.0), tvos(17.0)) API_UNAVAILABLE(watchos);
