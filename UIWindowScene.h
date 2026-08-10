@@ -65,6 +65,8 @@ UIKIT_EXTERN API_AVAILABLE(ios(13.0)) API_UNAVAILABLE(watchos) NS_SWIFT_UI_ACTOR
 ///   system cannot construct a display link.
 - (nullable CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)sel NS_SWIFT_NAME(displayLink(target:selector:)) API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 
+/// Indicates whether the window scene is full screen or windowed
+/// - Note: Only supported on Mac Catalyst
 @property (nonatomic, readonly, getter=isFullScreen) BOOL fullScreen API_AVAILABLE(macCatalyst(16.0)) API_UNAVAILABLE(watchos);
 
 /// A configuration describing a confirmation dialog to be shown when a user action will result in destruction of the scene session and disconnection of the scene.

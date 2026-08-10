@@ -518,6 +518,11 @@ typedef NS_ENUM(NSInteger, UIWritingToolsCoordinatorTextDecoration) {
 /// the user interacts with an issue, call this to bring up the relevant UI.
 ///
 /// Pass in context and range to identify the issue the user selected.
+/// The context must match one of the contexts returned from
+/// ``UIWritingToolsCoordinator/Delegate/writingToolsCoordinator(_:requestsContextsFor:completion:)``
+/// and the range must match the range in the context of one
+/// of the grammar details returned for that context from
+/// ``UIWritingToolsCoordinator/Delegate/writingToolsCoordinator(_:requestsGrammarResultsFor:completion:)``
 /// Returns NO if the UI cannot be brought up.
 - (BOOL)showGrammarPresentationForRange:(NSRange)range inContext:(UIWritingToolsCoordinatorContext *)context API_AVAILABLE(ios(27.0));
 

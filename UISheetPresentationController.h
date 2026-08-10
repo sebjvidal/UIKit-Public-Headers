@@ -28,6 +28,18 @@ UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos, visionos)
 const CGFloat UISheetPresentationControllerDetentInactive;
 
 
+typedef NS_ENUM(NSInteger, UISheetPresentationControllerPlacement) {
+    // The system determines the placement of the sheet.
+    UISheetPresentationControllerPlacementAutomatic,
+    // Places the sheet on the leading edge of the presenting view.
+    UISheetPresentationControllerPlacementLeading API_UNAVAILABLE(tvos, visionos),
+    // Centers the sheet within the presenting view.
+    UISheetPresentationControllerPlacementCenter API_UNAVAILABLE(tvos, visionos),
+    // Places the sheet on the trailing edge of the presenting view.
+    UISheetPresentationControllerPlacementTrailing API_UNAVAILABLE(tvos, visionos),
+} NS_SWIFT_NAME(UISheetPresentationController.Placement) API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
+
+
 // A context used for resolving custom UISheetPresentationControllerDetent values.
 UIKIT_EXTERN API_AVAILABLE(ios(16.0)) API_UNAVAILABLE(tvos, watchos, visionos) NS_SWIFT_UI_ACTOR
 @protocol UISheetPresentationControllerDetentResolutionContext <NSObject>
@@ -101,6 +113,11 @@ UIKIT_EXTERN API_AVAILABLE(ios(15.0)) API_UNAVAILABLE(tvos, watchos) NS_SWIFT_UI
 // If specified, the sheet will attempt to visually center itself over this view.
 // Default: nil
 @property (nonatomic, strong, nullable) UIView *sourceView;
+
+// The placement of the sheet within the presenting view.
+// The default value is UISheetPresentationControllerPlacementAutomatic.
+// This property is ignored when sourceView is non-nil.
+@property (nonatomic) UISheetPresentationControllerPlacement preferredPlacement API_AVAILABLE(ios(27.0), tvos(27.0), visionos(27.0)) API_UNAVAILABLE(watchos);
 
 // Whether the sheet sizes itself for readable content.
 // When YES, this maps to the behavior of UIModalPresentationPageSheet, where the sheet width follows the readable width.
